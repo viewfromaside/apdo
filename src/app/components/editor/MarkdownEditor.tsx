@@ -49,10 +49,11 @@ const MarkdownEditorContent = () => {
   return (
     <div ref={editorRef}>
       <MDXEditor
-        markdown={`-[x] sad`}
+        markdown={``}
         toMarkdownOptions={{
           bullet: "+",
         }}
+        spellCheck={false}
         plugins={[
           listsPlugin(),
           headingsPlugin(),
@@ -80,6 +81,7 @@ const MarkdownEditorContent = () => {
         ]}
         autoFocus={true}
         contentEditableClassName="
+        mdx-selection
         caret-thick 
         outline-none 
         max-w-none 
@@ -101,12 +103,16 @@ const MarkdownEditorContent = () => {
         */
         prose-p:transition-all
         prose-p:duration-75
+
+        caret-accent
         
         /* 📝 ESPAÇAMENTO DOS TÍTULOS */
         prose-headings:my-3
         prose-headings:leading-tight
+        prose-headings:tracking-tight
         prose-headings:transition-all
         prose-headings:duration-100
+        prose-headings:text-accent
         
         /* 💬 ESPAÇAMENTO DAS CITAÇÕES */
         prose-blockquote:my-3

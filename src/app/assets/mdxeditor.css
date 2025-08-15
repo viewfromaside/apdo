@@ -60,3 +60,44 @@ li[class*="_listItemChecked_"]::after {
   content: none;
   outline: none;
 }
+
+/* mdxeditor.css ou global.css */
+
+/* Cursor em forma de bloco suave */
+.caret-block {
+  caret-color: transparent; /* esconde o caret padrão */
+  position: relative;
+}
+
+.caret-block::after {
+  content: "";
+  position: absolute;
+  background-color: currentColor; /* mesma cor do texto */
+  width: 0.6em;
+  height: 1em;
+  transform: translateY(2px);
+  border-radius: 2px; /* bordas levemente arredondadas */
+  animation: caret-smooth-blink 1.2s ease-in-out infinite;
+  opacity: 1;
+}
+
+/* Animação suave */
+@keyframes caret-smooth-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3; /* não some totalmente, fica translúcido */
+  }
+}
+
+.mdx-selection ::selection {
+  background: #ffb347;
+  color: #000;
+}
+
+.mdx-selection ::-moz-selection {
+  background: #ffb347;
+  color: #000;
+}
