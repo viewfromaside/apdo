@@ -1,0 +1,44 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* 🎨 Cores do Modo Claro */
+  --color-primary: #3b3b3b;
+  --color-secondary: #6c757d;
+  --color-neutral: #eaeaea;
+  --color-background: #f8f9fa;
+  --color-accent: #ffb86c;
+  --color-success: #6fcf97;
+  --color-danger: #eb5757;
+
+  /* 🎨 Cores do Modo Escuro */
+  --color-dark-primary: #eaeaea;
+  --color-dark-secondary: #a0a0a0;
+  --color-dark-neutral: #2c2c2c;
+  --color-dark-background: #1e1e1e;
+  --color-dark-accent: #ffb86c;
+  --color-dark-success: #6fcf97;
+  --color-dark-danger: #eb5757;
+
+  /* 📝 Fontes */
+  --font-family-sans: Inter, ui-sans-serif, system-ui;
+  --font-family-mono: "Fira Code", monospace;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.15s ease-out;
+}
