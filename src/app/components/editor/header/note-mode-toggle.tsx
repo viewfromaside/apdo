@@ -9,17 +9,28 @@ import {
   SettingsIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { ComponentProps, useRef, useState } from "react";
+import {
+  ComponentProps,
+  Dispatch,
+  SetStateAction,
+  useRef,
+  useState,
+} from "react";
 import { twMerge } from "tailwind-merge";
 
-export const NoteModeSettings = ({
-  className,
-  ...props
-}: ComponentProps<"div">) => {
-  const [markdownActive, setMarkdownActive] = useState(false);
+type RawEditorProps = ComponentProps<"div"> & {
+  formatMarkdownToggle: boolean;
+  setFormatMarkdownToggle: Dispatch<SetStateAction<boolean>>;
+};
 
+export const NoteModeToggle = ({
+  className,
+  formatMarkdownToggle,
+  setFormatMarkdownToggle,
+  ...props
+}: RawEditorProps) => {
   const toggleMarkdownMode = () => {
-    setMarkdownActive((prev) => !prev);
+    setFormatMarkdownToggle((prev) => !prev);
   };
 
   return (
@@ -31,7 +42,11 @@ export const NoteModeSettings = ({
       )}
       {...props}
     >
-      {markdownActive ? <EyeIcon size={18} /> : <EyeClosedIcon size={18} />}
+      {formatMarkdownToggle ? (
+        <EyeClosedIcon size={18} />
+      ) : (
+        <EyeIcon size={18} />
+      )}
     </div>
   );
 };

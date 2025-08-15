@@ -3,15 +3,23 @@
 import {
   FileName,
   GoBack,
+  HeaderSettingsDropdown,
   MarkdownEditor,
-  NoteModeSettings,
+  NoteModeToggle,
   NoteSettings,
   Panel,
+  RawEditor,
 } from "./components";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { editor } from "@/app/assets/main.json";
 
 export default function Home() {
   const editorRef = useRef(null);
+
+  const [content, setContent] = useState<string>(editor.content || "");
+  const [formatMarkdownToggle, setFormatMarkdownToggle] =
+    useState<boolean>(true);
+
   return (
     <div className="flex w-full justify-center items-center">
       <Panel className="flex flex-col gap-3">
@@ -21,11 +29,18 @@ export default function Home() {
             <FileName className="w-fit">@viewfromaside/welcome</FileName>
           </div>
           <div className="flex flex-row gap-2">
-            <NoteModeSettings />
-            <NoteSettings href="/" />
+            <NoteModeToggle
+              formatMarkdownToggle={formatMarkdownToggle}
+              setFormatMarkdownToggle={setFormatMarkdownToggle}
+            />
+            <HeaderSettingsDropdown />
           </div>
         </div>
-        <MarkdownEditor />
+        {formatMarkdownToggle ? (
+          <MarkdownEditor content={content} setContent={setContent} />
+        ) : (
+          <RawEditor content={content} setContent={setContent} />
+        )}
       </Panel>
     </div>
   );

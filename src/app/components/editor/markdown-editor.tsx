@@ -14,10 +14,16 @@ import {
 } from "@mdxeditor/editor";
 import gsap from "gsap";
 import dynamic from "next/dynamic";
-import { useEffect, useRef } from "react";
+import React, { SetStateAction, useEffect, useRef } from "react";
 import "@/app/assets/mdxeditor.css";
 
-const MarkdownEditorContent = () => {
+const MarkdownEditorContent = ({
+  content,
+  setContent,
+}: {
+  content: string;
+  setContent: React.Dispatch<SetStateAction<string>>;
+}) => {
   const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -49,26 +55,10 @@ const MarkdownEditorContent = () => {
   return (
     <div ref={editorRef} className="h-full overflow-auto">
       <MDXEditor
-        markdown={`
-          # ✏️ **Yo, welcome to _apdo_**
-
-          > _Your digital corner for random sparks, wild ideas, and midnight thoughts._
-
-          ---
-
-          ### 🚀 **Here’s the deal:**
-          - **Drop notes** fast — no pressure, no rules.  
-          - **Keep ‘em safe** & always within reach.  
-          - **Make it yours** — your vibe, your style.  
-
-          ---
-
-          <span class="ghost-ai">_Your digital corner for random sparks, wild ideas, and midnight thoughts._ </span>
-
-
-          💡 _Think of apdo as your pocket graffiti wall — but cleaner._  
-
- `}
+        markdown={content}
+        onChange={(newContent) => {
+          setContent(newContent);
+        }}
         toMarkdownOptions={{
           bullet: "+",
         }}

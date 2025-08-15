@@ -1,1 +1,1 @@
-export * from "@/app/components/dropdown/header-dropdown";
+export * from "@/app/components/dropdown/header-settings-dropdown";
