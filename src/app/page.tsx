@@ -4,6 +4,7 @@ import {
   FileName,
   GoBack,
   MarkdownEditor,
+  NoteModeSettings,
   NoteSettings,
   Panel,
 } from "./components";
@@ -17,9 +18,12 @@ export default function Home() {
         <div className="flex flex-row justify-between items-center w-full">
           <div className="flex flex-row gap-2 items-center">
             <GoBack href="/" />
-            <FileName className="w-fit">welcome</FileName>
+            <FileName className="w-fit">@viewfromaside/welcome</FileName>
           </div>
-          <NoteSettings href="/" />
+          <div className="flex flex-row gap-2">
+            <NoteModeSettings />
+            <NoteSettings href="/" />
+          </div>
         </div>
         <MarkdownEditor />
       </Panel>

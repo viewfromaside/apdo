@@ -3,7 +3,7 @@ import { Inter, Fira_Code } from "next/font/google";
 import { Layout } from "./components";
 import { ThemeProvider } from "./components/shadcn-ui/theme-provider";
 import "@/app/assets/globals.css";
-import { Logo } from "./components/Logo";
+import { Logo } from "./components/logo";
 
 const inter = Inter({
   variable: "--font-inter",
