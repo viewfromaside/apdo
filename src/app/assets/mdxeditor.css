@@ -1,0 +1,62 @@
+/* ===== MDXEditor – Task list (checkbox) ===== */
+:root {
+  --spacing-4: 1rem;
+  --radius-small: 6px;
+  --accentBorder: #16a34a;
+  --accentSolid: #22c55e;
+  --accentBgActive: rgba(34, 197, 94, 0.25);
+  --baseBase: #fff;
+  --baseBorder: #e5e7eb;
+}
+
+/* Layout flex para alinhar caixinha e texto */
+li[class*="_listItemUnchecked_"],
+li[class*="_listItemChecked_"] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+  min-height: var(--spacing-4);
+  outline: none;
+}
+
+/* Caixinha base */
+li[class*="_listItemUnchecked_"]::before,
+li[class*="_listItemChecked_"]::before {
+  content: "";
+  width: var(--spacing-4);
+  height: var(--spacing-4);
+  flex-shrink: 0;
+  border-radius: var(--radius-small);
+  border: 1px solid var(--baseBorder);
+  background: transparent;
+  outline: none;
+}
+
+/* Foco acessível */
+li[class*="_listItemUnchecked_"]:focus::before,
+li[class*="_listItemChecked_"]:focus::before {
+  box-shadow: 0 0 0 2px var(--accentBgActive);
+  outline: none;
+}
+
+/* Caixa marcada (preenchida) */
+li[class*="_listItemChecked_"]::before {
+  border-color: var(--accentBorder);
+  background-color: var(--accentSolid);
+  outline: none;
+}
+
+/* Texto riscado quando marcado */
+li[class*="_listItemChecked_"] {
+  text-decoration: line-through;
+  outline: none;
+}
+
+/* Removemos completamente o ::after (ícone) */
+li[class*="_listItemChecked_"]::after {
+  content: none;
+  outline: none;
+}

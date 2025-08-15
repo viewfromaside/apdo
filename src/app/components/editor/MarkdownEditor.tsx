@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  BoldItalicUnderlineToggles,
   codeBlockPlugin,
   codeMirrorPlugin,
   headingsPlugin,
@@ -12,12 +11,11 @@ import {
   quotePlugin,
   searchPlugin,
   thematicBreakPlugin,
-  toolbarPlugin,
-  UndoRedo,
 } from "@mdxeditor/editor";
 import gsap from "gsap";
 import dynamic from "next/dynamic";
 import { useEffect, useRef } from "react";
+import "@/app/assets/mdxeditor.css";
 
 const MarkdownEditorContent = () => {
   const editorRef = useRef<HTMLDivElement>(null);
@@ -52,9 +50,12 @@ const MarkdownEditorContent = () => {
     <div ref={editorRef}>
       <MDXEditor
         markdown={`-[x] sad`}
+        toMarkdownOptions={{
+          bullet: "+",
+        }}
         plugins={[
-          headingsPlugin(),
           listsPlugin(),
+          headingsPlugin(),
           searchPlugin(),
           quotePlugin(),
           markdownShortcutPlugin(),
@@ -70,6 +71,7 @@ const MarkdownEditorContent = () => {
           //     return (
           //       <>
           //         <UndoRedo />
+          //         <ListsToggle />
           //         <BoldItalicUnderlineToggles />
           //       </>
           //     );
