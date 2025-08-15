@@ -42,3 +42,15 @@
 .animate-fadeIn {
   animation: fadeIn 0.15s ease-out;
 }
+
+::-webkit-scrollbar {
+  @apply w-1;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-accent rounded-md;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}

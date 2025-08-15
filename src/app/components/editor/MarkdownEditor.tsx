@@ -47,9 +47,22 @@ const MarkdownEditorContent = () => {
   }, []);
 
   return (
-    <div ref={editorRef}>
+    <div ref={editorRef} className="h-full overflow-auto">
       <MDXEditor
-        markdown={``}
+        markdown={`
+          # ✏️ Yo, welcome to **apdo**
+
+          This is your **spot** to jot down thoughts, random ideas, or that lyric that just hit you on the subway.  
+
+          ---
+
+          🚀 **What you can do here:**  
+          - Drop your notes, quick & messy  
+          - Keep ‘em safe and easy to find  
+          - Make it yours  
+
+          > _No rules, no clutter — just your words._
+ `}
         toMarkdownOptions={{
           bullet: "+",
         }}
