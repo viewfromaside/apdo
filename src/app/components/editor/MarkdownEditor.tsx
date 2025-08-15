@@ -50,18 +50,24 @@ const MarkdownEditorContent = () => {
     <div ref={editorRef} className="h-full overflow-auto">
       <MDXEditor
         markdown={`
-          # ✏️ Yo, welcome to **apdo**
+          # ✏️ **Yo, welcome to _apdo_**
 
-          This is your **spot** to jot down thoughts, random ideas, or that lyric that just hit you on the subway.  
+          > _Your digital corner for random sparks, wild ideas, and midnight thoughts._
 
           ---
 
-          🚀 **What you can do here:**  
-          - Drop your notes, quick & messy  
-          - Keep ‘em safe and easy to find  
-          - Make it yours  
+          ### 🚀 **Here’s the deal:**
+          - **Drop notes** fast — no pressure, no rules.  
+          - **Keep ‘em safe** & always within reach.  
+          - **Make it yours** — your vibe, your style.  
 
-          > _No rules, no clutter — just your words._
+          ---
+
+          <span class="ghost-ai">_Your digital corner for random sparks, wild ideas, and midnight thoughts._ </span>
+
+
+          💡 _Think of apdo as your pocket graffiti wall — but cleaner._  
+
  `}
         toMarkdownOptions={{
           bullet: "+",

@@ -54,3 +54,20 @@
 ::-webkit-scrollbar-track {
   @apply bg-transparent;
 }
+.ghost-ai {
+  font-style: italic;
+  opacity: 0.8;
+  background: linear-gradient(90deg, #ff00cc, #3333ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeGhost 1s ease-in-out infinite alternate;
+}
+
+@keyframes fadeGhost {
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
