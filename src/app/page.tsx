@@ -1,6 +1,8 @@
 "use client";
 
 import {
+  Dialog,
+  DialogHeader,
   FileName,
   GoBack,
   HeaderSettingsDropdown,
@@ -12,6 +14,7 @@ import {
 } from "./components";
 import { useRef, useState } from "react";
 import { editor } from "@/app/assets/main.json";
+import { DialogBody } from "./components/dialog/dialog-body";
 
 export default function Home() {
   const editorRef = useRef(null);
