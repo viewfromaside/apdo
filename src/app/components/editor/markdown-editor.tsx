@@ -28,7 +28,19 @@ const MarkdownEditorContent = ({
 
   useEffect(() => {
     if (!editorRef.current) return;
+    const children = Array.from(editorRef.current.children) as HTMLElement[];
 
+    // Se quiser animar o container inteiro só, use: [editorRef.current] no lugar de children
+    gsap.fromTo(
+      children.length > 0 ? children : [editorRef.current],
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 0.8,
+        ease: "power1.out",
+        stagger: 0.05, // efeito de cima pra baixo se houver vários filhos
+      }
+    );
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         mutation.addedNodes.forEach((node) => {

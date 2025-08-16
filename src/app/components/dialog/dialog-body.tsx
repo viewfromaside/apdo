@@ -17,7 +17,7 @@ export const DialogBody = ({
       <div
         ref={nodeRef}
         className={twMerge(
-          "dark:bg-dark-background border border-accent/20 dialog-handle cursor-default rounded-sm p-3 text-[13px]",
+          "dark:bg-dark-background w-fit h-fit border border-accent/20 dialog-handle cursor-default rounded-sm p-3 text-[13px]",
           className
         )}
         {...props}

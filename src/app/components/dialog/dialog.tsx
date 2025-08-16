@@ -2,7 +2,8 @@
 
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 
 type DialogContextType = {
   required?: boolean;
@@ -30,24 +31,49 @@ export const Dialog = ({
   className,
   required,
   toggle,
+  open,
   ...props
 }: DialogProps) => {
+  const [render, setRender] = useState(open);
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (open) {
+      setRender(true);
+    } else if (dialogRef.current) {
+      gsap.to(dialogRef.current, {
+        opacity: 0,
+        duration: 0.3,
+        ease: "power1.in",
+        onComplete: () => setRender(false),
+      });
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (render && dialogRef.current) {
+      gsap.fromTo(
+        dialogRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.3, ease: "power1.out" }
+      );
+    }
+  }, [render]);
+
   return (
     <DialogContext.Provider value={{ required, toggle }}>
-      <div
-        onClick={(e) => {
-          if (required) {
-            console.log("dialogue fechado");
-          }
-        }}
-        className={twMerge(
-          "absolute z-50 top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex justify-center items-center bg-black/60 w-full h-full rounded-sm ",
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </div>
+      {render && (
+        <div
+          ref={dialogRef}
+          className={twMerge(
+            "absolute z-50 top-0 left-0 w-full h-full bg-black/60 flex justify-center items-center",
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </div>
+      )}
     </DialogContext.Provider>
   );
 };

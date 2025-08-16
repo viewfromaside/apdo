@@ -5,25 +5,30 @@ import { Button } from "../shadcn-ui/button";
 import { DialogClose } from "./dialog-close";
 import { XIcon } from "lucide-react";
 
-type DialogHeaderProps = ComponentProps<"div"> & {};
+type DialogHeaderProps = ComponentProps<"div"> & {
+  textClassName?: string;
+};
 
 export const DialogHeader = ({
   className,
   children,
+  textClassName,
   ...props
 }: DialogHeaderProps) => {
   const { required } = useDialogContext();
   return (
     <div
       className={twMerge(
-        "flex flex-row gap-10 justify-between items-center",
+        "flex flex-row w-full gap-10 justify-between items-center",
         className
       )}
       {...props}
     >
-      {children}
+      <div className={twMerge("flex-1 font-mono uppercase", textClassName)}>
+        {children}
+      </div>
       {required && (
-        <DialogClose>
+        <DialogClose className="justify-self-end justify-end self-end">
           <XIcon size={14} />
         </DialogClose>
       )}
