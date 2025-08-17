@@ -1,4 +1,5 @@
 import { ComponentProps } from "react";
+import { Toaster } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 export const Panel = ({

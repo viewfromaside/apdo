@@ -27,7 +27,7 @@ export const DialogHeader = ({
       <div className={twMerge("flex-1 font-mono uppercase", textClassName)}>
         {children}
       </div>
-      {required && (
+      {!required && (
         <DialogClose className="justify-self-end justify-end self-end">
           <XIcon size={14} />
         </DialogClose>

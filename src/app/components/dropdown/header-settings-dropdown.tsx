@@ -21,7 +21,7 @@ export function HeaderSettingsDropdown() {
         <NoteSettings />
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-56 bg-background dark:bg-dark-background  border-accent"
+        className="w-56 bg-background dark:bg-dark-background  border-accent/20"
         align="end"
       >
         <DropdownMenuLabel>File</DropdownMenuLabel>
@@ -29,7 +29,7 @@ export function HeaderSettingsDropdown() {
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Actions</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent className="w-56 bg-background dark:bg-dark-background border-accent">
+              <DropdownMenuSubContent className="w-56 bg-background dark:bg-dark-background border-accent/20">
                 <DropdownMenuItem>Save</DropdownMenuItem>
                 <DropdownMenuItem>Rename</DropdownMenuItem>
                 <DropdownMenuItem>Delete</DropdownMenuItem>
@@ -39,13 +39,13 @@ export function HeaderSettingsDropdown() {
           </DropdownMenuSub>
           <DropdownMenuItem>Settings</DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuSeparator className="bg-accent" />
+        {/* <DropdownMenuSeparator className="bg-accent" />
         <DropdownMenuLabel>@viewfromaside</DropdownMenuLabel>
         <DropdownMenuGroup>
           <DropdownMenuItem>See Profile</DropdownMenuItem>
           <DropdownMenuItem>Appearence</DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuItem>Log out</DropdownMenuItem>
+        <DropdownMenuItem>Log out</DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

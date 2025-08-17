@@ -11,7 +11,7 @@ export const DialogClose = ({
   return (
     <div
       onClick={() => {
-        if (required) toggle();
+        if (!required) toggle();
       }}
       className={twMerge(
         `px-2 cursor-pointer hover:opacity-60 duration-200 w-fit select-none font-mono py-1 text-[12px] tracking-wide bg-gray-500/20 rounded-md h-fit `,

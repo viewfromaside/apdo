@@ -2,25 +2,25 @@
 
 import {
   Dialog,
+  DialogBody,
+  DialogContent,
   DialogHeader,
   FileName,
   GoBack,
   HeaderSettingsDropdown,
   MarkdownEditor,
   NoteModeToggle,
-  NoteSettings,
   Panel,
   RawEditor,
   UnsavedBottomBar,
 } from "./components";
 import { useRef, useState } from "react";
 import { editor } from "@/app/assets/main.json";
-import { DialogBody } from "./components/dialog/dialog-body";
-import { DialogContent } from "./components/dialog/dialog-content";
 
 export default function Home() {
-  const [alertDialog, setAlertDialog] = useState<boolean>(true);
+  const [alertDialog, setAlertDialog] = useState<boolean>(false);
   const [content, setContent] = useState<string>(editor.content || "");
+  const [saved, setSaved] = useState<boolean>(true);
   const [formatMarkdownToggle, setFormatMarkdownToggle] =
     useState<boolean>(true);
 
@@ -39,7 +39,7 @@ export default function Home() {
           <div className="flex flex-row gap-2">
             <NoteModeToggle
               formatMarkdownToggle={formatMarkdownToggle}
-              setFormatMarkdownToggle={setFormatMarkdownToggle}
+              setFormatMarkdownToggle={setAlertDialog}
             />
             <HeaderSettingsDropdown />
           </div>
@@ -57,7 +57,7 @@ export default function Home() {
             </DialogContent>
           </DialogBody>
         </Dialog>
-        <UnsavedBottomBar />
+        <UnsavedBottomBar show={saved} />
       </Panel>
     </div>
   );
