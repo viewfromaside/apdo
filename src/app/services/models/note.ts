@@ -17,4 +17,20 @@ export class Note extends BaseEntity implements INote {
     this.content = obj.content || "";
     this.favorite = obj.favorite || false;
   }
+
+  getObjectForCreate() {
+    return {
+      title: this.title,
+      content: this.content,
+      favorite: this.favorite,
+    };
+  }
+
+  getObjectForEdit() {
+    return {
+      title: this.title,
+      content: this.content,
+      favorite: this.favorite,
+    };
+  }
 }

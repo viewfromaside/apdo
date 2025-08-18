@@ -5,8 +5,8 @@ export interface IBase {
   updatedAt: Date;
   deletedAt: Date;
 
-  getObjectForCreate?: () => Record<string, any>;
-  getObjectForEdit?: () => Record<string, any>;
+  getObjectForCreate: () => Record<string, any>;
+  getObjectForEdit: () => Record<string, any>;
 }
 
 export class BaseEntity implements IBase {
@@ -22,5 +22,13 @@ export class BaseEntity implements IBase {
     this.createdAt = obj?.createdAt || new Date();
     this.updatedAt = obj?.updatedAt || new Date();
     this.deletedAt = obj?.deletedAt || new Date();
+  }
+
+  getObjectForCreate() {
+    return this;
+  }
+
+  getObjectForEdit() {
+    return this;
   }
 }
