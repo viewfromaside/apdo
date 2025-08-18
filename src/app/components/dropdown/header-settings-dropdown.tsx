@@ -37,7 +37,7 @@ export function HeaderSettingsDropdown() {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DropdownMenuItem>Appearence</DropdownMenuItem>
         </DropdownMenuGroup>
         {/* <DropdownMenuSeparator className="bg-accent" />
         <DropdownMenuLabel>@viewfromaside</DropdownMenuLabel>

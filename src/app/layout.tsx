@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${firaCode.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

@@ -16,6 +16,7 @@ import {
 } from "./components";
 import { useRef, useState } from "react";
 import { editor } from "@/app/assets/main.json";
+import { toast } from "sonner";
 
 export default function Home() {
   const [alertDialog, setAlertDialog] = useState<boolean>(false);
@@ -25,7 +26,13 @@ export default function Home() {
     useState<boolean>(true);
 
   const toggleAlertDialog = () => {
+    toast(String.fromCodePoint(0x1f4af) + " File Saved");
     setAlertDialog((prev) => !prev);
+  };
+
+  const saveActualContent = () => {
+    toast(String.fromCodePoint(0x1f4af) + " File Saved");
+    setSaved(true);
   };
 
   return (
@@ -34,7 +41,7 @@ export default function Home() {
         <div className="flex flex-row justify-between items-center w-full">
           <div className="flex flex-row gap-2 items-center">
             <GoBack href="/" />
-            <FileName className="w-fit">@viewfromaside/welcome</FileName>
+            <FileName className="w-fit">new file</FileName>
           </div>
           <div className="flex flex-row gap-2">
             <NoteModeToggle

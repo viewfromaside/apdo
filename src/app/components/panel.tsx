@@ -1,3 +1,4 @@
+import { useTheme } from "next-themes";
 import { ComponentProps } from "react";
 import { Toaster } from "sonner";
 import { twMerge } from "tailwind-merge";
@@ -7,6 +8,9 @@ export const Panel = ({
   children,
   ...props
 }: ComponentProps<"div">) => {
+  const { theme } = useTheme();
+  const isDarkTheme = theme === "dark";
+
   return (
     <div
       className={twMerge(
@@ -16,6 +20,23 @@ export const Panel = ({
       {...props}
     >
       {children}
+      <Toaster
+        className="bg-red-500"
+        toastOptions={{
+          duration: 1600,
+          style: {
+            backgroundColor: isDarkTheme
+              ? "var(--color-dark-background)"
+              : "var(--color-background)",
+            color: isDarkTheme ? "white" : "var(--color-dark-background)",
+            border: "1px solid var(--color-accent)",
+          },
+        }}
+        style={{
+          position: "absolute",
+          marginBottom: "20px",
+        }}
+      />
     </div>
   );
 };
