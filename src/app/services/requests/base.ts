@@ -14,7 +14,10 @@ export class BaseRequest<T extends IBase> {
   }
 
   async sendCreate(data: Partial<T>): Promise<T> {
-    const { data: res } = await this.client.post<T>("", data);
+    const { data: res } = await this.client.post<T>(
+      "",
+      data.getObjectForCreate!()
+    );
     return res;
   }
 
@@ -24,7 +27,10 @@ export class BaseRequest<T extends IBase> {
   }
 
   async sendEdit(id: string, data: Partial<T>): Promise<T> {
-    const { data: res } = await this.client.put<T>(`/${id}`, data);
+    const { data: res } = await this.client.put<T>(
+      `/${id}`,
+      data.getObjectForEdit!()
+    );
     return res;
   }
 
