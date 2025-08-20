@@ -15,11 +15,10 @@ export const UnsavedBottomBar = ({
   ...props
 }: UnsavedBottomBarProps) => {
   const bar = useRef<HTMLDivElement>(null);
+  const label = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (!bar.current) return;
-
-    gsap.set(bar.current, { transformOrigin: "center center" });
 
     if (show) {
       gsap.fromTo(
@@ -41,7 +40,7 @@ export const UnsavedBottomBar = ({
     <div
       ref={bar}
       className={twMerge(
-        "unsaved-bottom-bar absolute bottom-0 left-0 w-full h-1 bg-accent rounded-b-sm",
+        "unsaved-bottom-bar opacity-0 scale-x-0 absolute bottom-0 left-0 w-full h-1 bg-accent rounded-b-sm",
         className
       )}
       {...props}

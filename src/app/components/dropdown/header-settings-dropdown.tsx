@@ -13,8 +13,13 @@ import {
   DropdownMenuTrigger,
 } from "@/app/components/shadcn-ui/dropdown-menu";
 import { NoteSettings } from "../editor";
+import React, { SetStateAction } from "react";
 
-export function HeaderSettingsDropdown() {
+export function HeaderSettingsDropdown({
+  setSaved,
+}: {
+  setSaved: React.Dispatch<SetStateAction<boolean>>;
+}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -30,7 +35,9 @@ export function HeaderSettingsDropdown() {
             <DropdownMenuSubTrigger>Actions</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent className="w-56 bg-background dark:bg-dark-background border-accent/20">
-                <DropdownMenuItem>Save</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setSaved(true)}>
+                  Save
+                </DropdownMenuItem>
                 <DropdownMenuItem>Rename</DropdownMenuItem>
                 <DropdownMenuItem>Delete</DropdownMenuItem>
                 <DropdownMenuItem>Share</DropdownMenuItem>
