@@ -5,10 +5,20 @@ import { NoteVisibility } from "@/app/shared";
 
 const noteService = new NoteRequest();
 
-export const notesAtomWritable = atom<Note[]>([]);
+const mockNote = new Note({
+  id: "mock-1",
+  title: "welcome note",
+  content: "# Bem-vindo!\n\nEsta é sua primeira nota. Comece editando aqui!",
+  favorite: false,
+  visibility: NoteVisibility.PUBLIC,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+});
+
+export const notesAtomWritable = atom<Note[]>([mockNote]);
 export const notesAtom = unwrap(notesAtomWritable, (prev) => prev ?? []);
 
-export const selectedNoteIndexAtom = atom<number | null>(null);
+export const selectedNoteIndexAtom = atom<number | null>(0);
 
 export const selectedNoteAtom = atom<Note | null>((get) => {
   const notes = get(notesAtom);
@@ -18,6 +28,13 @@ export const selectedNoteAtom = atom<Note | null>((get) => {
 
 export const loadNotesAtom = atom(null, async (_get, set) => {
   const notes = await noteService.sendFindMany();
+
+  if (notes.length === 0) {
+    set(notesAtomWritable, [mockNote]);
+    set(selectedNoteIndexAtom, 0);
+    return;
+  }
+
   const sorted = [...notes].sort(
     (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime()
   );

@@ -15,21 +15,24 @@ export const UnsavedBottomBar = ({
   ...props
 }: UnsavedBottomBarProps) => {
   const bar = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!bar.current) return;
+
+    gsap.set(bar.current, { transformOrigin: "center center" });
 
     if (show) {
       gsap.fromTo(
         bar.current,
-        { scaleX: 0.42, transformOrigin: "right center" }, // 0%
-        { scaleX: 1, duration: 1.4, ease: "power1.out" } // 100%
+        { scaleX: 0, opacity: 0 },
+        { scaleX: 1, opacity: 1, duration: 0.6, ease: "power2.out" }
       );
     } else {
       gsap.to(bar.current, {
         scaleX: 0,
-        transformOrigin: "right center",
-        duration: 2,
-        ease: "power1.in",
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.in",
       });
     }
   }, [show]);
@@ -38,7 +41,7 @@ export const UnsavedBottomBar = ({
     <div
       ref={bar}
       className={twMerge(
-        "unsaved-bottom-bar absolute bottom-0 left-0 rounded-b-sm w-full h-1 bg-accent",
+        "unsaved-bottom-bar absolute bottom-0 left-0 w-full h-1 bg-accent rounded-b-sm",
         className
       )}
       {...props}

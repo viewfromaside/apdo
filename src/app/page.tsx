@@ -14,16 +14,54 @@ import {
   RawEditor,
   UnsavedBottomBar,
 } from "./components";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { editor } from "@/app/assets/main.json";
 import { toast } from "sonner";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import {
+  loadNotesAtom,
+  saveNoteAtom,
+  selectedNoteAtom,
+  selectedNoteIndexAtom,
+} from "./store";
 
 export default function Home() {
   const [alertDialog, setAlertDialog] = useState<boolean>(false);
-  const [content, setContent] = useState<string>(editor.content || "");
+  const [localContent, setLocalContent] = useState<string>("");
+  const [localTitle, setLocalTitle] = useState<string>();
+
   const [saved, setSaved] = useState<boolean>(true);
   const [formatMarkdownToggle, setFormatMarkdownToggle] =
     useState<boolean>(true);
+
+  const selectedNote = useAtomValue(selectedNoteAtom);
+  const [selectedNoteIndex, setSelectedNoteIndex] = useAtom(
+    selectedNoteIndexAtom
+  );
+  const saveNote = useSetAtom(saveNoteAtom);
+  const loadNotes = useSetAtom(loadNotesAtom);
+
+  // useEffect(() => {
+  //   loadNotes();
+  // }, [loadNotes]);
+
+  useEffect(() => {
+    if (selectedNote) {
+      setLocalContent(selectedNote.content || "");
+      setLocalTitle(selectedNote.title || "new file");
+    } else {
+      setLocalContent("");
+      setLocalTitle("new file");
+    }
+  }, [selectedNote]);
+
+  useEffect(() => {
+    if (selectedNote) {
+      const hasContentChanged = localContent !== (selectedNote.content || "");
+      const hasTitleChanged = localTitle !== (selectedNote.title || "new file");
+      setSaved(!hasContentChanged && !hasTitleChanged);
+    }
+  }, [localContent, localTitle, selectedNote]);
 
   const toggleAlertDialog = () => {
     toast(String.fromCodePoint(0x1f4af) + " File Saved");
@@ -41,7 +79,7 @@ export default function Home() {
         <div className="flex flex-row justify-between items-center w-full">
           <div className="flex flex-row gap-2 items-center">
             <GoBack href="/" />
-            <FileName className="w-fit">new file</FileName>
+            <FileName className="w-fit">{localTitle}</FileName>
           </div>
           <div className="flex flex-row gap-2">
             <NoteModeToggle
@@ -52,9 +90,9 @@ export default function Home() {
           </div>
         </div>
         {formatMarkdownToggle ? (
-          <MarkdownEditor content={content} setContent={setContent} />
+          <MarkdownEditor content={localContent} setContent={setLocalContent} />
         ) : (
-          <RawEditor content={content} setContent={setContent} />
+          <RawEditor content={localContent} setContent={setLocalContent} />
         )}
         <Dialog open={alertDialog} toggle={toggleAlertDialog}>
           <DialogBody className="w-[250px]">
@@ -64,7 +102,7 @@ export default function Home() {
             </DialogContent>
           </DialogBody>
         </Dialog>
-        <UnsavedBottomBar show={saved} />
+        <UnsavedBottomBar show={!saved} />
       </Panel>
     </div>
   );

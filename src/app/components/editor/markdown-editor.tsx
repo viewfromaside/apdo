@@ -16,6 +16,7 @@ import gsap from "gsap";
 import dynamic from "next/dynamic";
 import React, { SetStateAction, useEffect, useRef } from "react";
 import "@/app/assets/mdxeditor.css";
+import { useMarkdownEditor } from "@/app/hooks";
 
 const MarkdownEditorContent = ({
   content,
@@ -24,7 +25,7 @@ const MarkdownEditorContent = ({
   content: string;
   setContent: React.Dispatch<SetStateAction<string>>;
 }) => {
-  const editorRef = useRef<HTMLDivElement>(null);
+  const { editorRef } = useMarkdownEditor();
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -67,11 +68,11 @@ const MarkdownEditorContent = ({
     <div ref={editorRef} className="h-full overflow-auto">
       <MDXEditor
         markdown={content}
-        onChange={(newContent) => {
-          setContent(newContent);
-        }}
         toMarkdownOptions={{
           bullet: "+",
+        }}
+        onChange={(e) => {
+          setContent(e);
         }}
         spellCheck={false}
         plugins={[
