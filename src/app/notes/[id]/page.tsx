@@ -78,7 +78,7 @@ export default function NoteHome() {
       <Panel className="flex flex-col gap-3">
         <div className="flex flex-row justify-between items-center w-full">
           <div className="flex flex-row gap-2 items-center">
-            <GoBack href="/" />
+            <GoBack href="/notes" />
             <FileName className="w-fit">{localTitle}</FileName>
           </div>
           <div className="flex flex-row gap-2">
@@ -90,10 +90,7 @@ export default function NoteHome() {
           </div>
         </div>
         {formatMarkdownToggle ? (
-          <MarkdownEditor
-            content={editor.editor.content}
-            setContent={setLocalContent}
-          />
+          <MarkdownEditor content={localContent} setContent={setLocalContent} />
         ) : (
           <RawEditor content={localContent} setContent={setLocalContent} />
         )}

@@ -34,14 +34,14 @@ export default function SignInForm() {
   }, []);
 
   const handleClick = () => {
-    toast.error("locked in fr", {
-      style: {
-        // backgroundColor: "#83D448", success
-        backgroundColor: "#DE4747", // error
-        border: "0px",
-        padding: 10,
-      },
-    });
+    // toast.error("locked in fr", {
+    //   style: {
+    //     // backgroundColor: "#83D448", success
+    //     backgroundColor: "#DE4747", // error
+    //     border: "0px",
+    //     padding: 10,
+    //   },
+    // });
     router.replace("/notes");
   };
 
