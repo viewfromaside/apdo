@@ -54,6 +54,7 @@ export default function Home() {
       }
     );
 
+    // se n me engano essa porra aq eh a animacao do link
     tl.fromTo(
       linkRef.current,
       {
@@ -72,13 +73,10 @@ export default function Home() {
 
   return (
     <div className="flex w-full justify-center items-center">
-      <Panel className="flex flex-col gap-5 justify-center items-center">
+      <Panel className="flex flex-col gap-7 justify-center items-center">
         <Logo />
         <div className="flex flex-col gap-2">
-          <Button
-            ref={buttonRef}
-            className="text-[14px] transform transition-transform duration-200 hover:scale-105"
-          >
+          <Button ref={buttonRef} className="text-[14px]">
             sign in, aight?
           </Button>
           <Link
