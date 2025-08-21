@@ -11,7 +11,7 @@ export const Button = ({
     <div
       onClick={onClick}
       className={twMerge(
-        "px-3 cursor-pointer text-center select-none font-mono py-1 text-[12px] tracking-wide bg-accent/40 duration-200 hover:bg-accent rounded-md h-fit",
+        "px-3 cursor-pointer text-center select-none font-mono py-1 text-[12px] tracking-wide bg-accent/40 duration-200 hover:bg-accent hover:text-black rounded-md h-fit",
         className
       )}
       {...props}

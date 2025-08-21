@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Button,
   Dialog,
   DialogBody,
   DialogContent,
@@ -8,6 +9,7 @@ import {
   FileName,
   GoBack,
   HeaderSettingsDropdown,
+  Logo,
   MarkdownEditor,
   NoteModeToggle,
   Panel,
@@ -24,11 +26,70 @@ import {
   selectedNoteAtom,
   selectedNoteIndexAtom,
 } from "./store";
+import Link from "next/link";
+import gsap from "gsap";
 
 export default function Home() {
+  const buttonRef = useRef<HTMLDivElement>(null);
+  const linkRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    if (!buttonRef.current || !linkRef.current) return;
+
+    const tl = gsap.timeline({ delay: 0.8 });
+
+    tl.fromTo(
+      buttonRef.current,
+      {
+        y: 30,
+        opacity: 0,
+        scale: 0.9,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        ease: "back.out(1.7)",
+      }
+    );
+
+    tl.fromTo(
+      linkRef.current,
+      {
+        y: 20,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.5,
+        ease: "power2.out",
+      },
+      "-=0.3"
+    );
+  }, []);
+
   return (
     <div className="flex w-full justify-center items-center">
-      <Panel className="flex flex-col gap-3"></Panel>
+      <Panel className="flex flex-col gap-5 justify-center items-center">
+        <Logo />
+        <div className="flex flex-col gap-2">
+          <Button
+            ref={buttonRef}
+            className="text-[14px] transform transition-transform duration-200 hover:scale-105"
+          >
+            sign in, aight?
+          </Button>
+          <Link
+            ref={linkRef}
+            className="text-[13px] duration-300 hover:text-accent text-dark-secondary font-mono tracking-wide transform transition-all hover:translate-x-1"
+            href={"/notes"}
+          >
+            roll through as a guest, no cap
+          </Link>
+        </div>
+      </Panel>
     </div>
   );
 }
