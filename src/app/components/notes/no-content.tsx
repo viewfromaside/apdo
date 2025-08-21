@@ -13,7 +13,9 @@ export const NoContent = ({ className, ...props }: NoContentProps) => {
       )}
       {...props}
     >
-      <h2 className="text-[32px] font-bold text-accent">Ayy, you made it</h2>
+      <h2 className="text-[32px] md:text-[42px] font-bold text-accent">
+        Ayy, you made it
+      </h2>
       <span className="text-[14px] -mt-1">
         All the notes, your way — modern, no cap
       </span>
