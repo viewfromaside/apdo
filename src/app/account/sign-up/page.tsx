@@ -1,6 +1,6 @@
 "use client";
 import { Button, GoSignIn, GoSignUp, Logo, Panel } from "@/app/components";
-import { Input } from "@/app/components/input";
+import { Input } from "@/app/components";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 

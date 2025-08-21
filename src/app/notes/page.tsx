@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, HeaderSettingsDropdown, Logo, Panel } from "../components";
+import { Card, HeaderSettingsDropdown, Logo, Panel } from "@/app/components";
 
 export default function NotesHome() {
   return (

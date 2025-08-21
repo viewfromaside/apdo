@@ -1,6 +1,6 @@
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
-import { Button } from "../button";
+import { Button } from "@/app/components";
 import { useDialogContext } from "./dialog";
 
 type DialogContentProps = ComponentProps<"div"> & {

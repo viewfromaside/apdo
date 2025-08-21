@@ -12,7 +12,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/app/components/shadcn-ui/dropdown-menu";
-import { NoteSettings } from "../editor";
+import { NoteSettings } from "@/app/components";
 import React, { SetStateAction } from "react";
 
 export function HeaderSettingsDropdown({

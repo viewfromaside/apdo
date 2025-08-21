@@ -1,7 +1,6 @@
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 import { useDialogContext } from "./dialog";
-import { Button } from "../shadcn-ui/button";
 import { DialogClose } from "./dialog-close";
 import { XIcon } from "lucide-react";
 
