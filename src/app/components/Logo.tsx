@@ -5,7 +5,11 @@ import { ComponentProps, useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import gsap from "gsap";
 
-export const Logo = ({ className, ...props }: ComponentProps<"div">) => {
+type LogoProps = ComponentProps<"div"> & {
+  href?: string;
+};
+
+export const Logo = ({ href, className, ...props }: LogoProps) => {
   const textRef = useRef<HTMLSpanElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -61,7 +65,7 @@ export const Logo = ({ className, ...props }: ComponentProps<"div">) => {
   }, []);
 
   return (
-    <Link href={"/"}>
+    <Link href={href || "/"}>
       <div
         {...props}
         className={twMerge(

@@ -2,24 +2,43 @@ import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 import { FileName } from "../editor";
 import { Tag } from "../tag";
+import {
+  HeartIcon,
+  LockIcon,
+  LockOpen,
+  LockOpenIcon,
+  StarIcon,
+  StarOff,
+  ThumbsUpIcon,
+} from "lucide-react";
+import Link from "next/link";
 
 type CardProps = ComponentProps<"div"> & {};
 
 export const Card = ({ children, className, ...props }: CardProps) => {
   return (
-    <div
-      className={twMerge(
-        "bg-dark-background relative p-2 w-full rounded-sm cursor-pointer hover:bg-white/10 duration-200",
-        className
-      )}
-      {...props}
-    >
-      {/* <div className="absolute rounded-t-sm h-[2px] bg-accent top-0 left-0 w-full"></div> */}
+    <Link href={"/notes/askmdaskmd"} className="w-[calc(33%-3px)]">
+      <div
+        className={twMerge(
+          "bg-dark-background relative p-2 w-full hover:scale-103 rounded-sm cursor-pointer hover:bg-white/10 duration-200",
+          className
+        )}
+        {...props}
+      >
+        {/* <div className="absolute rounded-t-sm h-[2px] bg-accent top-0 left-0 w-full"></div> */}
 
-      <FileName className="mt-0">{props.title}</FileName>
-      <div className="flex flex-row mt-2 gap-1">
-        <Tag color="[#ff0000]" label="tech" />
+        <div className="flex flex-row gap-2">
+          <FileName className="mt-0 cursor-pointer">{props.title}</FileName>
+        </div>
+        <div className="flex flex-row mt-2 gap-1">
+          <Tag
+            className="bg-[#FFC000]/60 font-bold"
+            icon={StarIcon}
+            label="32"
+          />
+          <Tag color="[#27BEF5]" icon={LockOpenIcon} label="public" />
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };

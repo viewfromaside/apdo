@@ -23,6 +23,7 @@ import {
   selectedNoteAtom,
   selectedNoteIndexAtom,
 } from "@/app/store";
+import editor from "@/app/assets/main.json";
 
 export default function NoteHome() {
   const [alertDialog, setAlertDialog] = useState<boolean>(false);
@@ -89,7 +90,10 @@ export default function NoteHome() {
           </div>
         </div>
         {formatMarkdownToggle ? (
-          <MarkdownEditor content={localContent} setContent={setLocalContent} />
+          <MarkdownEditor
+            content={editor.editor.content}
+            setContent={setLocalContent}
+          />
         ) : (
           <RawEditor content={localContent} setContent={setLocalContent} />
         )}

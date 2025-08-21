@@ -1,30 +1,39 @@
+import { LucideIcon } from "lucide-react";
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 
 type TagProps = ComponentProps<"div"> & {
   color?: string;
   label?: string;
+  icon?: LucideIcon;
+  size?: number;
 };
 
-export const Tag = ({ className, color, label, ...props }: TagProps) => {
+export const Tag = ({
+  icon: Icon,
+  className,
+  color,
+  label,
+  size = 12, // tamanho padrão do ícone
+  ...props
+}: TagProps) => {
   const isCustomColor = color?.startsWith("[") && color?.endsWith("]");
   const hexColor = isCustomColor ? color!.slice(1, -1) : null;
 
   return (
     <div
       className={twMerge(
-        `px-3 cursor-default select-none font-mono py-1 text-[10px] tracking-wide rounded-md h-fit`,
+        // flex garante alinhamento
+        "inline-flex items-center gap-1 px-2 py-1 rounded-md",
+        "h-6 text-[11px] font-mono tracking-wide leading-none",
         !isCustomColor && color ? `bg-${color}/20` : "bg-accent/20",
         className
       )}
-      style={
-        hexColor
-          ? { backgroundColor: `${hexColor}20` } // Adiciona transparência
-          : undefined
-      }
+      style={hexColor ? { backgroundColor: `${hexColor}20` } : undefined}
       {...props}
     >
-      {label}
+      {Icon && <Icon size={size} strokeWidth={2} />}
+      <span className="whitespace-nowrap">{label}</span>
     </div>
   );
 };
