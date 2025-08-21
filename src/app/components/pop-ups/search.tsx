@@ -12,23 +12,13 @@ import { Input } from "../input";
 import { Button } from "../button";
 import { PopupProps } from ".";
 
-type callbacksType = {
-  search: () => void;
-  appearence: () => void;
-};
-
-type PopupSettingsProps = PopupProps & {
-  callbacks?: callbacksType;
-};
-
-export const PopupSettings = ({
+export const PopupSearch = ({
   open,
   toggle,
   contentClassName,
   dialogClassName,
-  callbacks,
   ...props
-}: PopupSettingsProps) => {
+}: PopupProps) => {
   return (
     <Dialog
       open={open}
@@ -36,7 +26,7 @@ export const PopupSettings = ({
       {...props}
       className={twMerge("", dialogClassName)}
     >
-      <DialogBody draggable>
+      <DialogBody>
         <DialogHeader></DialogHeader>
         <DialogContent
           className={twMerge(
@@ -44,26 +34,9 @@ export const PopupSettings = ({
             contentClassName
           )}
         >
-          <Button
-            onClick={() => {
-              callbacks?.search();
-              toggle();
-            }}
-            className="text-[16px]"
-            variant="ghost"
-          >
-            search
-          </Button>
-          <Button
-            onClick={() => {
-              callbacks?.appearence();
-              toggle();
-            }}
-            className="text-[16px]"
-            variant="ghost"
-          >
-            appearence
-          </Button>
+          <Button variant="ghost">search</Button>
+          <Button variant="ghost">my profile</Button>
+          <Button variant="ghost">appearence</Button>
         </DialogContent>
       </DialogBody>
     </Dialog>

@@ -1,20 +1,32 @@
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 
+type ButtonProps = ComponentProps<"div"> & {
+  variant?: "primary" | "secondary" | "ghost";
+};
+
+const buttonVariants: Record<NonNullable<ButtonProps["variant"]>, string> = {
+  primary: "bg-accent/40 hover:bg-accent text-black",
+  secondary: "bg-gray-500/20 hover:bg-gray-500/60 text-black",
+  ghost:
+    "bg-transparent hover:bg-gray-500/10 text-dark-background dark:text-neutral hover:!text-accent",
+};
+
 export const Button = ({
   className,
   children,
-  onClick,
+  variant = "primary",
   ...props
-}: ComponentProps<"div">) => {
+}: ButtonProps) => {
   return (
     <div
-      onClick={onClick}
+      {...props}
       className={twMerge(
-        "px-3 cursor-pointer text-center select-none font-mono py-1 text-[12px] tracking-wide bg-accent/40 duration-200 hover:bg-accent hover:text-black rounded-md h-fit",
+        `px-3 py-1 text-[12px] tracking-wide font-mono rounded-md 
+         cursor-pointer select-none text-center duration-200 h-fit`,
+        buttonVariants[variant],
         className
       )}
-      {...props}
     >
       {children}
     </div>
