@@ -7,7 +7,6 @@ import {
   DialogHeader,
   FileName,
   GoBack,
-  HeaderSettingsDropdown,
   MarkdownEditor,
   NoteModeToggle,
   Panel,
@@ -86,7 +85,6 @@ export default function NoteHome() {
               formatMarkdownToggle={formatMarkdownToggle}
               setFormatMarkdownToggle={setAlertDialog}
             />
-            <HeaderSettingsDropdown setSaved={setSaved} />
           </div>
         </div>
         {formatMarkdownToggle ? (

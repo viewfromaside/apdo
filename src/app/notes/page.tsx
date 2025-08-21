@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Card,
-  HeaderSettingsDropdown,
-  Logo,
-  NoContent,
-  Panel,
-} from "@/app/components";
+import { Card, Logo, NoContent, Panel } from "@/app/components";
 import { useState } from "react";
 import { Note } from "../services";
 
@@ -17,7 +11,6 @@ export default function NotesHome() {
       <Panel className="flex flex-col gap-4">
         <div className="flex flex-row w-full justify-between items-center">
           <Logo href="/notes" />
-          <HeaderSettingsDropdown />
         </div>
         <div className="flex w-full md:p-2 h-full overflow-x-hidden overflow-auto flex-row flex-wrap gap-2 content-start">
           {notes.length > 0 ? (
