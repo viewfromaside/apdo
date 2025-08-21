@@ -9,7 +9,7 @@ export const FileName = ({
   return (
     <span
       className={twMerge(
-        "-mt-2 px-3 cursor-default select-none font-mono py-1 text-[12px] tracking-wide bg-accent/20 rounded-md h-fit",
+        "px-3 cursor-default select-none font-mono py-1 text-[12px] tracking-wide bg-accent/20 rounded-md h-fit",
         className
       )}
       {...props}

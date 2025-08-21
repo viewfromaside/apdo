@@ -18,7 +18,7 @@ import React, { SetStateAction } from "react";
 export function HeaderSettingsDropdown({
   setSaved,
 }: {
-  setSaved: React.Dispatch<SetStateAction<boolean>>;
+  setSaved?: React.Dispatch<SetStateAction<boolean>>;
 }) {
   return (
     <DropdownMenu>
@@ -35,7 +35,13 @@ export function HeaderSettingsDropdown({
             <DropdownMenuSubTrigger>Actions</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent className="w-56 bg-background dark:bg-dark-background border-accent/20">
-                <DropdownMenuItem onClick={() => setSaved(true)}>
+                <DropdownMenuItem
+                  onClick={() => {
+                    if (setSaved) {
+                      setSaved(true);
+                    }
+                  }}
+                >
                   Save
                 </DropdownMenuItem>
                 <DropdownMenuItem>Rename</DropdownMenuItem>

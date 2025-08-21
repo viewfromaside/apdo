@@ -6,7 +6,7 @@ export interface IBase {
   deletedAt: Date;
 
   getObjectForCreate?: () => Record<string, any>;
-  getObjectForEdit?: () => Record<string, any>;   
+  getObjectForEdit?: () => Record<string, any>;
 }
 
 export class BaseEntity implements IBase {

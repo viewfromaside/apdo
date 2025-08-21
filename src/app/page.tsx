@@ -1,40 +1,16 @@
 "use client";
 
-import {
-  Button,
-  Dialog,
-  DialogBody,
-  DialogContent,
-  DialogHeader,
-  FileName,
-  GoBack,
-  HeaderSettingsDropdown,
-  Logo,
-  MarkdownEditor,
-  NoteModeToggle,
-  Panel,
-  RawEditor,
-  UnsavedBottomBar,
-} from "./components";
-import { useEffect, useRef, useState } from "react";
-import { editor } from "@/app/assets/main.json";
-import { toast } from "sonner";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import {
-  loadNotesAtom,
-  saveNoteAtom,
-  selectedNoteAtom,
-  selectedNoteIndexAtom,
-} from "./store";
+import { Button, Logo, Panel } from "./components";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
+import { GoSignUp } from "./components/account/go-sign-up";
 
 export default function Home() {
   const buttonRef = useRef<HTMLDivElement>(null);
-  const linkRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
-    if (!buttonRef.current || !linkRef.current) return;
+    if (!buttonRef.current) return;
 
     const tl = gsap.timeline({ delay: 0.8 });
 
@@ -53,22 +29,6 @@ export default function Home() {
         ease: "back.out(1.7)",
       }
     );
-
-    // se n me engano essa porra aq eh a animacao do link
-    tl.fromTo(
-      linkRef.current,
-      {
-        y: 20,
-        opacity: 0,
-      },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.5,
-        ease: "power2.out",
-      },
-      "-=0.3"
-    );
   }, []);
 
   return (
@@ -81,13 +41,7 @@ export default function Home() {
               sign in, aight?
             </Button>
           </Link>
-          <Link
-            ref={linkRef}
-            className="text-[13px] duration-300 opacity-0 hover:text-accent text-dark-secondary font-mono tracking-wide transform transition-all hover:translate-x-1"
-            href={"/account/sign-up"}
-          >
-            slide in, join the crew
-          </Link>
+          <GoSignUp />
         </div>
       </Panel>
     </div>

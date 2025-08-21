@@ -5,3 +5,5 @@ export * from "@/app/components/logo";
 export * from "@/app/components/editor";
 export * from "@/app/components/dropdown";
 export * from "@/app/components/dialog";
+export * from "@/app/components/account";
+export * from "@/app/components/notes";
