@@ -46,7 +46,7 @@ export default function Home() {
         scale: 0.9,
       },
       {
-        y: 0,
+        y: -10,
         opacity: 1,
         scale: 1,
         duration: 0.6,
@@ -62,7 +62,7 @@ export default function Home() {
         opacity: 0,
       },
       {
-        y: 0,
+        y: -10,
         opacity: 1,
         duration: 0.5,
         ease: "power2.out",
