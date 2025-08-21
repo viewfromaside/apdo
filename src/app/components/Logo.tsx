@@ -28,6 +28,7 @@ export const Logo = ({ className, ...props }: ComponentProps<"div">) => {
         scale: 0,
         rotation: -180,
         opacity: 0,
+        display: "block",
       },
       {
         scale: 1,
@@ -37,6 +38,8 @@ export const Logo = ({ className, ...props }: ComponentProps<"div">) => {
         ease: "back.out(1.7)",
       }
     );
+
+    tl.to(textRef.current, { opacity: 1 }, ".1");
 
     tl.fromTo(
       chars,
@@ -72,12 +75,13 @@ export const Logo = ({ className, ...props }: ComponentProps<"div">) => {
             src={"/logo.png"}
             width={35}
             height={35}
+            className="hidden"
             alt="Logo"
             unoptimized
           />
           <span
             ref={textRef}
-            className="text-[36px] -mt-3 font-bold tracking-tighter"
+            className="text-[36px] opacity-0 -mt-3 font-bold tracking-tighter"
           >
             apdo
           </span>

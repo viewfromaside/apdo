@@ -46,7 +46,7 @@ export default function Home() {
         scale: 0.9,
       },
       {
-        y: -10,
+        y: 0,
         opacity: 1,
         scale: 1,
         duration: 0.6,
@@ -62,7 +62,7 @@ export default function Home() {
         opacity: 0,
       },
       {
-        y: -10,
+        y: 0,
         opacity: 1,
         duration: 0.5,
         ease: "power2.out",
@@ -73,16 +73,18 @@ export default function Home() {
 
   return (
     <div className="flex w-full justify-center items-center">
-      <Panel className="flex flex-col gap-7 justify-center items-center">
+      <Panel className="flex flex-col gap-5 justify-center items-center">
         <Logo />
         <div className="flex flex-col gap-2">
-          <Button ref={buttonRef} className="text-[14px]">
-            sign in, aight?
-          </Button>
+          <Link href={"/account/sign-in"}>
+            <Button ref={buttonRef} className="text-[14px] opacity-0">
+              sign in, aight?
+            </Button>
+          </Link>
           <Link
             ref={linkRef}
-            className="text-[13px] duration-300 hover:text-accent text-dark-secondary font-mono tracking-wide transform transition-all hover:translate-x-1"
-            href={"/notes"}
+            className="text-[13px] duration-300 opacity-0 hover:text-accent text-dark-secondary font-mono tracking-wide transform transition-all hover:translate-x-1"
+            href={"/account/sign-up"}
           >
             slide in, join the crew
           </Link>

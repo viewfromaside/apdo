@@ -9,7 +9,7 @@ export const Layout = ({
   return (
     <main
       className={twMerge(
-        "flex flex-row h-screen p-5 bg-background dark:bg-dark-background",
+        "flex flex-row h-screen xl:p-5 bg-background dark:bg-dark-background",
         className
       )}
       {...props}

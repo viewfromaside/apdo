@@ -14,7 +14,7 @@ export const Panel = ({
   return (
     <div
       className={twMerge(
-        "bg-accent/10 dark:bg-black/20 w-[70%] h-[80%] relative flex rounded-sm p-5",
+        "bg-accent/10 dark:bg-black/20 w-full xl:w-[70%] h-full xl:h-[80%] relative flex rounded-sm p-5",
         className
       )}
       {...props}
