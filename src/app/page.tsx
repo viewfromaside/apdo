@@ -84,7 +84,7 @@ export default function Home() {
             className="text-[13px] duration-300 hover:text-accent text-dark-secondary font-mono tracking-wide transform transition-all hover:translate-x-1"
             href={"/notes"}
           >
-            roll through as a guest, no cap
+            slide in, join the crew
           </Link>
         </div>
       </Panel>
