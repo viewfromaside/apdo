@@ -20,7 +20,7 @@ export const useDialogContext = () => {
   return ctx;
 };
 
-type DialogProps = ComponentProps<"div"> & {
+export type DialogProps = ComponentProps<"div"> & {
   required?: boolean;
   open: boolean;
   toggle: () => void;
