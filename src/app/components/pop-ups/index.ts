@@ -1,5 +1,6 @@
 import { DialogProps } from "../dialog";
 
+export * from "@/app/components/pop-ups/manager";
 export * from "@/app/components/pop-ups/settings";
 export * from "@/app/components/pop-ups/search";
 

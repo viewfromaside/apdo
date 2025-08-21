@@ -17,7 +17,7 @@ export const Input = ({ onChange, className, value, ...props }: InputProps) => {
       onChange={onChange}
       value={value}
       className={twMerge(
-        "px-3 text-center select-none outline-none hover:scale-x-200 font-mono py-1 text-[12px] bg-gray-500/10 focus:bg-accent/10 duration-200 rounded-md h-fit",
+        "px-3 text-center select-none outline-none font-mono py-1 text-[12px] bg-gray-500/10 focus:bg-accent/10 duration-200 rounded-md h-fit",
         className
       )}
       {...props}

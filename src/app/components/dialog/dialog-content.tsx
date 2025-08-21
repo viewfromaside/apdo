@@ -16,7 +16,10 @@ export const DialogContent = ({
 }: DialogContentProps) => {
   const { toggle } = useDialogContext();
   return (
-    <div className={twMerge("flex flex-col gap-2", className)} {...props}>
+    <div
+      className={twMerge("flex flex-col w-full gap-2", className)}
+      {...props}
+    >
       <span className={twMerge("my-4", textClassName)}>{children}</span>
       {onClick && (
         <Button

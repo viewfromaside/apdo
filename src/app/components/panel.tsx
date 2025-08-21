@@ -2,6 +2,7 @@ import { useTheme } from "next-themes";
 import { ComponentProps } from "react";
 import { Toaster } from "sonner";
 import { twMerge } from "tailwind-merge";
+import { PopupManager } from "./pop-ups";
 
 export const Panel = ({
   className,
@@ -20,6 +21,7 @@ export const Panel = ({
       {...props}
     >
       {children}
+      <PopupManager />
       <Toaster
         className="bg-red-500"
         toastOptions={{

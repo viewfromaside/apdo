@@ -13,8 +13,8 @@ import { Button } from "../button";
 import { PopupProps } from ".";
 
 type callbacksType = {
-  search: () => void;
-  appearence: () => void;
+  search?: () => void;
+  appearence?: () => void;
 };
 
 type PopupSettingsProps = PopupProps & {
@@ -46,7 +46,7 @@ export const PopupSettings = ({
         >
           <Button
             onClick={() => {
-              callbacks?.search();
+              callbacks?.search && callbacks.search();
               toggle();
             }}
             className="text-[16px]"
@@ -56,7 +56,7 @@ export const PopupSettings = ({
           </Button>
           <Button
             onClick={() => {
-              callbacks?.appearence();
+              callbacks?.appearence && callbacks.appearence();
               toggle();
             }}
             className="text-[16px]"

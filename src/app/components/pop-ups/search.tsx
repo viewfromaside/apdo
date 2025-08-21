@@ -20,23 +20,14 @@ export const PopupSearch = ({
   ...props
 }: PopupProps) => {
   return (
-    <Dialog
-      open={open}
-      toggle={toggle}
-      {...props}
-      className={twMerge("", dialogClassName)}
-    >
-      <DialogBody>
+    <Dialog open={open} toggle={toggle} {...props}>
+      <DialogBody draggable mainClassName={dialogClassName}>
         <DialogHeader></DialogHeader>
         <DialogContent
-          className={twMerge(
-            "flex flex-col w-full gap-3 h-fit items-center justify-center",
-            contentClassName
-          )}
+          className={twMerge("flex flex-col w-full h-full", contentClassName)}
         >
-          <Button variant="ghost">search</Button>
-          <Button variant="ghost">my profile</Button>
-          <Button variant="ghost">appearence</Button>
+          <Input placeholder="note name or author" className="mb-2" />
+          <Button>search</Button>
         </DialogContent>
       </DialogBody>
     </Dialog>

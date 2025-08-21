@@ -14,7 +14,7 @@ export const DialogClose = ({
         if (!required) toggle();
       }}
       className={twMerge(
-        `cursor-pointer absolute right-[7%] top-[7%]`,
+        `cursor-pointer absolute right-[.6rem] top-[.6rem]`,
         className
       )}
       {...props}
