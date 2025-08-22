@@ -9,6 +9,7 @@ import {
   GoBack,
   MarkdownEditor,
   NoteModeToggle,
+  NoteSettings,
   Panel,
   RawEditor,
   UnsavedBottomBar,
@@ -23,6 +24,7 @@ import {
   selectedNoteIndexAtom,
 } from "@/app/store";
 import editor from "@/app/assets/main.json";
+import { togglePopupAtom } from "@/app/store/pop-up";
 
 export default function NoteHome() {
   const [alertDialog, setAlertDialog] = useState<boolean>(false);
@@ -34,6 +36,7 @@ export default function NoteHome() {
   const [formatMarkdownToggle, setFormatMarkdownToggle] =
     useState<boolean>(true);
 
+  const togglePopup = useSetAtom(togglePopupAtom);
   const selectedNote = useAtomValue(selectedNoteAtom);
   const [selectedNoteIndex, setSelectedNoteIndex] = useAtom(
     selectedNoteIndexAtom
@@ -42,14 +45,11 @@ export default function NoteHome() {
   const loadNotes = useSetAtom(loadNotesAtom);
 
   useEffect(() => {
-    console.log("selectedNote:", selectedNote);
-
     if (selectedNote) {
       console.log("Setting content from selectedNote:", selectedNote.content);
       setLocalContent(selectedNote.content || "");
       setLocalTitle(selectedNote.title || "new file");
     } else {
-      console.log("No selectedNote, using defaults");
       setLocalContent("");
       setLocalTitle("new file");
     }
@@ -64,6 +64,40 @@ export default function NoteHome() {
       setSaved(!hasContentChanged && !hasTitleChanged);
     }
   }, [localContent, localTitle, selectedNote, isInitialized]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === "s") {
+        event.preventDefault();
+
+        if (!saved && isInitialized) {
+          handleSave();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [saved, isInitialized, localContent, localTitle, selectedNote]);
+
+  const handleSave = () => {
+    try {
+      saveNote({
+        id: selectedNote?.id,
+        title: localTitle,
+        content: localContent,
+      });
+
+      setSaved(true);
+      toast(String.fromCodePoint(0x1f4af) + " File Saved");
+    } catch (error) {
+      console.error("Error saving note:", error);
+      toast.error("Error saving file");
+    }
+  };
 
   const toggleAlertDialog = () => {
     toast(String.fromCodePoint(0x1f4af) + " File Saved");
@@ -99,6 +133,7 @@ export default function NoteHome() {
             <FileName className="w-fit">{localTitle}</FileName>
           </div>
           <div className="flex flex-row gap-2">
+            <NoteSettings onClick={() => togglePopup("settings")} />
             <NoteModeToggle
               formatMarkdownToggle={formatMarkdownToggle}
               setFormatMarkdownToggle={setFormatMarkdownToggle}

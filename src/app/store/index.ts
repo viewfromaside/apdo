@@ -44,11 +44,15 @@ export const loadNotesAtom = atom(null, async (_get, set) => {
 
 export const saveNoteAtom = atom(
   null,
-  async (get, set, updatedNote: Partial<Note>) => {
+  (get, set, updatedNote: Partial<Note>) => {
     const selectedNote = get(selectedNoteAtom);
     if (!selectedNote) return;
 
-    const savedNote = await noteService.sendEdit(selectedNote.id!, updatedNote);
+    const savedNote = new Note({
+      ...selectedNote,
+      ...updatedNote,
+      updatedAt: new Date(),
+    });
 
     set(
       notesAtomWritable,
@@ -87,7 +91,7 @@ export const createNoteAtom = atom(
     createdNote.id = createRandomId(7);
     const currentNotes = get(notesAtomWritable);
     set(notesAtomWritable, [createdNote, ...currentNotes]);
-    set(selectedNoteIndexAtom, 0);
+    // set(selectedNoteIndexAtom, 0);
   }
 );
 

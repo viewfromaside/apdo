@@ -15,7 +15,7 @@ export class Note extends BaseEntity implements INote {
   public visibility: NoteVisibility;
 
   constructor(obj: Partial<INote & IBase>) {
-    super();
+    super(obj);
     this.title = obj.title || "";
     this.content = obj.content || "";
     this.favorite = obj.favorite || false;

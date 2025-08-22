@@ -47,7 +47,7 @@ export const PopupCreateNote = ({
     clearFields();
     toggle();
     // console.log("Creating note:", formObject);
-    // exemplo de chamada API:
+    // exemplo de api:
     // createNote(formObject.getObjectForCreate()).then(() => toggle(false));
   };
 

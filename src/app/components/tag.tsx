@@ -23,7 +23,6 @@ export const Tag = ({
   return (
     <div
       className={twMerge(
-        // flex garante alinhamento
         "inline-flex items-center gap-1 px-2 py-1 rounded-md",
         "h-6 text-[11px] font-mono tracking-wide leading-none",
         !isCustomColor && color ? `bg-${color}/20` : "bg-accent/20",

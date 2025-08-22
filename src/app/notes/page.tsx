@@ -13,11 +13,17 @@ import { useEffect, useState, useRef } from "react";
 import { Note } from "../services";
 import { useAtomValue, useSetAtom } from "jotai";
 import { togglePopupAtom } from "../store/pop-up";
-import { deleteNoteAtom, notesAtom, saveNoteAtom } from "../store";
+import {
+  deleteNoteAtom,
+  notesAtom,
+  saveNoteAtom,
+  setSelectedNoteAtom,
+} from "../store";
 import gsap from "gsap";
 
 export default function NotesHome() {
-  const notes = useAtomValue(notesAtom);
+  let notes = useAtomValue(notesAtom);
+  const selectNote = useSetAtom(setSelectedNoteAtom);
   const togglePopup = useSetAtom(togglePopupAtom);
 
   const headerRef = useRef<HTMLDivElement>(null);
@@ -25,6 +31,10 @@ export default function NotesHome() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const notesListRef = useRef<HTMLDivElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    selectNote("none");
+  }, []);
 
   useEffect(() => {
     if (!headerRef.current || !contentRef.current) return;
@@ -87,7 +97,6 @@ export default function NotesHome() {
   }, [notes.length]);
 
   useEffect(() => {
-    // Animação suave da lista de notas
     if (notes.length > 0 && notesListRef.current) {
       const noteCards = notesListRef.current.children;
 
