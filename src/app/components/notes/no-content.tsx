@@ -20,10 +20,10 @@ export const NoContent = ({ className, ...props }: NoContentProps) => {
         All the notes, your way — modern, no cap
       </span>
       <div className="flex flex-row mt-5 gap-4">
-        <Button className="bg-green-800 hover:bg-green-500 hover:text-white">
+        <Button className="bg-green-800 hover:bg-green-500 !text-white hover:text-white">
           drop a fresh one
         </Button>
-        <Button className=" hover:bg-accent ">set ya vibe</Button>
+        <Button className=" hover:bg-accent">set ya vibe</Button>
       </div>
     </div>
   );

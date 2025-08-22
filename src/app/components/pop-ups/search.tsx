@@ -11,6 +11,8 @@ import {
 import { Input } from "../input";
 import { Button } from "../button";
 import { PopupProps } from ".";
+import { useSetAtom } from "jotai";
+import { togglePopupAtom } from "@/app/store/pop-up";
 
 export const PopupSearch = ({
   open,
@@ -19,6 +21,8 @@ export const PopupSearch = ({
   dialogClassName,
   ...props
 }: PopupProps) => {
+  const togglePopup = useSetAtom(togglePopupAtom);
+
   return (
     <Dialog open={open} toggle={toggle} {...props}>
       <DialogBody draggable mainClassName={dialogClassName}>
@@ -27,7 +31,7 @@ export const PopupSearch = ({
           className={twMerge("flex flex-col w-full h-full", contentClassName)}
         >
           <Input placeholder="note name or author" className="mb-2" />
-          <Button>search</Button>
+          <Button onClick={() => togglePopup("notes")}>search</Button>
         </DialogContent>
       </DialogBody>
     </Dialog>

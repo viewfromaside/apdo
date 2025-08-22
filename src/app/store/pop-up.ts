@@ -2,11 +2,12 @@
 
 import { atom } from "jotai";
 
-export type PopupKey = "settings" | "search";
+export type PopupKey = "settings" | "search" | "notes";
 
 export const openPopupsAtom = atom<Record<PopupKey, boolean>>({
   settings: false,
   search: false,
+  notes: false,
 });
 
 export const togglePopupAtom = atom(null, (get, set, key: PopupKey) => {
@@ -22,4 +23,15 @@ export const openPopupAtom = atom(null, (get, set, key: PopupKey) => {
 export const closePopupAtom = atom(null, (get, set, key: PopupKey) => {
   const current = get(openPopupsAtom);
   set(openPopupsAtom, { ...current, [key]: false });
+});
+
+export const closeAllPopupAtom = atom(null, (get, set) => {
+  const keys = Object.keys(get(openPopupsAtom)) as PopupKey[];
+
+  const closed = keys.reduce(
+    (acc, key) => ({ ...acc, [key]: false }),
+    {} as Record<PopupKey, boolean>
+  );
+
+  set(openPopupsAtom, closed);
 });

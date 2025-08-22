@@ -6,6 +6,7 @@ import { PopupSearch } from "./search";
 import { useAtomValue, useSetAtom } from "jotai";
 import { openPopupsAtom, togglePopupAtom } from "@/app/store/pop-up";
 import { useEffect, useState } from "react";
+import { PopupNotes } from "./notes";
 
 export const PopupManager = () => {
   const openPopups = useAtomValue(openPopupsAtom);
@@ -19,7 +20,7 @@ export const PopupManager = () => {
 
   if (!mounted) return null;
 
-  return createPortal(
+  return (
     <>
       <PopupSettings
         contentClassName="w-[200px] md:w-[140px]"
@@ -35,7 +36,12 @@ export const PopupManager = () => {
         open={openPopups.search}
         toggle={() => togglePopup("search")}
       />
-    </>,
-    document.body
+
+      <PopupNotes
+        contentClassName="w-[300px] h-[300px]"
+        open={openPopups.notes}
+        toggle={() => togglePopup("notes")}
+      />
+    </>
   );
 };

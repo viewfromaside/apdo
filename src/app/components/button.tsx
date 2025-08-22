@@ -6,8 +6,8 @@ type ButtonProps = ComponentProps<"div"> & {
 };
 
 const buttonVariants: Record<NonNullable<ButtonProps["variant"]>, string> = {
-  primary: "bg-accent/40 hover:bg-accent text-black",
-  secondary: "bg-gray-500/20 hover:bg-gray-500/60 text-black",
+  primary: "bg-accent/40 hover:bg-accent text-white hover:text-black",
+  secondary: "bg-gray-500/20 hover:bg-gray-500/60 text-white",
   ghost:
     "bg-transparent hover:bg-gray-500/10 text-dark-background dark:text-neutral hover:!text-accent",
 };

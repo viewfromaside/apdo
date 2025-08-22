@@ -18,12 +18,12 @@ export const DialogHeader = ({
   return (
     <div
       className={twMerge(
-        "flex flex-row w-full gap-10 justify-between items-center",
+        "flex flex-row w-full gap-10 pb-2 justify-between items-center",
         className
       )}
       {...props}
     >
-      <div className={twMerge("flex-1 font-mono uppercase", textClassName)}>
+      <div className={twMerge("flex-1 font-mono text-center", textClassName)}>
         {children}
       </div>
       {!required && (
