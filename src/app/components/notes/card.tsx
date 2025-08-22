@@ -10,6 +10,7 @@ import { Note } from "@/app/services";
 import { NoteVisibility } from "@/app/shared";
 import { useSetAtom } from "jotai";
 import { setSelectedNoteAtom } from "@/app/store";
+import { closeAllPopupAtom } from "@/app/store/pop-up";
 
 type CardProps = ComponentProps<"div"> & {
   model: Note;
@@ -18,11 +19,13 @@ type CardProps = ComponentProps<"div"> & {
 export const Card = ({ children, className, model, ...props }: CardProps) => {
   const router = useRouter();
   const selectNote = useSetAtom(setSelectedNoteAtom);
+  const closeAllPopups = useSetAtom(closeAllPopupAtom);
 
   const goToNote = () => {
     selectNote(model.id);
     router.push(`/notes/${model.id}`);
     router.refresh();
+    closeAllPopups();
   };
 
   return (
