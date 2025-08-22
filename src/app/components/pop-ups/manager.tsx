@@ -7,6 +7,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { openPopupsAtom, togglePopupAtom } from "@/app/store/pop-up";
 import { useEffect, useState } from "react";
 import { PopupNotes } from "./notes";
+import { PopupCreateNote } from "./create-note";
 
 export const PopupManager = () => {
   const openPopups = useAtomValue(openPopupsAtom);
@@ -41,6 +42,11 @@ export const PopupManager = () => {
         contentClassName="w-[300px] h-[300px]"
         open={openPopups.notes}
         toggle={() => togglePopup("notes")}
+      />
+
+      <PopupCreateNote
+        open={openPopups.createNote}
+        toggle={() => togglePopup("createNote")}
       />
     </>
   );

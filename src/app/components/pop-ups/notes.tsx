@@ -9,6 +9,8 @@ import { closeAllPopupAtom, openPopupsAtom } from "@/app/store/pop-up";
 import { Card } from "../notes";
 import { Tag } from "../tag";
 import { SearchIcon } from "lucide-react";
+import { notesAtom } from "@/app/store";
+import { Note } from "@/app/services";
 
 type PopupNotesProps = PopupProps & {};
 
@@ -19,6 +21,7 @@ export const PopupNotes = ({
   dialogClassName,
   ...props
 }: PopupNotesProps) => {
+  const notes = useAtomValue(notesAtom);
   const openPopups = useAtomValue(openPopupsAtom);
   const closeAllPopups = useSetAtom(closeAllPopupAtom);
 
@@ -40,35 +43,13 @@ export const PopupNotes = ({
             contentClassName
           )}
         >
-          <Card
-            onClick={closeAllPopups}
-            className="w-full shadow-sm mb-1"
-            title={"random note about work"}
-          ></Card>
-          <Card
-            className="w-full shadow-sm mb-1"
-            title={"random note about work"}
-          ></Card>
-          <Card
-            className="w-full shadow-sm mb-1"
-            title={"random note about work"}
-          ></Card>
-          <Card
-            className="w-full shadow-sm mb-1"
-            title={"random note about work"}
-          ></Card>
-          <Card
-            className="w-full shadow-sm mb-1"
-            title={"random note about work"}
-          ></Card>
-          <Card
-            className="w-full shadow-sm mb-1"
-            title={"random note about work"}
-          ></Card>
-          <Card
-            className="w-full shadow-sm mb-1"
-            title={"random note about work"}
-          ></Card>
+          {notes.map((note: Note) => (
+            <Card
+              key={`search-${note.id}`}
+              model={note}
+              className="shadow-md border border-neutral/10 mb-2"
+            ></Card>
+          ))}
         </DialogContent>
       </DialogBody>
     </Dialog>
