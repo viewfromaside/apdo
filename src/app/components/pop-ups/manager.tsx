@@ -11,6 +11,7 @@ import { PopupCreateNote } from "./create-note";
 import { PopupAppearence } from "./appearence";
 import { PopupReport } from "./report";
 import { PopupFile } from "./file";
+import { PopupRename } from "./rename";
 
 export const PopupManager = () => {
   const openPopups = useAtomValue(openPopupsAtom);
@@ -71,6 +72,15 @@ export const PopupManager = () => {
         contentClassName="w-[200px] md:w-[140px]"
         open={openPopups.file}
         toggle={() => togglePopup("file")}
+        callbacks={{
+          rename: () => togglePopup("rename"),
+          exclude: () => togglePopup("rename"),
+        }}
+      />
+
+      <PopupRename
+        open={openPopups.rename}
+        toggle={() => togglePopup("rename")}
       />
     </>
   );

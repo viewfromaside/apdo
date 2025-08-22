@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Dialog, DialogBody, DialogContent, DialogHeader } from "../dialog";
 import { Input } from "../input";
@@ -16,6 +16,7 @@ import {
 import { useSetAtom } from "jotai";
 import { createNoteAtom } from "@/app/store";
 import { toast } from "sonner";
+import { useKeyboardShortcut } from "@/app/hooks";
 
 export const PopupCreateNote = ({
   open,
@@ -42,6 +43,7 @@ export const PopupCreateNote = ({
   };
 
   const handleSubmit = () => {
+    console.log(formObject);
     if (!formObject.title || !formObject.visibility)
       return toast.error("complete this, aight?", ToastErrorStyle);
 
@@ -53,6 +55,13 @@ export const PopupCreateNote = ({
     toggle();
   };
 
+  useKeyboardShortcut({
+    key: "Enter",
+    onKeyPress: handleSubmit,
+    deps: [formObject, open],
+    enabled: open,
+  });
+
   return (
     <Dialog open={open} toggle={toggle} {...props}>
       <DialogBody draggable mainClassName={dialogClassName}>
@@ -61,6 +70,7 @@ export const PopupCreateNote = ({
           className={twMerge("flex flex-col w-full h-full", contentClassName)}
         >
           <Input
+            autoFocus
             placeholder="note name"
             className="mb-2"
             value={formObject.title || ""}

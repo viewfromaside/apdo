@@ -9,7 +9,8 @@ export type PopupKey =
   | "createNote"
   | "appearence"
   | "report"
-  | "file";
+  | "file"
+  | "rename";
 
 export const openPopupsAtom = atom<Record<PopupKey, boolean>>({
   settings: false,
@@ -19,6 +20,7 @@ export const openPopupsAtom = atom<Record<PopupKey, boolean>>({
   appearence: false,
   report: false,
   file: false,
+  rename: false,
 });
 
 export const togglePopupAtom = atom(null, (get, set, key: PopupKey) => {

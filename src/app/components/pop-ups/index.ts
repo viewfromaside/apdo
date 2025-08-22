@@ -8,6 +8,7 @@ export * from "@/app/components/pop-ups/create-note";
 export * from "@/app/components/pop-ups/appearence";
 export * from "@/app/components/pop-ups/report";
 export * from "@/app/components/pop-ups/file";
+export * from "@/app/components/pop-ups/rename";
 
 export type PopupProps = DialogProps & {
   dialogClassName?: string;

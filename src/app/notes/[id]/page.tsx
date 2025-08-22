@@ -60,8 +60,7 @@ export default function NoteHome() {
   useEffect(() => {
     if (selectedNote && isInitialized) {
       const hasContentChanged = localContent !== (selectedNote.content || "");
-      const hasTitleChanged = localTitle !== (selectedNote.title || "new file");
-      setSaved(!hasContentChanged && !hasTitleChanged);
+      setSaved(!hasContentChanged);
     }
   }, [localContent, localTitle, selectedNote, isInitialized]);
 

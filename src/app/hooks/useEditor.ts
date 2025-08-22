@@ -7,7 +7,6 @@ import { Note } from "@/app/services";
 
 export const useMarkdownEditor = () => {
   const selectedNote = useAtomValue(selectedNoteAtom);
-  const saveNote = useSetAtom(saveNoteAtom);
   const editorRef = useRef<HTMLDivElement & MDXEditorMethods>(null);
 
   return {
