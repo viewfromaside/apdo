@@ -12,6 +12,7 @@ import { PopupAppearence } from "./appearence";
 import { PopupReport } from "./report";
 import { PopupFile } from "./file";
 import { PopupRename } from "./rename";
+import { PopupExclude } from "./exclude";
 
 export const PopupManager = () => {
   const openPopups = useAtomValue(openPopupsAtom);
@@ -74,13 +75,18 @@ export const PopupManager = () => {
         toggle={() => togglePopup("file")}
         callbacks={{
           rename: () => togglePopup("rename"),
-          exclude: () => togglePopup("rename"),
+          exclude: () => togglePopup("exclude"),
         }}
       />
 
       <PopupRename
         open={openPopups.rename}
         toggle={() => togglePopup("rename")}
+      />
+
+      <PopupExclude
+        open={openPopups.exclude}
+        toggle={() => togglePopup("exclude")}
       />
     </>
   );

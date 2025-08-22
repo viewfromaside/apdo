@@ -27,7 +27,6 @@ import editor from "@/app/assets/main.json";
 import { togglePopupAtom } from "@/app/store/pop-up";
 
 export default function NoteHome() {
-  const [alertDialog, setAlertDialog] = useState<boolean>(false);
   const [localContent, setLocalContent] = useState<string>("");
   const [localTitle, setLocalTitle] = useState<string>("new file");
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
@@ -106,7 +105,6 @@ export default function NoteHome() {
 
   const toggleAlertDialog = () => {
     toast(String.fromCodePoint(0x1f4af) + " File Saved");
-    setAlertDialog((prev) => !prev);
   };
 
   if (!isInitialized) {
@@ -135,7 +133,9 @@ export default function NoteHome() {
         <div className="flex flex-row justify-between items-center w-full">
           <div className="flex flex-row gap-2 items-center">
             <GoBack href="/notes" />
-            <FileName className="w-fit">{localTitle}</FileName>
+            {selectedNote && (
+              <FileName className="w-fit">{localTitle}</FileName>
+            )}
           </div>
           <div className="flex flex-row gap-2">
             <NoteSettings onClick={() => togglePopup("settings")} />
@@ -159,15 +159,6 @@ export default function NoteHome() {
             setContent={setLocalContent}
           />
         )}
-
-        <Dialog open={alertDialog} toggle={toggleAlertDialog}>
-          <DialogBody className="w-[250px]">
-            <DialogHeader>Permission</DialogHeader>
-            <DialogContent textClassName="text-justify">
-              You dont have permission to do that action
-            </DialogContent>
-          </DialogBody>
-        </Dialog>
 
         <UnsavedBottomBar show={!saved} />
       </Panel>
