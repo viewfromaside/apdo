@@ -1,14 +1,24 @@
+"use client";
+
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 import { FileName, Tag } from "@/app/components";
 import { LockOpenIcon, StarIcon } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type CardProps = ComponentProps<"div"> & {};
 
 export const Card = ({ children, className, ...props }: CardProps) => {
+  const router = useRouter();
+
+  const goToNote = () => {
+    router.push("/notes/asmdas");
+    router.refresh();
+  };
+
   return (
-    <Link href={"/notes/askmdaskmd"} className="w-full md:w-[calc(33.3%-5px)]">
+    <div onClick={goToNote} className="w-full">
       <div
         className={twMerge(
           "bg-dark-background relative p-2 w-full hover:scale-103 rounded-sm cursor-pointer hover:bg-white/10 duration-200",
@@ -25,6 +35,6 @@ export const Card = ({ children, className, ...props }: CardProps) => {
           <Tag color="[#27BEF5]" icon={LockOpenIcon} label="public" />
         </div>
       </div>
-    </Link>
+    </div>
   );
 };

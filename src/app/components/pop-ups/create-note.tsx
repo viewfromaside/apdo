@@ -11,31 +11,24 @@ import {
 import { Input } from "../input";
 import { Button } from "../button";
 import { PopupProps } from ".";
-import { useSetAtom } from "jotai";
-import { togglePopupAtom } from "@/app/store/pop-up";
-import { SearchIcon } from "lucide-react";
-import { Tag } from "../tag";
 
-export const PopupSearch = ({
+export const PopupCreateNote = ({
   open,
   toggle,
   contentClassName,
   dialogClassName,
   ...props
 }: PopupProps) => {
-  const togglePopup = useSetAtom(togglePopupAtom);
-
   return (
     <Dialog open={open} toggle={toggle} {...props}>
       <DialogBody draggable mainClassName={dialogClassName}>
-        <DialogHeader textClassName="text-start">
-          <Tag label="where u lookin at" />
-        </DialogHeader>
+        <DialogHeader></DialogHeader>
         <DialogContent
           className={twMerge("flex flex-col w-full h-full", contentClassName)}
         >
-          <Input placeholder="note name or author" className="mb-2" />
-          <Button onClick={() => togglePopup("notes")}>search</Button>
+          <Input placeholder="note name" className="mb-2" />
+          <div className="flex flex-row gap-2 justify-center"></div>
+          <Button>do it</Button>
         </DialogContent>
       </DialogBody>
     </Dialog>

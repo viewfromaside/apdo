@@ -11,10 +11,13 @@ import {
 import { Input } from "../input";
 import { Button } from "../button";
 import { PopupProps } from ".";
+import { useAtom, useAtomValue } from "jotai";
+import { selectedNoteAtom } from "@/app/store";
 
 type callbacksType = {
   search?: () => void;
   appearence?: () => void;
+  fileSettings?: () => void;
 };
 
 type PopupSettingsProps = PopupProps & {
@@ -29,6 +32,7 @@ export const PopupSettings = ({
   callbacks,
   ...props
 }: PopupSettingsProps) => {
+  const selectedNote = useAtomValue(selectedNoteAtom);
   return (
     <Dialog
       open={open}
@@ -44,6 +48,19 @@ export const PopupSettings = ({
             contentClassName
           )}
         >
+          {selectedNote && (
+            <Button
+              onClick={() => {
+                console.log(selectedNote);
+                callbacks?.fileSettings && callbacks.fileSettings();
+                toggle();
+              }}
+              className="text-[16px]"
+              variant="ghost"
+            >
+              file
+            </Button>
+          )}
           <Button
             onClick={() => {
               callbacks?.search && callbacks.search();

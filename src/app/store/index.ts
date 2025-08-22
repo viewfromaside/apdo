@@ -77,8 +77,8 @@ export const deleteNoteAtom = atom(null, async (get, set) => {
   const selectedNote = get(selectedNoteAtom);
   if (!selectedNote) return;
 
-  const deleted = await noteService.sendRemove(selectedNote.id!);
-  if (!deleted) return;
+  // const deleted = await noteService.sendRemove(selectedNote.id!);
+  // if (!deleted) return;
 
   const currentNotes = get(notesAtomWritable);
   set(

@@ -1,4 +1,5 @@
 "use client";
+
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
@@ -35,63 +36,44 @@ export const Dialog = ({
 }: DialogProps) => {
   const [render, setRender] = useState(open);
   const dialogRef = useRef<HTMLDivElement>(null);
-  const tlRef = useRef<gsap.core.Timeline | null>(null);
 
   useEffect(() => {
-    // Mata timeline anterior
-    if (tlRef.current) {
-      tlRef.current.kill();
-    }
-
     if (open) {
       setRender(true);
-    } else if (render && dialogRef.current) {
-      tlRef.current = gsap.timeline();
-      tlRef.current.to(dialogRef.current, {
+    } else if (dialogRef.current) {
+      gsap.to(dialogRef.current, {
         opacity: 0,
-        duration: 0.2,
+        duration: 0.3,
         ease: "power1.in",
         onComplete: () => setRender(false),
       });
     }
-  }, [open, render]);
+  }, [open]);
 
   useEffect(() => {
-    if (render && open && dialogRef.current) {
-      // Mata timeline anterior
-
-      tlRef.current = gsap.timeline();
-      tlRef.current.fromTo(
+    if (render && dialogRef.current) {
+      gsap.fromTo(
         dialogRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.2, ease: "power1.out" }
+        { opacity: 1, duration: 0.3, ease: "power1.out" }
       );
     }
-  }, [render, open]);
-
-  // Cleanup
-  useEffect(() => {
-    return () => {
-      if (tlRef.current) {
-        tlRef.current.kill();
-      }
-    };
-  }, []);
-
-  if (!render) return null;
+  }, [render]);
 
   return (
     <DialogContext.Provider value={{ required, toggle }}>
-      <div
-        ref={dialogRef}
-        className={twMerge(
-          "fixed z-50 top-0 left-0 w-full h-full bg-black/60 flex justify-center items-center",
-          className
-        )}
-        {...props}
-      >
-        {children}
-      </div>
+      {render && (
+        <div
+          ref={dialogRef}
+          className={twMerge(
+            "absolute z-50 top-0 left-0 w-full h-full bg-black/60 flex justify-center items-center",
+            className
+          )}
+          {...props}
+        >
+          {children}
+        </div>
+      )}
     </DialogContext.Provider>
   );
 };

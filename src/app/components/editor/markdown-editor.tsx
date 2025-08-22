@@ -14,7 +14,7 @@ import {
 } from "@mdxeditor/editor";
 import gsap from "gsap";
 import dynamic from "next/dynamic";
-import React, { SetStateAction, useEffect, useRef } from "react";
+import React, { SetStateAction, useEffect, useRef, useState } from "react";
 import "@/app/assets/mdxeditor.css";
 import { useMarkdownEditor } from "@/app/hooks";
 
@@ -29,6 +29,8 @@ const MarkdownEditorContent = ({
 
   useEffect(() => {
     if (!editorRef.current) return;
+    console.log(content);
+
     const children = Array.from(editorRef.current.children) as HTMLElement[];
 
     gsap.fromTo(

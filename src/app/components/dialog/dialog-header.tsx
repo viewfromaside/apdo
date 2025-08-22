@@ -18,7 +18,7 @@ export const DialogHeader = ({
   return (
     <div
       className={twMerge(
-        "flex flex-row w-full gap-10 pb-2 justify-between items-center",
+        "flex flex-row w-full pb-1 items-center justify-between ",
         className
       )}
       {...props}
@@ -27,7 +27,9 @@ export const DialogHeader = ({
         {children}
       </div>
       {!required && (
-        <DialogClose className="justify-self-end justify-end self-end">
+        <DialogClose
+          className={`${!children && "absolute top-[0.7rem] right-[0.7rem]"}`}
+        >
           <XIcon size={14} />
         </DialogClose>
       )}
