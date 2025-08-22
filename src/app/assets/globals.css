@@ -52,6 +52,15 @@
   --font-family-mono: "Fira Code", monospace;
 }
 
+*::selection {
+  background: #ffb347;
+  color: #000;
+}
+*::-moz-selection {
+  background: #ffb347;
+  color: #000;
+}
+
 body {
   overflow: hidden;
 }

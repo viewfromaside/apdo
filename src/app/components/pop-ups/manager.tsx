@@ -8,6 +8,9 @@ import { openPopupsAtom, togglePopupAtom } from "@/app/store/pop-up";
 import { useEffect, useState } from "react";
 import { PopupNotes } from "./notes";
 import { PopupCreateNote } from "./create-note";
+import { PopupAppearence } from "./appearence";
+import { PopupReport } from "./report";
+import { PopupFile } from "./file";
 
 export const PopupManager = () => {
   const openPopups = useAtomValue(openPopupsAtom);
@@ -29,6 +32,9 @@ export const PopupManager = () => {
         toggle={() => togglePopup("settings")}
         callbacks={{
           search: () => togglePopup("search"),
+          appearence: () => togglePopup("appearence"),
+          report: () => togglePopup("report"),
+          fileSettings: () => togglePopup("file"),
         }}
       />
 
@@ -47,6 +53,24 @@ export const PopupManager = () => {
       <PopupCreateNote
         open={openPopups.createNote}
         toggle={() => togglePopup("createNote")}
+      />
+
+      <PopupAppearence
+        contentClassName="w-[300px] h-[300px]"
+        open={openPopups.appearence}
+        toggle={() => togglePopup("appearence")}
+      />
+
+      <PopupReport
+        contentClassName="w-[200px] md:w-[140px]"
+        open={openPopups.report}
+        toggle={() => togglePopup("report")}
+      />
+
+      <PopupFile
+        contentClassName="w-[200px] md:w-[140px]"
+        open={openPopups.file}
+        toggle={() => togglePopup("file")}
       />
     </>
   );

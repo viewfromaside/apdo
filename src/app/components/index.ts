@@ -8,4 +8,5 @@ export * from "@/app/components/account";
 export * from "@/app/components/notes";
 export * from "@/app/components/input";
 export * from "@/app/components/tag";
+export * from "@/app/components/textarea";
 export * from "@/app/components/pop-ups";

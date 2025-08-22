@@ -2,13 +2,23 @@
 
 import { atom } from "jotai";
 
-export type PopupKey = "settings" | "search" | "notes" | "createNote";
+export type PopupKey =
+  | "settings"
+  | "search"
+  | "notes"
+  | "createNote"
+  | "appearence"
+  | "report"
+  | "file";
 
 export const openPopupsAtom = atom<Record<PopupKey, boolean>>({
   settings: false,
   search: false,
   notes: false,
   createNote: false,
+  appearence: false,
+  report: false,
+  file: false,
 });
 
 export const togglePopupAtom = atom(null, (get, set, key: PopupKey) => {

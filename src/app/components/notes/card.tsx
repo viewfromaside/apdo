@@ -23,9 +23,8 @@ export const Card = ({ children, className, model, ...props }: CardProps) => {
 
   const goToNote = () => {
     selectNote(model.id);
-    router.push(`/notes/${model.id}`);
-    router.refresh();
     closeAllPopups();
+    router.push(`/notes/${model.id}`);
   };
 
   return (

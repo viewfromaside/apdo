@@ -15,25 +15,22 @@ import { useAtom, useAtomValue } from "jotai";
 import { selectedNoteAtom } from "@/app/store";
 
 type callbacksType = {
-  search?: () => void;
-  appearence?: () => void;
-  fileSettings?: () => void;
-  report?: () => void;
+  rename?: () => void;
+  exclude?: () => void;
 };
 
-type PopupSettingsProps = PopupProps & {
+type PopupFileProps = PopupProps & {
   callbacks?: callbacksType;
 };
 
-export const PopupSettings = ({
+export const PopupFile = ({
   open,
   toggle,
   contentClassName,
   dialogClassName,
   callbacks,
   ...props
-}: PopupSettingsProps) => {
-  const selectedNote = useAtomValue(selectedNoteAtom);
+}: PopupFileProps) => {
   return (
     <Dialog
       open={open}
@@ -49,40 +46,25 @@ export const PopupSettings = ({
             contentClassName
           )}
         >
-          {selectedNote && (
-            <>
-              <Button
-                onClick={() => {
-                  console.log(selectedNote);
-                  callbacks?.fileSettings && callbacks.fileSettings();
-                  toggle();
-                }}
-                className="text-[16px]"
-                variant="ghost"
-              >
-                file
-              </Button>
-            </>
-          )}
           <Button
             onClick={() => {
-              callbacks?.search && callbacks.search();
+              callbacks?.rename && callbacks.rename();
               toggle();
             }}
             className="text-[16px]"
             variant="ghost"
           >
-            search
+            rename
           </Button>
           <Button
             onClick={() => {
-              callbacks?.appearence && callbacks.appearence();
+              callbacks?.exclude && callbacks.exclude();
               toggle();
             }}
             className="text-[16px]"
             variant="ghost"
           >
-            appearence
+            exclude
           </Button>
         </DialogContent>
       </DialogBody>

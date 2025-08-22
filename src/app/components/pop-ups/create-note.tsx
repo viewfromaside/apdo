@@ -7,7 +7,12 @@ import { Input } from "../input";
 import { Button } from "../button";
 import { PopupProps } from ".";
 import { Note } from "@/app/services";
-import { NoteVisibility } from "@/app/shared";
+import {
+  NoteVisibility,
+  ToastErrorStyle,
+  ToastMinimumStyle,
+  ToastSuccessStyle,
+} from "@/app/shared";
 import { useSetAtom } from "jotai";
 import { createNoteAtom } from "@/app/store";
 import { toast } from "sonner";
@@ -37,18 +42,15 @@ export const PopupCreateNote = ({
   };
 
   const handleSubmit = () => {
-    console.log("Creating note:", formObject.getObjectForCreate());
+    if (!formObject.title || !formObject.visibility)
+      return toast.error("complete this, aight?", ToastErrorStyle);
+
     createNote(formObject);
-    toast.success("note created", {
-      style: {
-        backgroundColor: "green",
-      },
-    });
+
+    toast.success("note created", ToastSuccessStyle);
+
     clearFields();
     toggle();
-    // console.log("Creating note:", formObject);
-    // exemplo de api:
-    // createNote(formObject.getObjectForCreate()).then(() => toggle(false));
   };
 
   return (

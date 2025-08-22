@@ -13,26 +13,26 @@ import { Button } from "../button";
 import { PopupProps } from ".";
 import { useAtom, useAtomValue } from "jotai";
 import { selectedNoteAtom } from "@/app/store";
+import { Textarea } from "../textarea";
 
 type callbacksType = {
-  search?: () => void;
-  appearence?: () => void;
-  fileSettings?: () => void;
   report?: () => void;
+  appearence?: () => void;
+  fileReport?: () => void;
 };
 
-type PopupSettingsProps = PopupProps & {
+type PopupReportProps = PopupProps & {
   callbacks?: callbacksType;
 };
 
-export const PopupSettings = ({
+export const PopupReport = ({
   open,
   toggle,
   contentClassName,
   dialogClassName,
   callbacks,
   ...props
-}: PopupSettingsProps) => {
+}: PopupReportProps) => {
   const selectedNote = useAtomValue(selectedNoteAtom);
   return (
     <Dialog
@@ -49,30 +49,15 @@ export const PopupSettings = ({
             contentClassName
           )}
         >
-          {selectedNote && (
-            <>
-              <Button
-                onClick={() => {
-                  console.log(selectedNote);
-                  callbacks?.fileSettings && callbacks.fileSettings();
-                  toggle();
-                }}
-                className="text-[16px]"
-                variant="ghost"
-              >
-                file
-              </Button>
-            </>
-          )}
           <Button
             onClick={() => {
-              callbacks?.search && callbacks.search();
+              callbacks?.report && callbacks.report();
               toggle();
             }}
             className="text-[16px]"
             variant="ghost"
           >
-            search
+            sensitive
           </Button>
           <Button
             onClick={() => {
@@ -82,7 +67,7 @@ export const PopupSettings = ({
             className="text-[16px]"
             variant="ghost"
           >
-            appearence
+            inappropriate
           </Button>
         </DialogContent>
       </DialogBody>

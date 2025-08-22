@@ -92,7 +92,13 @@ export default function NoteHome() {
       });
 
       setSaved(true);
-      toast(String.fromCodePoint(0x1f4af) + " File Saved");
+      toast("locked up, no cap", {
+        style: {
+          width: "fit-content",
+          paddingTop: 12,
+          paddingBottom: 12,
+        },
+      });
     } catch (error) {
       console.error("Error saving note:", error);
       toast.error("Error saving file");

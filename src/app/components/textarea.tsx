@@ -3,11 +3,16 @@
 import { ComponentProps, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-type InputProps = ComponentProps<"input"> & {};
+type TextareaProps = ComponentProps<"textarea"> & {};
 
-export const Input = ({ onChange, className, value, ...props }: InputProps) => {
+export const Textarea = ({
+  onChange,
+  className,
+  value,
+  ...props
+}: TextareaProps) => {
   return (
-    <input
+    <textarea
       onChange={onChange}
       value={value}
       className={twMerge(
