@@ -28,7 +28,7 @@ export default function NoteHome() {
   const [alertDialog, setAlertDialog] = useState<boolean>(false);
   const [localContent, setLocalContent] = useState<string>("");
   const [localTitle, setLocalTitle] = useState<string>("new file");
-  const [isInitialized, setIsInitialized] = useState<boolean>(false); // 🔑 Estado para controlar renderização
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   const [saved, setSaved] = useState<boolean>(true);
   const [formatMarkdownToggle, setFormatMarkdownToggle] =
@@ -41,9 +41,7 @@ export default function NoteHome() {
   const saveNote = useSetAtom(saveNoteAtom);
   const loadNotes = useSetAtom(loadNotesAtom);
 
-  // 🚀 Inicialização - só renderiza após o primeiro useEffect
   useEffect(() => {
-    console.log("=== INITIALIZING COMPONENT ===");
     console.log("selectedNote:", selectedNote);
 
     if (selectedNote) {
@@ -57,7 +55,6 @@ export default function NoteHome() {
     }
 
     setIsInitialized(true);
-    console.log("=== COMPONENT INITIALIZED ===");
   }, [selectedNote]);
 
   useEffect(() => {
@@ -111,7 +108,7 @@ export default function NoteHome() {
 
         {formatMarkdownToggle ? (
           <MarkdownEditor
-            key={`md-${selectedNote?.id || "new"}-${isInitialized}`} // 🔑 Key que muda com inicialização
+            key={`md-${selectedNote?.id || "new"}-${isInitialized}`}
             content={localContent}
             setContent={setLocalContent}
           />
