@@ -1,4 +1,6 @@
-import { ComponentProps } from "react";
+"use client";
+
+import React, { ComponentProps, SetStateAction, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import {
   Dialog,
@@ -15,15 +17,40 @@ import { useSetAtom } from "jotai";
 import { togglePopupAtom } from "@/app/store/pop-up";
 import { SearchIcon } from "lucide-react";
 import { Tag } from "../tag";
+import { useKeyboardShortcut } from "@/app/hooks";
+import { toast } from "sonner";
+import { ToastMinimumStyle } from "@/app/shared";
+
+type PopupSearchProps = PopupProps & {
+  searchValue: string;
+  setSearchValue: React.Dispatch<SetStateAction<string>>;
+};
 
 export const PopupSearch = ({
   open,
   toggle,
   contentClassName,
   dialogClassName,
+  setSearchValue,
+  searchValue,
   ...props
-}: PopupProps) => {
+}: PopupSearchProps) => {
   const togglePopup = useSetAtom(togglePopupAtom);
+
+  const handleSubmit = () => {
+    if (!searchValue) {
+      toast.error("try to search something", ToastMinimumStyle);
+      return;
+    }
+    togglePopup("notes");
+  };
+
+  useKeyboardShortcut({
+    key: "Enter",
+    onKeyPress: handleSubmit,
+    enabled: open,
+    deps: [open, searchValue],
+  });
 
   return (
     <Dialog open={open} toggle={toggle} {...props}>
@@ -34,8 +61,14 @@ export const PopupSearch = ({
         <DialogContent
           className={twMerge("flex flex-col w-full h-full", contentClassName)}
         >
-          <Input placeholder="note name or author" className="mb-2" />
-          <Button onClick={() => togglePopup("notes")}>search</Button>
+          <Input
+            autoFocus
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            placeholder="note name or author"
+            className="mb-2"
+          />
+          <Button onClick={handleSubmit}>search</Button>
         </DialogContent>
       </DialogBody>
     </Dialog>

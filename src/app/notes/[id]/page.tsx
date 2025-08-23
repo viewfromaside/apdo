@@ -103,26 +103,10 @@ export default function NoteHome() {
     }
   };
 
-  const toggleAlertDialog = () => {
-    toast(String.fromCodePoint(0x1f4af) + " File Saved");
-  };
-
   if (!isInitialized) {
     return (
       <div className="flex w-full justify-center items-center">
-        <Panel className="flex flex-col gap-3">
-          <div className="flex flex-row justify-between items-center w-full">
-            <div className="flex flex-row gap-2 items-center">
-              <GoBack href="/notes" />
-              <FileName className="w-fit animate-pulse bg-neutral/20 rounded">
-                Loading...
-              </FileName>
-            </div>
-          </div>
-          <div className="h-96 bg-neutral/10 rounded-lg animate-pulse flex items-center justify-center">
-            <span className="text-neutral/50">Loading content...</span>
-          </div>
-        </Panel>
+        <Panel className="flex flex-col gap-3"></Panel>
       </div>
     );
   }

@@ -1,6 +1,6 @@
 "use client";
 
-import { ComponentProps, useEffect, useRef } from "react";
+import { ComponentProps, SetStateAction, useEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import { Dialog, DialogBody, DialogContent, DialogHeader } from "../dialog";
 import { PopupProps } from ".";
@@ -12,13 +12,16 @@ import { SearchIcon } from "lucide-react";
 import { notesAtom } from "@/app/store";
 import { Note } from "@/app/services";
 
-type PopupNotesProps = PopupProps & {};
+type PopupNotesProps = PopupProps & {
+  searchValue: string;
+};
 
 export const PopupNotes = ({
   open,
   toggle,
   contentClassName,
   dialogClassName,
+  searchValue,
   ...props
 }: PopupNotesProps) => {
   const notes = useAtomValue(notesAtom);
@@ -35,7 +38,7 @@ export const PopupNotes = ({
     <Dialog open={open} toggle={toggle} {...props} className={twMerge("")}>
       <DialogBody>
         <DialogHeader>
-          <Tag icon={SearchIcon} label="viewfromaside" />
+          <Tag icon={SearchIcon} label={searchValue} />
         </DialogHeader>
         <DialogContent
           className={twMerge(

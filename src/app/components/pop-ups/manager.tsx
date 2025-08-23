@@ -18,6 +18,7 @@ export const PopupManager = () => {
   const openPopups = useAtomValue(openPopupsAtom);
   const togglePopup = useSetAtom(togglePopupAtom);
 
+  const [searchValue, setSearchValue] = useState<string>("");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -41,12 +42,15 @@ export const PopupManager = () => {
       />
 
       <PopupSearch
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
         dialogClassName="top-0"
         open={openPopups.search}
         toggle={() => togglePopup("search")}
       />
 
       <PopupNotes
+        searchValue={searchValue}
         contentClassName="w-[300px] h-[300px]"
         open={openPopups.notes}
         toggle={() => togglePopup("notes")}
@@ -58,7 +62,7 @@ export const PopupManager = () => {
       />
 
       <PopupAppearence
-        contentClassName="w-[300px] h-[300px]"
+        contentClassName="w-[300px] h-[400px]"
         open={openPopups.appearence}
         toggle={() => togglePopup("appearence")}
       />
