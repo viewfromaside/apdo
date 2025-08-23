@@ -1,11 +1,14 @@
 "use client";
 import { Button, GoSignIn, GoSignUp, Logo, Panel } from "@/app/components";
 import { Input } from "@/app/components";
+import { togglePopupAtom } from "@/app/store/pop-up";
 import gsap from "gsap";
+import { useSetAtom } from "jotai";
 import { useEffect, useRef } from "react";
 
 export default function SignUpForm() {
   const formRef = useRef<HTMLDivElement>(null);
+  const togglePopup = useSetAtom(togglePopupAtom);
 
   useEffect(() => {
     if (!formRef.current) return;
@@ -42,7 +45,12 @@ export default function SignUpForm() {
             placeholder="confirm password"
             type="password"
           />
-          <Button className="w-full opacity-0">hop on</Button>
+          <Button
+            onClick={() => togglePopup("confirmEmail")}
+            className="w-full opacity-0"
+          >
+            hop on
+          </Button>
         </div>
         <GoSignIn />
       </Panel>

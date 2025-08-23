@@ -13,6 +13,7 @@ import { PopupReport } from "./report";
 import { PopupFile } from "./file";
 import { PopupRename } from "./rename";
 import { PopupExclude } from "./exclude";
+import { PopupConfirmEmail } from "./confirm-email";
 
 export const PopupManager = () => {
   const openPopups = useAtomValue(openPopupsAtom);
@@ -47,6 +48,12 @@ export const PopupManager = () => {
         dialogClassName="top-0"
         open={openPopups.search}
         toggle={() => togglePopup("search")}
+      />
+
+      <PopupConfirmEmail
+        dialogClassName="top-0"
+        open={openPopups.confirmEmail}
+        toggle={() => togglePopup("confirmEmail")}
       />
 
       <PopupNotes

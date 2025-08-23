@@ -102,7 +102,12 @@ export const NoContent = ({ className, ...props }: NoContentProps) => {
         >
           drop a fresh one
         </Button>
-        <Button className=" hover:bg-accent">set ya vibe</Button>
+        <Button
+          onClick={() => togglePopup("appearence")}
+          className="hover:bg-accent"
+        >
+          set ya vibe
+        </Button>
       </div>
     </div>
   );
