@@ -50,6 +50,15 @@ export const PopupAppearence = ({
     }));
   };
 
+  const handleReset = () => {
+    const defaultThemeColors = {
+      neutral: "#ffffff",
+      background: "#1e1e1e",
+      accent: "#ffb86c",
+    };
+    setThemeColors(defaultThemeColors);
+  };
+
   const handleSubmit = () => {
     let root = document.documentElement;
     Object.entries(themeColors).map(([key, color]) => {
@@ -67,13 +76,13 @@ export const PopupAppearence = ({
 
   return (
     <Dialog open={open} toggle={toggle} {...props} className={twMerge("")}>
-      <DialogBody>
-        <DialogHeader>
+      <DialogBody mainClassName="!bg-[#1e1e1e] border-[#ffb86c]/20">
+        <DialogHeader className="bg-[#1e1e1e]">
           <Tag icon={PaletteIcon} color="" label="appearence" />
         </DialogHeader>
         <DialogContent
           className={twMerge(
-            "flex flex-col w-full p-3 gap-5 overflow-auto overflow-x-hidden",
+            "flex flex-col w-full p-3 bg-[#1e1e1e] gap-5 overflow-auto overflow-x-hidden ",
             contentClassName
           )}
         >
@@ -91,6 +100,9 @@ export const PopupAppearence = ({
               />
             ))}
             <Button onClick={handleSubmit}>save it</Button>
+            <Button variant="secondary" onClick={handleReset}>
+              i want that back
+            </Button>
           </div>
         </DialogContent>
       </DialogBody>
