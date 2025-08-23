@@ -74,7 +74,6 @@ const MarkdownEditorContent = ({
         toMarkdownOptions={{
           bullet: "+",
         }}
-        placeholder={"# Drop a text here"}
         onChange={(e) => {
           setContent(e);
         }}
