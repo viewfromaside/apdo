@@ -23,7 +23,7 @@ import {
   selectedNoteAtom,
   selectedNoteIndexAtom,
 } from "@/app/store";
-import editor from "@/app/assets/main.json";
+import editor from "@/app/assets/main.json"; // JSON local com suas notas
 import { togglePopupAtom } from "@/app/store/pop-up";
 
 export default function NoteHome() {
@@ -45,14 +45,12 @@ export default function NoteHome() {
 
   useEffect(() => {
     if (selectedNote) {
-      console.log("Setting content from selectedNote:", selectedNote.content);
       setLocalContent(selectedNote.content || "");
       setLocalTitle(selectedNote.title || "new file");
     } else {
       setLocalContent("");
       setLocalTitle("new file");
     }
-
     setIsInitialized(true);
   }, [selectedNote]);
 
@@ -67,7 +65,6 @@ export default function NoteHome() {
     const handleKeyDown = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key === "s") {
         event.preventDefault();
-
         if (!saved && isInitialized) {
           handleSave();
         }
@@ -75,10 +72,7 @@ export default function NoteHome() {
     };
 
     document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [saved, isInitialized, localContent, localTitle, selectedNote]);
 
   const handleSave = () => {
@@ -91,11 +85,7 @@ export default function NoteHome() {
 
       setSaved(true);
       toast("locked up, no cap", {
-        style: {
-          width: "fit-content",
-          paddingTop: 12,
-          paddingBottom: 12,
-        },
+        style: { width: "fit-content", paddingTop: 12, paddingBottom: 12 },
       });
     } catch (error) {
       console.error("Error saving note:", error);

@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 
 export const themeColorsAtom = atom({
-  neutral: "#2c2c2c",
+  neutral: "#eaeaea",
   background: "#1e1e1e",
   accent: "#ffb86c",
 });

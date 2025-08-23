@@ -29,6 +29,7 @@ const MarkdownEditorContent = ({
 
   useEffect(() => {
     if (!editorRef.current) return;
+    editorRef.current.focus();
     console.log(content);
 
     const children = Array.from(editorRef.current.children) as HTMLElement[];
@@ -73,6 +74,7 @@ const MarkdownEditorContent = ({
         toMarkdownOptions={{
           bullet: "+",
         }}
+        placeholder={"# Drop a text here"}
         onChange={(e) => {
           setContent(e);
         }}
