@@ -1,16 +1,13 @@
 "use client";
 
-import { ComponentProps, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Dialog, DialogBody, DialogContent, DialogHeader } from "../dialog";
 import { PopupProps } from ".";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { closeAllPopupAtom, openPopupsAtom } from "@/app/store/pop-up";
-import { Card } from "../notes";
 import { Tag } from "../tag";
-import { PaletteIcon, SearchIcon } from "lucide-react";
-import { notesAtom } from "@/app/store";
-import { Note } from "@/app/services";
+import { PaletteIcon } from "lucide-react";
 import { Button } from "../button";
 import { ColorPicker } from "../color-picker";
 import { ColorKey, themeColorsAtom } from "@/app/store/color";
@@ -28,8 +25,6 @@ export const PopupAppearence = ({
   const closeAllPopups = useSetAtom(closeAllPopupAtom);
   const [themeColors, setThemeColors] = useAtom(themeColorsAtom);
   const [openPickers, setOpenPickers] = useState<Record<ColorKey, boolean>>({
-    primary: false,
-    secondary: false,
     neutral: false,
     background: false,
     accent: false,
@@ -55,9 +50,16 @@ export const PopupAppearence = ({
     }));
   };
 
+  const handleSubmit = () => {
+    let root = document.documentElement;
+    Object.entries(themeColors).map(([key, color]) => {
+      root.style.setProperty(`--color-dark-${key}`, color);
+      root.style.setProperty(`--color-${key}`, color);
+      console.log(root.style);
+    });
+  };
+
   const colorLabels: Record<ColorKey, string> = {
-    primary: "primary color",
-    secondary: "secondary color",
     neutral: "neutral color",
     background: "background color",
     accent: "accent color",
@@ -88,6 +90,7 @@ export const PopupAppearence = ({
                 onToggle={() => togglePicker(key as ColorKey)}
               />
             ))}
+            <Button onClick={handleSubmit}>save it</Button>
           </div>
         </DialogContent>
       </DialogBody>
