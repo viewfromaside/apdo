@@ -7,10 +7,6 @@ public class Note extends BaseModel {
     private String content;
     private NoteVisibility visibility;
 
-    public Note() {
-
-    }
-
     public Note(String id, String title, String content, NoteVisibility visibility) {
         super();
         this.id = id;
