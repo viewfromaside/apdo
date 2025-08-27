@@ -10,7 +10,7 @@ public class Note extends BaseModel {
     public Note(String id, String title, String content, NoteVisibility visibility) {
         super();
         this.id = id;
-        this.title = title;
+        this.title = title.replaceAll(" ", "_").toLowerCase();
         this.content = content;
         this.visibility = visibility;
     }

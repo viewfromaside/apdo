@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.viewfromaside.apdo.dto.NoteDTO;
 import com.viewfromaside.apdo.model.Note;
 import com.viewfromaside.apdo.service.NoteService;
 
@@ -24,8 +25,8 @@ public class NoteController {
     private NoteService noteService;
 
     @PostMapping("/create")
-    public String create(@RequestBody Note note) throws ExecutionException, InterruptedException {
-        return this.noteService.createNote(note);
+    public String create(@RequestBody NoteDTO noteDTO) throws ExecutionException, InterruptedException {
+        return this.noteService.createNote(noteDTO.toModel());
     }
 
     @GetMapping("/{id}")
@@ -39,7 +40,8 @@ public class NoteController {
     }
 
     @PutMapping("/{id}")
-    public String update(@PathVariable String id, @RequestBody Note note) throws ExecutionException, InterruptedException {
+    public String update(@PathVariable String id, @RequestBody NoteDTO noteDTO) throws ExecutionException, InterruptedException {
+        Note note = noteDTO.toModel();
         note.setId(id);
         return this.noteService.updateNote(note);
     }
