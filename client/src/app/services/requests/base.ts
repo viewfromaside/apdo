@@ -7,16 +7,17 @@ export class BaseRequest<T extends IBase> {
   protected client: AxiosInstance;
 
   constructor(url: string, config?: AxiosRequestConfig) {
-    this.url = url;
+    this.url = process.env.NEXT_PUBLIC_BACKEND_API_URL + url;
+    console.log(process.env.NEXT_PUBLIC_BACKEND_API_URL);
     this.client = axios.create({
-      baseURL: url,
+      baseURL: this.url,
       ...config,
     });
   }
 
   async sendCreate(data: Partial<T>): Promise<T> {
     const { data: res, status } = await this.client.post<T>(
-      "",
+      `/create`,
       data.getObjectForCreate!()
     );
     if (status >= 200 && status < 300) {

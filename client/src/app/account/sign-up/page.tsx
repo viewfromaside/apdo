@@ -11,7 +11,6 @@ import { useEffect, useRef, useState } from "react";
 export default function SignUpForm() {
   const formRef = useRef<HTMLDivElement>(null);
   const [formObject, setFormObject] = useState<User>(new User({}));
-  const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const togglePopup = useSetAtom(togglePopupAtom);
 
@@ -23,7 +22,7 @@ export default function SignUpForm() {
     if (
       !formObject.username ||
       !formObject.email ||
-      !password ||
+      !formObject.password ||
       !confirmPassword
     )
       return;
@@ -74,8 +73,8 @@ export default function SignUpForm() {
             placeholder="email"
           />
           <Input
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
+            onChange={(e) => handleChange("password", e.target.value)}
+            value={formObject.password}
             className="opacity-0"
             placeholder="password"
             type="password"

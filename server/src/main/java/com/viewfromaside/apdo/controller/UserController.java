@@ -39,7 +39,7 @@ public class UserController {
         return this.userService.getAllUsers();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/edit")
     public User update(@PathVariable String id, @RequestBody UserDTO userDTO) throws ExecutionException, InterruptedException {
         User user = userDTO.toModel();
         user.setId(id);
