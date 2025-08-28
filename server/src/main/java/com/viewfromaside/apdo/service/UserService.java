@@ -24,12 +24,13 @@ public class UserService {
         return FirestoreClient.getFirestore();
     }
 
-    public String createUser(User user) throws ExecutionException, InterruptedException {
+    public User createUser(User user) throws ExecutionException, InterruptedException {
         ApiFuture<WriteResult> future = this.getFirestore()
             .collection(COLLECTION_NAME)
             .document(user.getId())
             .set(user);
-        return future.get().getUpdateTime().toString();
+        future.get();
+        return user;
     }
 
     public User getUserById(String id) throws ExecutionException, InterruptedException {
@@ -59,9 +60,10 @@ public class UserService {
                     .collect(Collectors.toList());
     }
     
-    public String updateUser(User user) throws ExecutionException, InterruptedException {
+    public User updateUser(User user) throws ExecutionException, InterruptedException {
         ApiFuture<WriteResult> future = this.getFirestore().collection(COLLECTION_NAME).document(user.getId()).set(user);
-        return future.get().getUpdateTime().toString();
+        future.get();
+        return user;
     }
 
     public String deleteUser(String id) throws ExecutionException, InterruptedException {

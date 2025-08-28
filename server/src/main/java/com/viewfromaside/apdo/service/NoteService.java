@@ -24,12 +24,13 @@ public class NoteService {
         return FirestoreClient.getFirestore();
     }
 
-    public String createNote(Note note) throws ExecutionException, InterruptedException {
+    public Note createNote(Note note) throws ExecutionException, InterruptedException {
         ApiFuture<WriteResult> future = this.getFirestore()
             .collection(COLLECTION_NAME)
             .document(note.getId())
             .set(note);
-        return future.get().getUpdateTime().toString();
+        future.get();
+        return note;
     }
 
     public Note getNoteById(String id) throws ExecutionException, InterruptedException {
@@ -48,9 +49,10 @@ public class NoteService {
                     .collect(Collectors.toList());
     }
     
-    public String updateNote(Note note) throws ExecutionException, InterruptedException {
+    public Note updateNote(Note note) throws ExecutionException, InterruptedException {
         ApiFuture<WriteResult> future = this.getFirestore().collection(COLLECTION_NAME).document(note.getId()).set(note);
-        return future.get().getUpdateTime().toString();
+        future.get();
+        return note;
     }
 
     public String deleteNote(String id) throws ExecutionException, InterruptedException {

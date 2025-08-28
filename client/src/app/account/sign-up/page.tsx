@@ -1,14 +1,38 @@
 "use client";
 import { Button, GoSignIn, GoSignUp, Logo, Panel } from "@/app/components";
 import { Input } from "@/app/components";
+import { UserRequest } from "@/app/services";
+import { User } from "@/app/services/models/user";
 import { togglePopupAtom } from "@/app/store/pop-up";
 import gsap from "gsap";
 import { useSetAtom } from "jotai";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function SignUpForm() {
   const formRef = useRef<HTMLDivElement>(null);
+  const [formObject, setFormObject] = useState<User>(new User({}));
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
   const togglePopup = useSetAtom(togglePopupAtom);
+
+  const handleChange = (field: keyof User, value: any) => {
+    setFormObject((prev) => new User({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async () => {
+    if (
+      !formObject.username ||
+      !formObject.email ||
+      !password ||
+      !confirmPassword
+    )
+      return;
+
+    const request = new UserRequest();
+    const response = await request.sendCreate(formObject);
+    console.log(response);
+    togglePopup("confirmEmail");
+  };
 
   useEffect(() => {
     if (!formRef.current) return;
@@ -37,18 +61,33 @@ export default function SignUpForm() {
       <Panel className="flex flex-col gap-2 justify-center items-center">
         <Logo />
         <div ref={formRef} className="form flex flex-col gap-2 items-center">
-          <Input className="opacity-0" placeholder="username" />
-          <Input className="opacity-0" placeholder="email" />
-          <Input className="opacity-0" placeholder="password" type="password" />
           <Input
+            onChange={(e) => handleChange("username", e.target.value)}
+            value={formObject.username}
+            className="opacity-0"
+            placeholder="username"
+          />
+          <Input
+            onChange={(e) => handleChange("email", e.target.value)}
+            value={formObject.email}
+            className="opacity-0"
+            placeholder="email"
+          />
+          <Input
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            className="opacity-0"
+            placeholder="password"
+            type="password"
+          />
+          <Input
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            value={confirmPassword}
             className="opacity-0"
             placeholder="confirm password"
             type="password"
           />
-          <Button
-            onClick={() => togglePopup("confirmEmail")}
-            className="w-full opacity-0"
-          >
+          <Button onClick={handleSubmit} className="w-full opacity-0">
             hop on
           </Button>
         </div>

@@ -25,7 +25,7 @@ public class NoteController {
     private NoteService noteService;
 
     @PostMapping("/create")
-    public String create(@RequestBody NoteDTO noteDTO) throws ExecutionException, InterruptedException {
+    public Note create(@RequestBody NoteDTO noteDTO) throws ExecutionException, InterruptedException {
         return this.noteService.createNote(noteDTO.toModel());
     }
 
@@ -40,7 +40,7 @@ public class NoteController {
     }
 
     @PutMapping("/{id}")
-    public String update(@PathVariable String id, @RequestBody NoteDTO noteDTO) throws ExecutionException, InterruptedException {
+    public Note update(@PathVariable String id, @RequestBody NoteDTO noteDTO) throws ExecutionException, InterruptedException {
         Note note = noteDTO.toModel();
         note.setId(id);
         return this.noteService.updateNote(note);

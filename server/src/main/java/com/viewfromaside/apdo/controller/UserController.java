@@ -25,7 +25,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/create")
-    public String create(@RequestBody UserDTO userDTO) throws ExecutionException, InterruptedException {
+    public User create(@RequestBody UserDTO userDTO) throws ExecutionException, InterruptedException {
         return this.userService.createUser(userDTO.toModel());
     }
 
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public String update(@PathVariable String id, @RequestBody UserDTO userDTO) throws ExecutionException, InterruptedException {
+    public User update(@PathVariable String id, @RequestBody UserDTO userDTO) throws ExecutionException, InterruptedException {
         User user = userDTO.toModel();
         user.setId(id);
         return this.userService.updateUser(user);
