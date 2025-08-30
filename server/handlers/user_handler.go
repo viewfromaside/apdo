@@ -6,7 +6,6 @@ import (
 
 	"github.com/apdo/server/models"
 	"github.com/apdo/server/models/dto"
-	"github.com/apdo/server/utils"
 	"github.com/apdo/server/utils/crypto"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -14,9 +13,7 @@ import (
 
 var jwtSecret = []byte("some_secret_right_here")
 
-var users = []models.User{
-	{ID: utils.GenerateID(7), Username: "side", Password: "123", Email: "alex@gmail.com", CreatedAt: time.Now()},
-}
+var users = []models.User{}
 
 func GetUsers(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, users)
