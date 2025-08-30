@@ -9,25 +9,20 @@ jobs:
   count-lines:
     runs-on: ubuntu-latest
     env:
-      # Check cloc docs for supported languages and exact names (e.g., "Vuejs Component", "C#")
-      # HIGHLIGHT_LANGS: show these languages individually; everything else goes to "Others"
       HIGHLIGHT_LANGS: "JavaScript,TypeScript,JSX,Vuejs Component,PHP,C#"
 
-      # IGNORE_LANGS: drop these languages entirely (not shown and not counted)
       IGNORE_LANGS: "JSON,HTML,CSS,SCSS,Sass,Markdown,SVG,XML,YAML,TOML,CSV,Text,Properties"
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Install required dependencies: jq (JSON processor), cloc (count lines of code), and locale settings
       - name: Install Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y jq cloc locales
           sudo locale-gen en_US.UTF-8
 
-      # Fetch public repositories (excluding forks) and clone only the default branch
       - name: Fetch and Clone Repositories
         env:
           GH_PAT: ${{ secrets.GH_PAT }}

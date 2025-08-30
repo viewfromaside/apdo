@@ -22,7 +22,7 @@ func GetUsers(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, users)
 }
 
-func PostUsers(c *gin.Context) {
+func RegisterAccount(c *gin.Context) {
 	var input models.User
 
 	if err := c.BindJSON(&input); err != nil {

@@ -9,7 +9,9 @@ import (
 func RegisterRoutes(router *gin.Engine) {
 	// ACCOUNT
 	router.POST("/account/login", handlers.LoginAccount)
+	router.POST("/account/register", handlers.RegisterAccount)
 
+	// APPLYING MIDDLEWARE AND PREFIX GROUP
 	protected := router.Group("/api")
 	protected.Use(middlewares.JWTAuthMiddleware())
 
@@ -22,5 +24,4 @@ func RegisterRoutes(router *gin.Engine) {
 
 	// USERS CRUD
 	protected.GET("/users", handlers.GetUsers)
-	router.POST("/users/create", handlers.PostUsers)
 }
