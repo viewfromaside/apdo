@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/apdo/server/models"
+	"google.golang.org/api/iterator"
 )
 
 const USERS_COLLECTION string = "users"
@@ -46,6 +47,27 @@ func FindManyUsers() []models.User {
 		users = append(users, user)
 	}
 	return users
+}
+
+func FindUserByField(field, value string) (*models.User, error) {
+	iter := firestoreClient.Collection(USERS_COLLECTION).
+		Where(field, "==", value).
+		Documents(context.Background())
+
+	doc, err := iter.Next()
+	if err != nil {
+		if err == iterator.Done {
+			return nil, fmt.Errorf("record not found")
+		}
+		return nil, err
+	}
+
+	var user models.User
+	if err := doc.DataTo(&user); err != nil {
+		return nil, err
+	}
+
+	return &user, nil
 }
 
 func FindUserByID(id string) (*models.User, error) {

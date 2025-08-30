@@ -10,6 +10,7 @@ func RegisterRoutes(router *gin.Engine) {
 	// ACCOUNT
 	router.POST("/account/login", handlers.LoginAccount)
 	router.POST("/account/register", handlers.RegisterAccount)
+	router.POST("/account/activate/:id", handlers.ActivateAccount)
 
 	// APPLYING MIDDLEWARE AND PREFIX GROUP
 	protected := router.Group("/api")

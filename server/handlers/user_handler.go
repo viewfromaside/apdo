@@ -6,6 +6,7 @@ import (
 
 	"github.com/apdo/server/models"
 	"github.com/apdo/server/models/dto"
+	"github.com/apdo/server/services"
 	"github.com/apdo/server/utils/crypto"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
@@ -13,9 +14,8 @@ import (
 
 var jwtSecret = []byte("some_secret_right_here")
 
-var users = []models.User{}
-
 func GetUsers(c *gin.Context) {
+	users := services.FindManyUsers()
 	c.IndentedJSON(http.StatusOK, users)
 }
 
@@ -37,9 +37,8 @@ func RegisterAccount(c *gin.Context) {
 	newUser.Username = input.Username
 	newUser.Email = input.Email
 	newUser.Password = hashedPassword
-
-	users = append(users, newUser)
-
+	services.CreateUser(newUser)
+	newUser.Password = "secret"
 	c.IndentedJSON(http.StatusCreated, newUser)
 }
 
@@ -51,21 +50,37 @@ func LoginAccount(c *gin.Context) {
 		return
 	}
 
-	for _, user := range users {
-		if user.Username == input.Username {
-			if crypto.VerifyPassword(input.Password, user.Password) {
-				claims := jwt.MapClaims{
-					"username": input.Username,
-					"exp":      time.Now().Add(time.Hour * 24 * 7).Unix(),
-				}
-				token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-				tokenString, _ := token.SignedString(jwtSecret)
-				c.IndentedJSON(http.StatusOK, gin.H{"data": user, "jwt": tokenString})
-				return
-			}
-			c.IndentedJSON(http.StatusUnauthorized, gin.H{"error": "wrong password"})
-			return
-		}
+	user, err := services.FindUserByField("Username", input.Username)
+	if err != nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "account not found"})
+		return
 	}
-	c.IndentedJSON(http.StatusNotFound, gin.H{"error": "account not found"})
+
+	if crypto.VerifyPassword(input.Password, user.Password) {
+		claims := jwt.MapClaims{
+			"username": input.Username,
+			"exp":      time.Now().Add(time.Hour * 24 * 7).Unix(),
+		}
+		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+		tokenString, _ := token.SignedString(jwtSecret)
+		user.Password = "secret"
+		c.IndentedJSON(http.StatusOK, gin.H{"data": user, "jwt": tokenString})
+		return
+	}
+
+	c.IndentedJSON(http.StatusUnauthorized, gin.H{"error": "wrong password"})
+}
+
+func ActivateAccount(c *gin.Context) {
+	id := c.Param("id")
+	user, err := services.FindUserByID(id)
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "internal server error contact support"})
+		return
+	}
+	user.Active = true
+	services.UpdateUser(*user)
+	user.Password = "secret"
+
+	c.IndentedJSON(http.StatusOK, user)
 }
