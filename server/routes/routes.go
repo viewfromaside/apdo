@@ -2,14 +2,25 @@ package routes
 
 import (
 	"github.com/apdo/server/handlers"
+	"github.com/apdo/server/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterRoutes(router *gin.Engine) {
+	// ACCOUNT
+	router.POST("/account/login", handlers.LoginAccount)
+
+	protected := router.Group("/api")
+	protected.Use(middlewares.JWTAuthMiddleware())
+
 	// NOTES CRUD
-	router.GET("/notes", handlers.GetNotes)
-	router.GET("/notes/:id", handlers.GetNoteById)
-	router.DELETE("/notes/:id/remove", handlers.RemoveById)
-	router.PUT("/notes/:id/edit", handlers.UpdateById)
-	router.POST("/notes/create", handlers.PostNotes)
+	protected.GET("/notes", handlers.GetNotes)
+	protected.GET("/notes/:id", handlers.GetNoteById)
+	protected.DELETE("/notes/:id/remove", handlers.RemoveById)
+	protected.PUT("/notes/:id/edit", handlers.UpdateById)
+	protected.POST("/notes/create", handlers.PostNotes)
+
+	// USERS CRUD
+	protected.GET("/users", handlers.GetUsers)
+	router.POST("/users/create", handlers.PostUsers)
 }
