@@ -6,12 +6,13 @@ import (
 	"time"
 
 	"github.com/apdo/server/models"
+	"google.golang.org/api/iterator"
 )
 
-const COLLECTION_NAME string = "notes"
+const NOTES_COLLECTION string = "notes"
 
 func CreateNote(note models.Note) {
-	_, err := firestoreClient.Collection(COLLECTION_NAME).Doc(note.ID).Set(context.Background(), note)
+	_, err := firestoreClient.Collection(NOTES_COLLECTION).Doc(note.ID).Set(context.Background(), note)
 	if err != nil {
 		fmt.Printf("error occured on db-side: %s\n", err)
 		return
@@ -20,7 +21,7 @@ func CreateNote(note models.Note) {
 
 func UpdateNote(note models.Note) error {
 	note.UpdatedAt = time.Now()
-	_, err := firestoreClient.Collection(COLLECTION_NAME).Doc(note.ID).Set(context.Background(), note)
+	_, err := firestoreClient.Collection(NOTES_COLLECTION).Doc(note.ID).Set(context.Background(), note)
 	if err != nil {
 		return fmt.Errorf("error updating record: %w", err)
 	}
@@ -28,30 +29,36 @@ func UpdateNote(note models.Note) error {
 }
 
 func DeleteNote(id string) error {
-	_, err := firestoreClient.Collection(COLLECTION_NAME).Doc(id).Delete(context.Background())
+	_, err := firestoreClient.Collection(NOTES_COLLECTION).Doc(id).Delete(context.Background())
 	if err != nil {
 		return fmt.Errorf("error updating record: %w", err)
 	}
 	return nil
 }
 
-func FindManyNotes() []models.Note {
-	iter := firestoreClient.Collection(COLLECTION_NAME).Documents(context.Background())
+func FindManyNotes() ([]models.Note, error) {
+	iter := firestoreClient.Collection(NOTES_COLLECTION).Documents(context.Background())
 	var notes []models.Note
 	for {
 		doc, err := iter.Next()
-		if err != nil {
+		if err == iterator.Done {
 			break
 		}
+		if err != nil {
+			return nil, err
+		}
+
 		var note models.Note
-		doc.DataTo(&note)
+		if err := doc.DataTo(&note); err != nil {
+			return nil, err
+		}
 		notes = append(notes, note)
 	}
-	return notes
+	return notes, nil
 }
 
 func FindNoteByID(id string) (*models.Note, error) {
-	doc, err := firestoreClient.Collection(COLLECTION_NAME).Doc(id).Get(context.Background())
+	doc, err := firestoreClient.Collection(NOTES_COLLECTION).Doc(id).Get(context.Background())
 	if err != nil {
 		return nil, fmt.Errorf("record not found: %w", err)
 	}
@@ -60,17 +67,23 @@ func FindNoteByID(id string) (*models.Note, error) {
 	return &note, nil
 }
 
-func FindManyNotesByField(field, value string) []models.Note {
-	iter := firestoreClient.Collection(COLLECTION_NAME).Where(field, "==", value).Documents(context.Background())
+func FindManyNotesByField(field, value string) ([]models.Note, error) {
+	iter := firestoreClient.Collection(NOTES_COLLECTION).Where(field, "==", value).Documents(context.Background())
 	var notes []models.Note
 	for {
 		doc, err := iter.Next()
-		if err != nil {
+		if err == iterator.Done {
 			break
 		}
+		if err != nil {
+			return nil, err
+		}
+
 		var note models.Note
-		doc.DataTo(&note)
+		if err := doc.DataTo(&note); err != nil {
+			return nil, err
+		}
 		notes = append(notes, note)
 	}
-	return notes
+	return notes, nil
 }

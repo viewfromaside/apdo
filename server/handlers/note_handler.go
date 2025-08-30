@@ -2,17 +2,17 @@ package handlers
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/apdo/server/models"
+	"github.com/apdo/server/services"
 	"github.com/apdo/server/utils"
 	"github.com/gin-gonic/gin"
 )
 
-var notes = []models.Note{}
 var availableVisibility = []models.NoteVisibility{models.PUBLIC, models.PRIVATE}
 
 func GetNotes(c *gin.Context) {
+	notes, _ := services.FindManyNotes()
 	c.IndentedJSON(http.StatusOK, notes)
 }
 
@@ -33,21 +33,20 @@ func PostNotes(c *gin.Context) {
 		newNote.Visibility = input.Visibility
 	}
 
-	notes = append(notes, newNote)
+	services.CreateNote(newNote)
 	c.IndentedJSON(http.StatusCreated, newNote)
 }
 
 func GetNoteById(c *gin.Context) {
 	id := c.Param("id")
+	note, err := services.FindNoteByID(id)
 
-	for _, a := range notes {
-		if a.ID == id {
-			c.IndentedJSON(http.StatusOK, a)
-			return
-		}
+	if err != nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "not found"})
+		return
 	}
 
-	c.IndentedJSON(http.StatusNotFound, gin.H{"error": "not found"})
+	c.IndentedJSON(http.StatusOK, note)
 }
 
 func UpdateById(c *gin.Context) {
@@ -56,35 +55,39 @@ func UpdateById(c *gin.Context) {
 
 	if err := c.BindJSON(&input); err != nil {
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "internal server error contact support"})
+		return
 	}
 
-	for i := 0; i < len(notes); i++ {
-		if notes[i].ID == id {
-			notes[i].Title = input.Title
-			notes[i].Content = input.Content
-			if utils.Contains(availableVisibility, input.Visibility) {
-				notes[i].Visibility = input.Visibility
-			}
-			notes[i].UpdatedAt = time.Now()
-			c.IndentedJSON(http.StatusOK, notes[i])
-			return
-		}
+	if input.Content == "" || input.Title == "" || input.CreatedBy == "" {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "missing fields"})
+		return
 	}
 
-	c.IndentedJSON(http.StatusNotFound, gin.H{"error": "not found"})
+	if !utils.Contains(availableVisibility, input.Visibility) {
+		input.Visibility = models.PUBLIC
+	}
+
+	input.ID = id
+
+	err := services.UpdateNote(input)
+
+	if err != nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "internal server error contact support"})
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, input)
 }
 
 func RemoveById(c *gin.Context) {
 	id := c.Param("id")
 
-	for i := 0; i < len(notes); i++ {
-		if notes[i].ID == id {
-			removed := notes[i]
-			notes = append(notes[:i], notes[i+1:]...)
-			c.IndentedJSON(http.StatusOK, removed)
-			return
-		}
+	err := services.DeleteNote(id)
+
+	if err != nil {
+		c.IndentedJSON(http.StatusNotFound, gin.H{"error": "internal server error contact support"})
+		return
 	}
 
-	c.IndentedJSON(http.StatusNotFound, gin.H{"error": "not found"})
+	c.IndentedJSON(http.StatusOK, gin.H{"message": "record deleted"})
 }
