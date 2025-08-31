@@ -38,9 +38,15 @@ func RegisterAccount(c *gin.Context) {
 	newUser.Email = input.Email
 	newUser.Password = hashedPassword
 
-	userFound, _ := services.FindUserByField("Username", input.Username)
-	if userFound != nil {
-		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "user already exists with this username"})
+	usernameFound, _ := services.FindUserByField("Username", input.Username)
+	if usernameFound != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "already exists user with this username"})
+		return
+	}
+
+	emailFound, _ := services.FindUserByField("Email", input.Email)
+	if emailFound != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "already exists user with this email"})
 		return
 	}
 
