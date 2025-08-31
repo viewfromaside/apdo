@@ -49,14 +49,14 @@
       "search": {
         "title": "where u lookin at",
         "submit": "search",
-        "placeholder": "note name"
+        "placeholder": "note name or author"
       },
       "alert": {
         "title": "alert"
       },
       "errors": {
         "incorrectCredentials": "incorrect credencials",
-        "fieldsMissing": "fields missing",
+        "fieldsMissing": "complete this, aight?",
         "differentPasswords": "the passwords are not the same"
       },
       "appearence": {

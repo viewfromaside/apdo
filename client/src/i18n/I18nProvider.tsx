@@ -1,5 +1,4 @@
 "use client";
-
 import React, { ReactNode, useEffect, useState } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { localeReloadAtom } from "@/store/reload";
@@ -10,12 +9,23 @@ type Locale = "en" | "pt" | "de";
 export default function I18nProvider({ children }: { children: ReactNode }) {
   const [locale, setLocale] = useState<Locale>("en");
   const [messages, setMessages] = useState<any>(null);
-  const [reload] = useAtom(localeReloadAtom); // depende do atom
+  const [reload] = useAtom(localeReloadAtom);
 
   useEffect(() => {
-    const stored = localStorage.getItem("locale");
-    const validLocale: Locale =
-      stored === "pt" || stored === "de" ? stored : "en";
+    const stored = localStorage.getItem("locale") as Locale | null;
+
+    let validLocale: Locale;
+
+    if (stored === "pt" || stored === "de") {
+      validLocale = stored;
+    } else {
+      const browserLang = navigator.language.slice(0, 2);
+      validLocale =
+        browserLang === "pt" || browserLang === "de"
+          ? (browserLang as Locale)
+          : "en";
+    }
+
     setLocale(validLocale);
 
     import(`./messages/${validLocale}.json`).then((mod) => {

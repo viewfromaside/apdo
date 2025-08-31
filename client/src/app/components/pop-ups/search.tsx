@@ -33,7 +33,7 @@ export const PopupSearch = ({
 
   const handleSubmit = () => {
     if (!searchValue) {
-      toast.error("try to search something", ToastMinimumStyle);
+      toast.error(t("popups.errors.fieldsMissing"), ToastMinimumStyle);
       return;
     }
     togglePopup("notes");

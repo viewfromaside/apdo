@@ -40,7 +40,7 @@ export const PopupCreateNote = ({
 
   const handleSubmit = () => {
     if (!formObject.title || !formObject.visibility)
-      return toast.error("complete this, aight?", ToastErrorStyle);
+      return toast.error(t("popups.errors.fieldsMissing"), ToastErrorStyle);
 
     createNote(formObject);
 

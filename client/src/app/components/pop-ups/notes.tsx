@@ -30,6 +30,7 @@ export const PopupNotes = ({
   searchValue,
   ...props
 }: PopupNotesProps) => {
+  const [backup, setBackup] = useState<Note[]>([]);
   const [notes, setNotes] = useState<Note[]>([]);
   const noteService = useAtomValue(noteServiceAtom);
   const openPopups = useAtomValue(openPopupsAtom);
@@ -40,6 +41,7 @@ export const PopupNotes = ({
       async function getData() {
         if (!noteService) return;
         const response = await noteService.sendFindManyOnlyPublic();
+        setBackup(response);
         setNotes(response);
       }
       getData();
@@ -58,14 +60,19 @@ export const PopupNotes = ({
             contentClassName
           )}
         >
-          {notes.map((note: Note) => (
-            <Card
-              key={`search-${note.id}`}
-              model={note}
-              title={`${note.createdBy}/${note.title}`}
-              className="shadow-md border border-neutral/10 mb-2"
-            ></Card>
-          ))}
+          {notes
+            .filter((n) => {
+              let displayName = `${n.createdBy}/${n.title}`;
+              return displayName.includes(searchValue);
+            })
+            .map((note: Note) => (
+              <Card
+                key={`search-${note.id}`}
+                model={note}
+                title={`${note.createdBy}/${note.title}`}
+                className="shadow-md border border-neutral/10 mb-2"
+              ></Card>
+            ))}
         </DialogContent>
       </DialogBody>
     </Dialog>

@@ -5,7 +5,7 @@ import { Button } from "../button";
 import { PopupProps } from ".";
 import { useAtomValue } from "jotai";
 import { selectedNoteAtom } from "@/store";
-import { getUser } from "@/store/user";
+import { getUser, verifyItsLogged } from "@/store/user";
 import { useTranslations } from "next-intl";
 
 type callbacksType = {
@@ -59,16 +59,18 @@ export const PopupSettings = ({
               </Button>
             </>
           )}
-          <Button
-            onClick={() => {
-              callbacks?.search && callbacks.search();
-              toggle();
-            }}
-            className="text-[16px]"
-            variant="ghost"
-          >
-            {t("popups.settings.search")}
-          </Button>
+          {verifyItsLogged() && (
+            <Button
+              onClick={() => {
+                callbacks?.search && callbacks.search();
+                toggle();
+              }}
+              className="text-[16px]"
+              variant="ghost"
+            >
+              {t("popups.settings.search")}
+            </Button>
+          )}
           <Button
             onClick={() => {
               callbacks?.appearence && callbacks.appearence();
@@ -79,16 +81,18 @@ export const PopupSettings = ({
           >
             {t("popups.settings.appearence")}
           </Button>
-          <Button
-            onClick={() => {
-              callbacks?.logout && callbacks.logout();
-              toggle();
-            }}
-            className="text-[16px]"
-            variant="ghost"
-          >
-            {t("popups.settings.logout")}
-          </Button>
+          {verifyItsLogged() && (
+            <Button
+              onClick={() => {
+                callbacks?.logout && callbacks.logout();
+                toggle();
+              }}
+              className="text-[16px]"
+              variant="ghost"
+            >
+              {t("popups.settings.logout")}
+            </Button>
+          )}
         </DialogContent>
       </DialogBody>
     </Dialog>

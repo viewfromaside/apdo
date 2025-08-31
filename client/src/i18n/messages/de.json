@@ -49,14 +49,14 @@
       "search": {
         "title": "wo suchst du?",
         "submit": "suchen",
-        "placeholder": "notizname"
+        "placeholder": "notizname oder autor"
       },
       "alert": {
         "title": "achtung"
       },
       "errors": {
         "incorrectCredentials": "falsche daten",
-        "fieldsMissing": "felder fehlen",
+        "fieldsMissing": "mach das fertig, klar?",
         "differentPasswords": "passwörter stimmen nicht überein"
       },
       "appearence": {

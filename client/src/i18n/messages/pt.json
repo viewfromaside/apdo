@@ -1,6 +1,6 @@
 {
   "home": {
-    "signInTitle": "entrar, beleza?",
+    "signInTitle": "entra ai po",
     "signUpTitle": "chega aí, junta-se à galera"
   },
   "form": {
@@ -49,14 +49,14 @@
       "search": {
         "title": "oq ta procurando?",
         "submit": "buscar",
-        "placeholder": "nome da nota"
+        "placeholder": "nome da nota ou autor"
       },
       "alert": {
         "title": "alerta"
       },
       "errors": {
         "incorrectCredentials": "credenciais incorretas",
-        "fieldsMissing": "campos faltando",
+        "fieldsMissing": "preenche os campos, irmão",
         "differentPasswords": "as senhas não são iguais"
       },
       "appearence": {
