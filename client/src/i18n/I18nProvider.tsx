@@ -13,18 +13,9 @@ export default function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const stored = localStorage.getItem("locale") as Locale | null;
-
-    let validLocale: Locale;
-
-    if (stored === "pt" || stored === "de") {
-      validLocale = stored;
-    } else {
-      const browserLang = navigator.language.slice(0, 2);
-      validLocale =
-        browserLang === "pt" || browserLang === "de"
-          ? (browserLang as Locale)
-          : "en";
-    }
+    const validLocale: Locale = ["pt", "en", "de"].includes(stored as Locale)
+      ? (stored as Locale)
+      : "en";
 
     setLocale(validLocale);
 
