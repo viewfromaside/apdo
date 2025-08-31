@@ -10,6 +10,7 @@ import { NoteVisibility } from "@/shared";
 import { useSetAtom } from "jotai";
 import { setSelectedNoteAtom } from "@/store";
 import { closeAllPopupAtom } from "@/store/pop-up";
+import { useTranslations } from "next-intl";
 
 type CardProps = ComponentProps<"div"> & {
   model: Note;
@@ -23,8 +24,8 @@ export const Card = ({
   title,
   ...props
 }: CardProps) => {
+  const t = useTranslations("general");
   const router = useRouter();
-  const setSelectedNote = useSetAtom(setSelectedNoteAtom);
   const closeAllPopups = useSetAtom(closeAllPopupAtom);
 
   const goToNote = () => {
@@ -50,9 +51,17 @@ export const Card = ({
         </div>
         <div className="flex flex-row mt-2 gap-1">
           {model.visibility === NoteVisibility.PUBLIC ? (
-            <Tag color="[#27BEF5]" icon={LockOpenIcon} label="public" />
+            <Tag
+              color="[#27BEF5]"
+              icon={LockOpenIcon}
+              label={t("notes.attributes.public")}
+            />
           ) : (
-            <Tag color="[#EB3C1A]" icon={LockIcon} label="private" />
+            <Tag
+              color="[#EB3C1A]"
+              icon={LockIcon}
+              label={t("notes.attributes.public")}
+            />
           )}
         </div>
       </div>

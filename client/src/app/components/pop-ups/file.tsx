@@ -13,6 +13,7 @@ import { Button } from "../button";
 import { PopupProps } from ".";
 import { useAtom, useAtomValue } from "jotai";
 import { selectedNoteAtom } from "@/store";
+import { useTranslations } from "next-intl";
 
 type callbacksType = {
   rename?: () => void;
@@ -31,6 +32,7 @@ export const PopupFile = ({
   callbacks,
   ...props
 }: PopupFileProps) => {
+  const t = useTranslations("general");
   return (
     <Dialog
       open={open}
@@ -54,7 +56,7 @@ export const PopupFile = ({
             className="text-[16px]"
             variant="ghost"
           >
-            rename
+            {t("popups.file.rename")}
           </Button>
           <Button
             onClick={() => {
@@ -64,7 +66,7 @@ export const PopupFile = ({
             className="text-[16px]"
             variant="ghost"
           >
-            exclude
+            {t("popups.file.exclude")}
           </Button>
         </DialogContent>
       </DialogBody>

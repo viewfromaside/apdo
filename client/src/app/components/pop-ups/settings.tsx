@@ -6,6 +6,7 @@ import { PopupProps } from ".";
 import { useAtomValue } from "jotai";
 import { selectedNoteAtom } from "@/store";
 import { getUser } from "@/store/user";
+import { useTranslations } from "next-intl";
 
 type callbacksType = {
   search?: () => void;
@@ -27,6 +28,7 @@ export const PopupSettings = ({
   callbacks,
   ...props
 }: PopupSettingsProps) => {
+  const t = useTranslations("general");
   const selectedNote = useAtomValue(selectedNoteAtom);
   return (
     <Dialog
@@ -53,7 +55,7 @@ export const PopupSettings = ({
                 className="text-[16px]"
                 variant="ghost"
               >
-                file
+                {t("popups.settings.file")}
               </Button>
             </>
           )}
@@ -65,7 +67,7 @@ export const PopupSettings = ({
             className="text-[16px]"
             variant="ghost"
           >
-            search
+            {t("popups.settings.search")}
           </Button>
           <Button
             onClick={() => {
@@ -75,7 +77,7 @@ export const PopupSettings = ({
             className="text-[16px]"
             variant="ghost"
           >
-            appearence
+            {t("popups.settings.appearence")}
           </Button>
           <Button
             onClick={() => {
@@ -85,7 +87,7 @@ export const PopupSettings = ({
             className="text-[16px]"
             variant="ghost"
           >
-            logout
+            {t("popups.settings.logout")}
           </Button>
         </DialogContent>
       </DialogBody>

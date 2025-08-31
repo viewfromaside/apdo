@@ -7,8 +7,10 @@ import gsap from "gsap";
 import { GoSignUp } from "./components/account/go-sign-up";
 import { verifyItsLogged } from "../store/user";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
+  const t = useTranslations("home");
   const buttonRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
@@ -44,7 +46,7 @@ export default function Home() {
         <div className="flex flex-col gap-2">
           <Link href={"/account/sign-in"}>
             <Button ref={buttonRef} className="text-[14px] opacity-0">
-              sign in, aight?
+              {t("signInTitle")}
             </Button>
           </Link>
           <GoSignUp />

@@ -12,6 +12,7 @@ import { useSetAtom } from "jotai";
 import { createNoteAtom } from "@/store";
 import { toast } from "sonner";
 import { useKeyboardShortcut } from "@/hooks";
+import { useTranslations } from "next-intl";
 
 export const PopupCreateNote = ({
   open,
@@ -20,6 +21,7 @@ export const PopupCreateNote = ({
   dialogClassName,
   ...props
 }: PopupProps) => {
+  const t = useTranslations("general");
   const [formObject, setFormObject] = useState<Note>(new Note({}));
   const createNote = useSetAtom(createNoteAtom);
 
@@ -62,7 +64,7 @@ export const PopupCreateNote = ({
         >
           <Input
             autoFocus
-            placeholder="note name"
+            placeholder={t("popups.createNote.placeholder")}
             className="mb-2"
             value={formObject.title || ""}
             onChange={(e) => handleChange("title", e.target.value)}
@@ -78,7 +80,7 @@ export const PopupCreateNote = ({
               className="w-full"
               onClick={() => handleChange("visibility", NoteVisibility.PUBLIC)}
             >
-              public
+              {t("popups.createNote.attributes.public")}
             </Button>
             <Button
               variant={
@@ -89,11 +91,13 @@ export const PopupCreateNote = ({
               className="w-full"
               onClick={() => handleChange("visibility", NoteVisibility.PRIVATE)}
             >
-              private
+              {t("popups.createNote.attributes.private")}
             </Button>
           </div>
 
-          <Button onClick={handleSubmit}>do it</Button>
+          <Button onClick={handleSubmit}>
+            {t("popups.createNote.submit")}
+          </Button>
         </DialogContent>
       </DialogBody>
     </Dialog>

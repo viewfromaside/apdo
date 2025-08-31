@@ -23,14 +23,14 @@ export const DialogHeader = ({
       )}
       {...props}
     >
-      <div className={twMerge("flex-1 font-mono text-center", textClassName)}>
+      <div className={twMerge(`flex-1 font-mono text-start`, textClassName)}>
         {children}
       </div>
       {!required && (
         <DialogClose
           className={`${!children && "absolute top-[0.7rem] right-[0.7rem]"}`}
         >
-          <XIcon size={14} />
+          <XIcon size={18} />
         </DialogClose>
       )}
     </div>

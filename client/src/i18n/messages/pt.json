@@ -1,0 +1,98 @@
+{
+  "home": {
+    "signInTitle": "entrar, beleza?",
+    "signUpTitle": "chega aí, junta-se à galera"
+  },
+  "form": {
+    "username": "nome de usuário",
+    "email": "email",
+    "password": "senha",
+    "confirmPassword": "confirma senha",
+    "submit": "manda ver",
+    "goSignIn": "de volta? passa aqui",
+    "goSignUp": "chega aí, junta-se à galera"
+  },
+  "general": {
+    "main": {
+      "header": {
+        "createNote": "criar nota"
+      }
+    },
+    "popups": {
+      "settings": {
+        "file": "arquivo",
+        "search": "buscar",
+        "appearence": "visual",
+        "logout": "sair"
+      },
+      "file": {
+        "rename": "renomear",
+        "exclude": "excluir"
+      },
+      "createNote": {
+        "placeholder": "nome da nota",
+        "attributes": {
+          "public": "pública",
+          "private": "privada"
+        },
+        "submit": "manda ver"
+      },
+      "rename": {
+        "title": "ta indeciso?",
+        "placeholder": "novo nome da nota",
+        "submit": "manda ver"
+      },
+      "exclude": {
+        "title": "tem certeza?",
+        "submit": "manda ver"
+      },
+      "search": {
+        "title": "oq ta procurando?",
+        "submit": "buscar",
+        "placeholder": "nome da nota"
+      },
+      "alert": {
+        "title": "alerta"
+      },
+      "errors": {
+        "incorrectCredentials": "credenciais incorretas",
+        "fieldsMissing": "campos faltando",
+        "differentPasswords": "as senhas não são iguais"
+      },
+      "appearence": {
+        "title": "visual",
+        "submit": "salvar",
+        "reset": "reseta essa bomba",
+        "attributes": {
+          "en": "inglês",
+          "pt": "português",
+          "de": "alemão",
+          "neutral": "cor neutra",
+          "background": "cor de fundo",
+          "accent": "cor de destaque"
+        }
+      }
+    },
+    "notes": {
+      "noContent": {
+        "primaryTitle": "E aí, você chegou",
+        "secondaryTitle": "Todas as notas, do seu jeito — moderno, sem enrolação",
+        "createNote": "crie uma nova",
+        "changeAppearence": "defina seu estilo"
+      },
+      "home": {
+        "primaryTitle": "aqui estão minhas notas"
+      },
+      "attributes": {
+        "title": "título",
+        "content": "conteúdo",
+        "public": "pública",
+        "private": "privada",
+        "visibility": "visibilidade"
+      }
+    },
+    "editor": {
+      "save": "trancado, sem enrolação"
+    }
+  }
+}

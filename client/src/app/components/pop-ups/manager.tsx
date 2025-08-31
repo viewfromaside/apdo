@@ -106,6 +106,7 @@ export const PopupManager = () => {
       />
 
       <PopupExclude
+        contentClassName="w-[150px]"
         open={openPopups.exclude}
         toggle={() => togglePopup("exclude")}
       />

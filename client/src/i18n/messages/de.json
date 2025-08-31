@@ -1,0 +1,98 @@
+{
+  "home": {
+    "signInTitle": "einloggen, alles klar?",
+    "signUpTitle": "komm rein, join der crew"
+  },
+  "form": {
+    "username": "benutzername",
+    "email": "email",
+    "password": "passwort",
+    "confirmPassword": "passwort bestätigen",
+    "submit": "los geht's",
+    "goSignIn": "wieder da? rutsch rein",
+    "goSignUp": "komm rein, join der crew"
+  },
+  "general": {
+    "main": {
+      "header": {
+        "createNote": "notiz erstellen"
+      }
+    },
+    "popups": {
+      "settings": {
+        "file": "datei",
+        "search": "suche",
+        "appearence": "optik",
+        "logout": "ausloggen"
+      },
+      "file": {
+        "rename": "umbenennen",
+        "exclude": "löschen"
+      },
+      "createNote": {
+        "placeholder": "notizname",
+        "attributes": {
+          "public": "öffentlich",
+          "private": "privat"
+        },
+        "submit": "mach mal"
+      },
+      "rename": {
+        "title": "verwirrt? okay",
+        "placeholder": "neuer notizname",
+        "submit": "mach mal"
+      },
+      "exclude": {
+        "title": "bist du sicher?",
+        "submit": "mach mal"
+      },
+      "search": {
+        "title": "wo suchst du?",
+        "submit": "suchen",
+        "placeholder": "notizname"
+      },
+      "alert": {
+        "title": "achtung"
+      },
+      "errors": {
+        "incorrectCredentials": "falsche daten",
+        "fieldsMissing": "felder fehlen",
+        "differentPasswords": "passwörter stimmen nicht überein"
+      },
+      "appearence": {
+        "title": "optik",
+        "submit": "speichern",
+        "reset": "zurücksetzen bitte",
+        "attributes": {
+          "en": "englisch",
+          "pt": "portugiesisch",
+          "de": "deutsch",
+          "neutral": "neutrale farbe",
+          "background": "hintergrundfarbe",
+          "accent": "akzentfarbe"
+        }
+      }
+    },
+    "notes": {
+      "noContent": {
+        "primaryTitle": "hey, du hast’s geschafft",
+        "secondaryTitle": "Alle Notizen, dein style — modern, kein Blabla",
+        "createNote": "werf ne frische rein",
+        "changeAppearence": "setz deine vibes"
+      },
+      "home": {
+        "primaryTitle": "also hier sind meine notizen"
+      },
+      "attributes": {
+        "title": "titel",
+        "content": "inhalt",
+        "public": "öffentlich",
+        "private": "privat",
+        "visibility": "sichtbarkeit"
+      }
+    },
+    "editor": {
+      "save": "gesperrt, kein Blabla"
+    }
+  }
+}

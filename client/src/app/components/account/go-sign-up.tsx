@@ -1,10 +1,12 @@
 "use client";
 
 import gsap from "gsap";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
 export const GoSignUp = () => {
+  const t = useTranslations("home");
   const linkRef = useRef<HTMLAnchorElement>(null);
   useEffect(() => {
     if (!linkRef.current) return;
@@ -29,10 +31,10 @@ export const GoSignUp = () => {
   return (
     <Link
       ref={linkRef}
-      className="text-[13px] duration-300 opacity-0 hover:text-accent text-dark-secondary font-mono tracking-wide transform transition-all hover:translate-x-1"
+      className="text-[13px] text-center duration-300 opacity-0 hover:text-accent text-dark-secondary font-mono tracking-wide transform transition-all hover:translate-x-1"
       href={"/account/sign-up"}
     >
-      slide in, join the crew
+      {t("signUpTitle")}
     </Link>
   );
 };

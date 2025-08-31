@@ -11,6 +11,7 @@ import { deleteNoteAtom, selectedNoteAtom } from "@/store";
 import { toast } from "sonner";
 import { ToastSuccessStyle } from "@/shared";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export const PopupExclude = ({
   open,
@@ -19,7 +20,7 @@ export const PopupExclude = ({
   dialogClassName,
   ...props
 }: PopupProps) => {
-  const selectedNote = useAtomValue(selectedNoteAtom);
+  const t = useTranslations("general");
   const deleteNote = useSetAtom(deleteNoteAtom);
   const router = useRouter();
 
@@ -41,12 +42,12 @@ export const PopupExclude = ({
     <Dialog open={open} toggle={toggle} {...props}>
       <DialogBody draggable mainClassName={dialogClassName}>
         <DialogHeader textClassName="text-start">
-          <Tag label="are u sure?" />
+          <Tag label={t("popups.exclude.title")} />
         </DialogHeader>
         <DialogContent
           className={twMerge("flex flex-col w-full h-full", contentClassName)}
         >
-          <Button onClick={handleSubmit}>do it</Button>
+          <Button onClick={handleSubmit}>{t("popups.exclude.submit")}</Button>
         </DialogContent>
       </DialogBody>
     </Dialog>

@@ -18,12 +18,14 @@ import { togglePopupAtom } from "@/store/pop-up";
 import { useRouter } from "next/navigation";
 import { getUser, verifyItsLogged } from "@/store/user";
 import { Note, NoteRequest } from "@/services";
+import { useTranslations } from "next-intl";
 
 export default function NoteHome({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const t = useTranslations("general");
   const unwrappedParams = use(params);
   const id = unwrappedParams.id;
 
@@ -103,7 +105,7 @@ export default function NoteHome({
       });
 
       setSaved(true);
-      toast("locked up, no cap", {
+      toast(t("editor.save"), {
         style: { width: "fit-content", paddingTop: 12, paddingBottom: 12 },
       });
     } catch (error) {
@@ -160,7 +162,7 @@ export default function NoteHome({
             />
           )
         ) : (
-          <div className="flex justify-center items-center">Carregando...</div>
+          <div className="flex justify-center items-center"></div>
         )}
 
         <UnsavedBottomBar show={!saved} />

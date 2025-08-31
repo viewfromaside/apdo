@@ -12,6 +12,7 @@ import { Tag } from "../tag";
 import { useKeyboardShortcut } from "@/hooks";
 import { toast } from "sonner";
 import { ToastMinimumStyle } from "@/shared";
+import { useTranslations } from "next-intl";
 
 type PopupSearchProps = PopupProps & {
   searchValue: string;
@@ -27,6 +28,7 @@ export const PopupSearch = ({
   searchValue,
   ...props
 }: PopupSearchProps) => {
+  const t = useTranslations("general");
   const togglePopup = useSetAtom(togglePopupAtom);
 
   const handleSubmit = () => {
@@ -48,7 +50,7 @@ export const PopupSearch = ({
     <Dialog open={open} toggle={toggle} {...props}>
       <DialogBody draggable mainClassName={dialogClassName}>
         <DialogHeader textClassName="text-start">
-          <Tag label="where u lookin at" />
+          <Tag label={t("popups.search.title")} />
         </DialogHeader>
         <DialogContent
           className={twMerge("flex flex-col w-full h-full", contentClassName)}
@@ -57,10 +59,10 @@ export const PopupSearch = ({
             autoFocus
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
-            placeholder="note name or author"
+            placeholder={t("popups.search.placeholder")}
             className="mb-2"
           />
-          <Button onClick={handleSubmit}>search</Button>
+          <Button onClick={handleSubmit}>{t("popups.search.submit")}</Button>
         </DialogContent>
       </DialogBody>
     </Dialog>

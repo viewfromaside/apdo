@@ -16,8 +16,10 @@ import gsap from "gsap";
 import { useRouter } from "next/navigation";
 import { getUser, verifyItsLogged } from "@/store/user";
 import { ColorRequest } from "@/services/requests/color";
+import { useTranslations } from "next-intl";
 
 export default function NotesHome() {
+  const t = useTranslations("general");
   let notes = useAtomValue(notesAtom);
   const [loading, setLoading] = useState<boolean>(true);
   const selectNote = useSetAtom(setSelectedNoteAtom);
@@ -159,7 +161,7 @@ export default function NotesHome() {
           <div ref={buttonsRef} className="flex flex-row gap-4">
             {notes.length > 0 && (
               <Button onClick={() => togglePopup("createNote")}>
-                create note
+                {t("main.header.createNote")}
               </Button>
             )}
             <NoteSettings onClick={() => togglePopup("settings")} />
@@ -176,7 +178,7 @@ export default function NotesHome() {
                 ref={titleRef}
                 className="md:text-[32px] font-extrabold text-accent"
               >
-                so there are my notes
+                {t("notes.home.primaryTitle")}
               </h2>
               <div ref={notesListRef} className="flex flex-col gap-2">
                 {notes.map((note: Note) => (

@@ -1,0 +1,98 @@
+{
+  "home": {
+    "signInTitle": "sign in, aight?",
+    "signUpTitle": "slide in, join the crew"
+  },
+  "form": {
+    "username": "username",
+    "email": "email",
+    "password": "password",
+    "confirmPassword": "confirm password",
+    "submit": "hop on",
+    "goSignIn": "back again? slide thru",
+    "goSignUp": "slide in, join the crew"
+  },
+  "general": {
+    "main": {
+      "header": {
+        "createNote": "create note"
+      }
+    },
+    "popups": {
+      "settings": {
+        "file": "file",
+        "search": "search",
+        "appearence": "appearence",
+        "logout": "logout"
+      },
+      "file": {
+        "rename": "rename",
+        "exclude": "exclude"
+      },
+      "createNote": {
+        "placeholder": "note name",
+        "attributes": {
+          "public": "public",
+          "private": "private"
+        },
+        "submit": "do it"
+      },
+      "rename": {
+        "title": "so u confused?",
+        "placeholder": "new note name",
+        "submit": "do it"
+      },
+      "exclude": {
+        "title": "are u sure?",
+        "submit": "do it"
+      },
+      "search": {
+        "title": "where u lookin at",
+        "submit": "search",
+        "placeholder": "note name"
+      },
+      "alert": {
+        "title": "alert"
+      },
+      "errors": {
+        "incorrectCredentials": "incorrect credencials",
+        "fieldsMissing": "fields missing",
+        "differentPasswords": "the passwords are not the same"
+      },
+      "appearence": {
+        "title": "appearence",
+        "submit": "save it",
+        "reset": "i want that back",
+        "attributes": {
+          "en": "english",
+          "pt": "portuguese",
+          "de": "deutsch",
+          "neutral": "neutral color",
+          "background": "background color",
+          "accent": "accent color"
+        }
+      }
+    },
+    "notes": {
+      "noContent": {
+        "primaryTitle": "Ayy, you made it",
+        "secondaryTitle": "All the notes, your way — modern, no cap",
+        "createNote": "drop a fresh one",
+        "changeAppearence": "set ya vibe"
+      },
+      "home": {
+        "primaryTitle": "so there are my notes"
+      },
+      "attributes": {
+        "title": "title",
+        "content": "content",
+        "public": "public",
+        "private": "private",
+        "visibility": "visibility"
+      }
+    },
+    "editor": {
+      "save": "locked up, no cap"
+    }
+  }
+}

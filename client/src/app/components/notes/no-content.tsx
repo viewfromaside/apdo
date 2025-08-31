@@ -6,10 +6,12 @@ import { Button } from "../button";
 import { useSetAtom } from "jotai";
 import { togglePopupAtom } from "@/store/pop-up";
 import gsap from "gsap";
+import { useTranslations } from "next-intl";
 
 type NoContentProps = ComponentProps<"div"> & {};
 
 export const NoContent = ({ className, ...props }: NoContentProps) => {
+  const t = useTranslations("general");
   const togglePopup = useSetAtom(togglePopupAtom);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -90,23 +92,23 @@ export const NoContent = ({ className, ...props }: NoContentProps) => {
         ref={titleRef}
         className="text-[32px] md:text-[42px] font-bold text-accent"
       >
-        Ayy, you made it
+        {t("notes.noContent.primaryTitle")}
       </h2>
       <span ref={subtitleRef} className="text-[14px] text-neutral -mt-1">
-        All the notes, your way — modern, no cap
+        {t("notes.noContent.secondaryTitle")}
       </span>
       <div ref={buttonsRef} className="flex flex-row mt-5 gap-4">
         <Button
           onClick={() => togglePopup("createNote")}
           className="bg-green-800 hover:bg-green-500 !text-neutral hover:text-neutral"
         >
-          drop a fresh one
+          {t("notes.noContent.createNote")}
         </Button>
         <Button
           onClick={() => togglePopup("appearence")}
           className="hover:bg-accent"
         >
-          set ya vibe
+          {t("notes.noContent.changeAppearence")}
         </Button>
       </div>
     </div>

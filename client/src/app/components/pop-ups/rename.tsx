@@ -11,6 +11,7 @@ import { togglePopupAtom } from "@/store/pop-up";
 import { Tag } from "../tag";
 import { useKeyboardShortcut } from "@/hooks";
 import { saveNoteAtom, selectedNoteAtom } from "@/store";
+import { useTranslations } from "next-intl";
 
 export const PopupRename = ({
   open,
@@ -19,7 +20,7 @@ export const PopupRename = ({
   dialogClassName,
   ...props
 }: PopupProps) => {
-  const togglePopup = useSetAtom(togglePopupAtom);
+  const t = useTranslations("general");
   const selectedNote = useAtomValue(selectedNoteAtom);
   const saveNote = useSetAtom(saveNoteAtom);
   const [newTitle, setNewTitle] = useState<string>("");
@@ -51,7 +52,7 @@ export const PopupRename = ({
     <Dialog open={open} toggle={toggle} {...props}>
       <DialogBody draggable mainClassName={dialogClassName}>
         <DialogHeader textClassName="text-start">
-          <Tag label="so u confused?" />
+          <Tag label={t("popups.rename.title")} />
         </DialogHeader>
         <DialogContent
           className={twMerge("flex flex-col w-full h-full", contentClassName)}
@@ -60,10 +61,10 @@ export const PopupRename = ({
             autoFocus
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
-            placeholder="new note name"
+            placeholder={t("popups.rename.placeholder")}
             className="mb-2"
           />
-          <Button onClick={handleSubmit}>do it</Button>
+          <Button onClick={handleSubmit}>{t("popups.rename.submit")}</Button>
         </DialogContent>
       </DialogBody>
     </Dialog>

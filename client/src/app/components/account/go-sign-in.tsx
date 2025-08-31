@@ -1,10 +1,12 @@
 "use client";
 
 import gsap from "gsap";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 
 export const GoSignIn = () => {
+  const t = useTranslations("form");
   const linkRef = useRef<HTMLAnchorElement>(null);
   useEffect(() => {
     if (!linkRef.current) return;
@@ -32,7 +34,7 @@ export const GoSignIn = () => {
       className="text-[13px] duration-300 opacity-0 hover:text-accent text-dark-secondary font-mono tracking-wide transform transition-all hover:translate-x-1"
       href={"/account/sign-in"}
     >
-      back again? slide thru
+      {t("goSignIn")}
     </Link>
   );
 };

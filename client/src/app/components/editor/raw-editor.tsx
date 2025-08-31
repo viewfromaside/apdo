@@ -1,6 +1,6 @@
 import { ComponentProps, Dispatch, SetStateAction } from "react";
 import { twMerge } from "tailwind-merge";
-import "@/app/assets/mdxeditor.css";
+import "@/assets/mdxeditor.css";
 
 type RawEditorProps = ComponentProps<"textarea"> & {
   content: string;

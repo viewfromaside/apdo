@@ -15,6 +15,9 @@ import { ColorRequest } from "@/services";
 import { getUser } from "@/store/user";
 import { Color } from "@/services";
 import { DE, US, BR } from "country-flag-icons/react/3x2";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { localeReloadAtom } from "@/store/reload";
 
 type PopupAppearenceProps = PopupProps & {};
 
@@ -25,8 +28,11 @@ export const PopupAppearence = ({
   dialogClassName,
   ...props
 }: PopupAppearenceProps) => {
+  const router = useRouter();
+  const t = useTranslations("general");
   const openPopups = useAtomValue(openPopupsAtom);
   const closeAllPopups = useSetAtom(closeAllPopupAtom);
+  const [, setReload] = useAtom(localeReloadAtom);
   const [language, setLanguage] = useState<"de" | "pt" | "en">("en");
   const [themeColors, setThemeColors] = useAtom(themeColorsAtom);
   const [openPickers, setOpenPickers] = useState<Record<ColorKey, boolean>>({
@@ -34,6 +40,12 @@ export const PopupAppearence = ({
     background: false,
     accent: false,
   });
+
+  function changeLanguage(lang: "de" | "pt" | "en") {
+    localStorage.setItem("locale", lang);
+    setLanguage(lang);
+    setReload((prev) => prev + 1);
+  }
 
   useEffect(() => {
     if (openPopups.appearence) {
@@ -56,6 +68,12 @@ export const PopupAppearence = ({
             accent: asColor.accentColor,
           };
         });
+      }
+      const locale = localStorage.getItem("locale");
+      if (locale === "de" || locale === "pt" || locale === "en") {
+        setLanguage(locale);
+      } else {
+        setLanguage("en");
       }
       getData();
     }
@@ -106,9 +124,9 @@ export const PopupAppearence = ({
   };
 
   const colorLabels: Record<ColorKey, string> = {
-    neutral: "neutral color",
-    background: "background color",
-    accent: "accent color",
+    neutral: t("popups.appearence.attributes.neutral"),
+    background: t("popups.appearence.attributes.background"),
+    accent: t("popups.appearence.attributes.accent"),
   };
 
   const languageButtonClassName = "w-full flex flex-row gap-2 justify-center";
@@ -117,7 +135,11 @@ export const PopupAppearence = ({
     <Dialog open={open} toggle={toggle} {...props} className={twMerge("")}>
       <DialogBody mainClassName="!bg-[#1e1e1e] border-[#ffb86c]/20">
         <DialogHeader className="bg-[#1e1e1e]">
-          <Tag icon={PaletteIcon} color="" label="appearence" />
+          <Tag
+            icon={PaletteIcon}
+            color=""
+            label={t("popups.appearence.title")}
+          />
         </DialogHeader>
         <DialogContent
           className={twMerge(
@@ -125,31 +147,31 @@ export const PopupAppearence = ({
             contentClassName
           )}
         >
-          <div className="flex -mt-6 flex-col gap-2 mb-3">
+          <div className="flex flex-col gap-2 mb-3">
             <div className="flex flex-col w-full font-mono gap-2">
               <Button
                 className={languageButtonClassName}
-                onClick={() => setLanguage("de")}
+                onClick={() => changeLanguage("de")}
                 variant={language == "de" ? "primary" : "secondary"}
               >
                 <DE className="w-5 rounded-md" />
-                <span>deutsch</span>
+                <span>{t("popups.appearence.attributes.de")}</span>
               </Button>
               <Button
                 className={languageButtonClassName}
-                onClick={() => setLanguage("en")}
+                onClick={() => changeLanguage("en")}
                 variant={language == "en" ? "primary" : "secondary"}
               >
                 <US className="w-5 rounded-md" />
-                <span>english</span>
+                <span>{t("popups.appearence.attributes.en")}</span>
               </Button>
               <Button
                 className={languageButtonClassName}
-                onClick={() => setLanguage("pt")}
+                onClick={() => changeLanguage("pt")}
                 variant={language == "pt" ? "primary" : "secondary"}
               >
                 <BR className="w-5 rounded-md" />
-                <span>portuguese</span>
+                <span>{t("popups.appearence.attributes.pt")}</span>
               </Button>
             </div>
           </div>
@@ -166,9 +188,11 @@ export const PopupAppearence = ({
                 onToggle={() => togglePicker(key as ColorKey)}
               />
             ))}
-            <Button onClick={handleSubmit}>save it</Button>
+            <Button onClick={handleSubmit}>
+              {t("popups.appearence.submit")}
+            </Button>
             <Button variant="secondary" onClick={handleReset}>
-              i want that back
+              {t("popups.appearence.reset")}
             </Button>
           </div>
         </DialogContent>

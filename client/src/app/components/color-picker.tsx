@@ -54,7 +54,7 @@ export const ColorPicker = ({
       </Button>
 
       {isOpen && (
-        <div className="absolute w-full z-50 mt-2 p-3 bg-dark-background border border-gray-400/10 rounded-lg shadow-lg">
+        <div className="absolute w-full z-50 mt-2 p-3 bg-[#1e1e1e] border border-gray-400/10 rounded-lg shadow-lg">
           <div className="space-y-3">
             <HexColorPicker
               color={color}

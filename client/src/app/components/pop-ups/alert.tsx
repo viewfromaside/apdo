@@ -9,6 +9,7 @@ import { Tag } from "../tag";
 import { useKeyboardShortcut } from "@/hooks";
 import { deleteNoteAtom, selectedNoteAtom } from "@/store";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export const PopupAlert = ({
   open,
@@ -17,12 +18,11 @@ export const PopupAlert = ({
   dialogClassName,
   ...props
 }: PopupProps) => {
+  const t = useTranslations("general");
   const alertPopupText = useAtomValue(alertPopupTextAtom);
-  const selectedNote = useAtomValue(selectedNoteAtom);
-  const deleteNote = useSetAtom(deleteNoteAtom);
-  const router = useRouter();
 
   const handleSubmit = () => {
+    console.log("opa");
     toggle();
   };
 
@@ -37,7 +37,7 @@ export const PopupAlert = ({
     <Dialog open={open} toggle={toggle} {...props}>
       <DialogBody draggable mainClassName={dialogClassName}>
         <DialogHeader textClassName="text-start">
-          <Tag label="alert" />
+          <Tag label={t("popups.alert.title")} />
         </DialogHeader>
         <DialogContent
           className={twMerge("flex flex-col w-full h-full", contentClassName)}
