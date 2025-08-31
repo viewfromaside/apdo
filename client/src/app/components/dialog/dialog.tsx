@@ -38,7 +38,6 @@ export const Dialog = ({
   const animationRef = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
-    // Mata qualquer animação anterior
     if (animationRef.current) {
       animationRef.current.kill();
     }
@@ -57,7 +56,6 @@ export const Dialog = ({
 
   useEffect(() => {
     if (render && dialogRef.current && open) {
-      // Mata animação anterior se existir
       if (animationRef.current) {
         animationRef.current.kill();
       }
@@ -70,7 +68,6 @@ export const Dialog = ({
     }
   }, [render, open]);
 
-  // Cleanup
   useEffect(() => {
     return () => {
       if (animationRef.current) {
