@@ -19,6 +19,7 @@ type callbacksType = {
   appearence?: () => void;
   fileSettings?: () => void;
   report?: () => void;
+  logout?: () => void;
 };
 
 type PopupSettingsProps = PopupProps & {
@@ -83,6 +84,16 @@ export const PopupSettings = ({
             variant="ghost"
           >
             appearence
+          </Button>
+          <Button
+            onClick={() => {
+              callbacks?.logout && callbacks.logout();
+              toggle();
+            }}
+            className="text-[16px]"
+            variant="ghost"
+          >
+            logout
           </Button>
         </DialogContent>
       </DialogBody>

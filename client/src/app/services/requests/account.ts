@@ -8,31 +8,31 @@ export class AccountRequest extends BaseRequest<User> {
     super("/account");
   }
 
-  async sendRegister(data: Partial<User>): Promise<User> {
-    const { data: res, status } = await this.client.post<User>(
-      `/register`,
-      data.getObjectForCreate!()
-    );
-    if (status >= 200 && status < 300) {
-      toast.success("Success!", {
-        description: "The operation completed successfully.",
-        duration: 3000,
-      });
-    } else {
-      toast.error("Error", {
-        description: "Internal error, please contact support.",
-        duration: 5000,
-      });
-    }
+  async sendRegister(data: Partial<User>): Promise<AxiosResponse | null> {
+    try {
+      const response = await this.client.post<User>(
+        `/register`,
+        data.getObjectForCreate!()
+      );
 
-    return res;
+      return response;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
   }
 
-  async sendLogin(data: Partial<User>): Promise<AxiosResponse> {
-    const res = await this.client.post(`/login`, {
-      username: data.username,
-      password: data.password,
-    });
-    return res;
+  async sendLogin(data: Partial<User>): Promise<AxiosResponse | null> {
+    try {
+      const res = await this.client.post(`/login`, {
+        username: data.username,
+        password: data.password,
+      });
+      console.log(res.status);
+      return res;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
   }
 }

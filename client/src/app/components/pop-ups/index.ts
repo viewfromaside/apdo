@@ -11,6 +11,7 @@ export * from "@/app/components/pop-ups/file";
 export * from "@/app/components/pop-ups/rename";
 export * from "@/app/components/pop-ups/exclude";
 export * from "@/app/components/pop-ups/confirm-email";
+export * from "@/app/components/pop-ups/alert";
 
 export type PopupProps = DialogProps & {
   dialogClassName?: string;

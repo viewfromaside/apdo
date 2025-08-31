@@ -37,6 +37,13 @@ func RegisterAccount(c *gin.Context) {
 	newUser.Username = input.Username
 	newUser.Email = input.Email
 	newUser.Password = hashedPassword
+
+	userFound, _ := services.FindUserByField("Username", input.Username)
+	if userFound != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "user already exists with this username"})
+		return
+	}
+
 	services.CreateUser(newUser)
 	newUser.Password = "secret"
 	c.IndentedJSON(http.StatusCreated, newUser)

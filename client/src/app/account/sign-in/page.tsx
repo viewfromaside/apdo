@@ -3,7 +3,7 @@ import { Button, GoSignUp, Logo, Panel } from "@/app/components";
 import { Input } from "@/app/components/input";
 import { User } from "@/app/services/models/user";
 import { AccountRequest } from "@/app/services/requests/account";
-import { togglePopupAtom } from "@/app/store/pop-up";
+import { showAlertPopupAtom, togglePopupAtom } from "@/app/store/pop-up";
 import { saveUser, verifyItsLogged } from "@/app/store/user";
 import gsap from "gsap";
 import { useSetAtom } from "jotai";
@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 export default function SignInForm() {
   const formRef = useRef<HTMLDivElement>(null);
   const togglePopup = useSetAtom(togglePopupAtom);
+  const showAlertPopup = useSetAtom(showAlertPopupAtom);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
@@ -43,10 +44,11 @@ export default function SignInForm() {
   }, []);
 
   const handleClick = async () => {
+    if (!username || !password) return showAlertPopup("fields missing");
     const request = new AccountRequest();
     const response = await request.sendLogin({ username, password });
 
-    if (response.status == 200) {
+    if (response?.status == 200) {
       let data = response.data;
       if (data.data.active) {
         togglePopup("confirmEmail");
@@ -55,6 +57,8 @@ export default function SignInForm() {
       localStorage.setItem("jwt", data.jwt);
       saveUser(data.data);
       router.replace("/notes");
+    } else {
+      showAlertPopup("incorrect credencials");
     }
   };
 

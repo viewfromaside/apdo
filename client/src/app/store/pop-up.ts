@@ -12,7 +12,10 @@ export type PopupKey =
   | "file"
   | "rename"
   | "exclude"
-  | "confirmEmail";
+  | "confirmEmail"
+  | "alert";
+
+export const alertPopupTextAtom = atom<string>("");
 
 export const openPopupsAtom = atom<Record<PopupKey, boolean>>({
   settings: false,
@@ -25,6 +28,7 @@ export const openPopupsAtom = atom<Record<PopupKey, boolean>>({
   rename: false,
   exclude: false,
   confirmEmail: false,
+  alert: false,
 });
 
 export const togglePopupAtom = atom(null, (get, set, key: PopupKey) => {
@@ -51,4 +55,10 @@ export const closeAllPopupAtom = atom(null, (get, set) => {
   );
 
   set(openPopupsAtom, closed);
+});
+
+export const showAlertPopupAtom = atom(null, (get, set, text: string) => {
+  set(alertPopupTextAtom, text);
+  const current = get(openPopupsAtom);
+  set(openPopupsAtom, { ...current, alert: true });
 });

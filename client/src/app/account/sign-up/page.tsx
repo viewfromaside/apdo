@@ -4,7 +4,7 @@ import { Input } from "@/app/components";
 import { UserRequest } from "@/app/services";
 import { User } from "@/app/services/models/user";
 import { AccountRequest } from "@/app/services/requests/account";
-import { togglePopupAtom } from "@/app/store/pop-up";
+import { showAlertPopupAtom, togglePopupAtom } from "@/app/store/pop-up";
 import { verifyItsLogged } from "@/app/store/user";
 import gsap from "gsap";
 import { useSetAtom } from "jotai";
@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function SignUpForm() {
   const formRef = useRef<HTMLDivElement>(null);
+  const showAlertPopup = useSetAtom(showAlertPopupAtom);
   const [formObject, setFormObject] = useState<User>(new User({}));
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const togglePopup = useSetAtom(togglePopupAtom);
@@ -29,12 +30,19 @@ export default function SignUpForm() {
       !formObject.password ||
       !confirmPassword
     )
-      return;
+      return showAlertPopup("fields is missing");
+
+    if (confirmPassword !== formObject.password) {
+      return showAlertPopup("the password are not the same");
+    }
 
     const request = new AccountRequest();
     const response = await request.sendRegister(formObject);
-    console.log(response);
-    togglePopup("confirmEmail");
+    if (response?.status == 201) {
+      togglePopup("confirmEmail");
+    } else {
+      showAlertPopup("already exists a user with that username or email");
+    }
   };
 
   useEffect(() => {

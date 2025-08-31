@@ -14,6 +14,9 @@ import { PopupFile } from "./file";
 import { PopupRename } from "./rename";
 import { PopupExclude } from "./exclude";
 import { PopupConfirmEmail } from "./confirm-email";
+import { PopupAlert } from "./alert";
+import { logout } from "@/app/store/user";
+import { useRouter } from "next/navigation";
 
 export const PopupManager = () => {
   const openPopups = useAtomValue(openPopupsAtom);
@@ -21,6 +24,7 @@ export const PopupManager = () => {
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
@@ -39,6 +43,10 @@ export const PopupManager = () => {
           appearence: () => togglePopup("appearence"),
           report: () => togglePopup("report"),
           fileSettings: () => togglePopup("file"),
+          logout: () => {
+            logout();
+            router.replace("/");
+          },
         }}
       />
 
@@ -98,6 +106,12 @@ export const PopupManager = () => {
       <PopupExclude
         open={openPopups.exclude}
         toggle={() => togglePopup("exclude")}
+      />
+
+      <PopupAlert
+        contentClassName="max-w-[200px]"
+        open={openPopups.alert}
+        toggle={() => togglePopup("alert")}
       />
     </>
   );
