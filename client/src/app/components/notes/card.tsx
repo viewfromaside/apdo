@@ -14,15 +14,22 @@ import { closeAllPopupAtom } from "@/app/store/pop-up";
 
 type CardProps = ComponentProps<"div"> & {
   model: Note;
+  title?: string;
 };
 
-export const Card = ({ children, className, model, ...props }: CardProps) => {
+export const Card = ({
+  children,
+  className,
+  model,
+  title,
+  ...props
+}: CardProps) => {
   const router = useRouter();
   const selectNote = useSetAtom(setSelectedNoteAtom);
   const closeAllPopups = useSetAtom(closeAllPopupAtom);
 
   const goToNote = () => {
-    selectNote(model.id);
+    selectNote(model);
     closeAllPopups();
     router.push(`/notes/${model.id}`);
   };
@@ -39,7 +46,9 @@ export const Card = ({ children, className, model, ...props }: CardProps) => {
         {/* <div className="absolute rounded-t-sm h-[2px] bg-accent top-0 left-0 w-full"></div> */}
 
         <div className="flex flex-row gap-2">
-          <FileName className="mt-0 cursor-pointer">{model.title}</FileName>
+          <FileName className="mt-0 cursor-pointer">
+            {title ? title : model.title}
+          </FileName>
         </div>
         <div className="flex flex-row mt-2 gap-1">
           {model.visibility === NoteVisibility.PUBLIC ? (

@@ -1,5 +1,4 @@
 "use client";
-
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
@@ -36,12 +35,18 @@ export const Dialog = ({
 }: DialogProps) => {
   const [render, setRender] = useState(open);
   const dialogRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
+    // Mata qualquer animação anterior
+    if (animationRef.current) {
+      animationRef.current.kill();
+    }
+
     if (open) {
       setRender(true);
     } else if (dialogRef.current) {
-      gsap.to(dialogRef.current, {
+      animationRef.current = gsap.to(dialogRef.current, {
         opacity: 0,
         duration: 0.3,
         ease: "power1.in",
@@ -51,14 +56,28 @@ export const Dialog = ({
   }, [open]);
 
   useEffect(() => {
-    if (render && dialogRef.current) {
-      gsap.fromTo(
+    if (render && dialogRef.current && open) {
+      // Mata animação anterior se existir
+      if (animationRef.current) {
+        animationRef.current.kill();
+      }
+
+      animationRef.current = gsap.fromTo(
         dialogRef.current,
         { opacity: 0 },
         { opacity: 1, duration: 0.3, ease: "power1.out" }
       );
     }
-  }, [render]);
+  }, [render, open]);
+
+  // Cleanup
+  useEffect(() => {
+    return () => {
+      if (animationRef.current) {
+        animationRef.current.kill();
+      }
+    };
+  }, []);
 
   return (
     <DialogContext.Provider value={{ required, toggle }}>

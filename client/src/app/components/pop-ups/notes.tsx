@@ -1,15 +1,21 @@
 "use client";
 
-import { ComponentProps, SetStateAction, useEffect, useRef } from "react";
+import {
+  ComponentProps,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { twMerge } from "tailwind-merge";
 import { Dialog, DialogBody, DialogContent, DialogHeader } from "../dialog";
 import { PopupProps } from ".";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { closeAllPopupAtom, openPopupsAtom } from "@/app/store/pop-up";
 import { Card } from "../notes";
 import { Tag } from "../tag";
 import { SearchIcon } from "lucide-react";
-import { notesAtom } from "@/app/store";
+import { notesAtom, noteServiceAtom } from "@/app/store";
 import { Note } from "@/app/services";
 
 type PopupNotesProps = PopupProps & {
@@ -24,13 +30,19 @@ export const PopupNotes = ({
   searchValue,
   ...props
 }: PopupNotesProps) => {
-  const notes = useAtomValue(notesAtom);
+  const [notes, setNotes] = useState<Note[]>([]);
+  const noteService = useAtomValue(noteServiceAtom);
   const openPopups = useAtomValue(openPopupsAtom);
   const closeAllPopups = useSetAtom(closeAllPopupAtom);
 
   useEffect(() => {
     if (openPopups.notes) {
-      console.log("o popup de notes acaba de executar um fetch");
+      async function getData() {
+        if (!noteService) return;
+        const response = await noteService.sendFindManyOnlyPublic();
+        setNotes(response);
+      }
+      getData();
     }
   }, [openPopups]);
 
@@ -50,6 +62,7 @@ export const PopupNotes = ({
             <Card
               key={`search-${note.id}`}
               model={note}
+              title={`${note.createdBy}/${note.title}`}
               className="shadow-md border border-neutral/10 mb-2"
             ></Card>
           ))}

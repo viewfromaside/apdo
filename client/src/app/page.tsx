@@ -5,11 +5,17 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { GoSignUp } from "./components/account/go-sign-up";
+import { verifyItsLogged } from "./store/user";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const buttonRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
+    if (verifyItsLogged()) {
+      return router.replace("/notes");
+    }
     if (!buttonRef.current) return;
 
     const tl = gsap.timeline({ delay: 0.8 });

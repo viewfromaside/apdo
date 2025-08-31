@@ -1,12 +1,25 @@
 package routes
 
 import (
+	"time"
+
 	"github.com/apdo/server/handlers"
 	"github.com/apdo/server/middlewares"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterRoutes(router *gin.Engine) {
+
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
 	// ACCOUNT
 	router.POST("/account/login", handlers.LoginAccount)
 	router.POST("/account/register", handlers.RegisterAccount)
@@ -17,7 +30,8 @@ func RegisterRoutes(router *gin.Engine) {
 	protected.Use(middlewares.JWTAuthMiddleware())
 
 	// NOTES CRUD
-	protected.GET("/notes", handlers.GetNotes)
+	protected.GET("/notes/public", handlers.GetPublicNotes)
+	protected.GET("/notes/user/:id", handlers.GetNotesByUser)
 	protected.GET("/notes/:id", handlers.GetNoteById)
 	protected.DELETE("/notes/:id/remove", handlers.RemoveById)
 	protected.PUT("/notes/:id/edit", handlers.UpdateById)

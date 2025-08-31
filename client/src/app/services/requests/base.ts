@@ -1,16 +1,23 @@
+import { getCookie } from "@/app/lib/utils";
 import { IBase } from "@/app/services/models";
+import { ToastErrorStyle, ToastSuccessStyle } from "@/app/shared";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import { getDefaultStore } from "jotai";
+import { useCookies } from "react-cookie";
 import { toast } from "sonner";
 
 export class BaseRequest<T extends IBase> {
   protected url: string;
   protected client: AxiosInstance;
 
-  constructor(url: string, config?: AxiosRequestConfig) {
+  constructor(url: string, jwt?: string, config?: AxiosRequestConfig) {
     this.url = process.env.NEXT_PUBLIC_BACKEND_API_URL + url;
-    console.log(process.env.NEXT_PUBLIC_BACKEND_API_URL);
+
     this.client = axios.create({
       baseURL: this.url,
+      headers: {
+        Authorization: jwt ? `Bearer ${jwt}` : undefined,
+      },
       ...config,
     });
   }
@@ -20,68 +27,35 @@ export class BaseRequest<T extends IBase> {
       `/create`,
       data.getObjectForCreate!()
     );
-    if (status >= 200 && status < 300) {
-      toast.success("Success!", {
-        description: "The operation completed successfully.",
-        duration: 3000,
-      });
-    } else {
-      toast.error("Error", {
-        description: "Internal error, please contact support.",
-        duration: 5000,
-      });
-    }
 
     return res;
   }
 
   async sendRemove(id: string): Promise<boolean> {
-    const res = await this.client.delete(`/${id}`);
+    const res = await this.client.delete(`/${id}/remove`);
     let hasSuccess = res.status >= 200 && res.status < 300;
-    if (hasSuccess) {
-      toast.success("Success!", {
-        description: "The operation completed successfully.",
-        duration: 3000,
-      });
-    } else {
-      toast.error("Error", {
-        description: "Internal error, please contact support.",
-        duration: 5000,
-      });
-    }
+
     return hasSuccess;
   }
 
   async sendEdit(id: string, data: Partial<T>): Promise<T> {
     const { data: res, status } = await this.client.put<T>(
-      `/${id}`,
+      `/${id}/edit`,
       data.getObjectForEdit!()
     );
 
-    if (status >= 200 && status < 300) {
-      toast.success("Success!", {
-        description: "The operation completed successfully.",
-        duration: 3000,
-      });
-    } else {
-      toast.error("Error", {
-        description: "Internal error, please contact support.",
-        duration: 5000,
-      });
-    }
     return res;
   }
 
   async sendFindMany(params?: Record<string, any>): Promise<T[]> {
+    if (params?.field) {
+      this.url += `?field=${params.field}`;
+    }
+    if (params?.value) {
+      this.url += `?value=${params.value}`;
+    }
     const { data: res, status } = await this.client.get<T[]>("", { params });
 
-    if (status >= 200 && status < 300) {
-    } else {
-      toast.error("Error", {
-        description: "Internal error, please contact support.",
-        duration: 5000,
-      });
-    }
     return res;
   }
 
@@ -89,17 +63,6 @@ export class BaseRequest<T extends IBase> {
     try {
       const { data: res, status } = await this.client.get<T>(`/${id}`);
 
-      if (status >= 200 && status < 300) {
-        toast.success("Success!", {
-          description: "The operation completed successfully.",
-          duration: 3000,
-        });
-      } else {
-        toast.error("Error", {
-          description: "Internal error, please contact support.",
-          duration: 5000,
-        });
-      }
       return res;
     } catch (err: any) {
       if (err.response?.status == 404) return null;

@@ -3,6 +3,6 @@ import { BaseRequest } from "./base";
 
 export class UserRequest extends BaseRequest<User> {
   constructor() {
-    super("/users");
+    super("/api/users");
   }
 }

@@ -14,19 +14,31 @@ import {
   RawEditor,
   UnsavedBottomBar,
 } from "@/app/components";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   loadNotesAtom,
+  noteServiceAtom,
   saveNoteAtom,
   selectedNoteAtom,
   selectedNoteIndexAtom,
+  setSelectedNoteAtom,
 } from "@/app/store";
 import editor from "@/app/assets/main.json"; // JSON local com suas notas
 import { togglePopupAtom } from "@/app/store/pop-up";
+import { useParams, useRouter } from "next/navigation";
+import { verifyItsLogged } from "@/app/store/user";
+import { NoteRequest } from "@/app/services";
 
-export default function NoteHome() {
+export default function NoteHome({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const unwrappedParams = use(params);
+  const id = unwrappedParams.id;
+
   const [localContent, setLocalContent] = useState<string>("");
   const [localTitle, setLocalTitle] = useState<string>("new file");
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
@@ -37,19 +49,34 @@ export default function NoteHome() {
 
   const togglePopup = useSetAtom(togglePopupAtom);
   const selectedNote = useAtomValue(selectedNoteAtom);
+  const setSelectedNote = useSetAtom(setSelectedNoteAtom);
   const [selectedNoteIndex, setSelectedNoteIndex] = useAtom(
     selectedNoteIndexAtom
   );
   const saveNote = useSetAtom(saveNoteAtom);
   const loadNotes = useSetAtom(loadNotesAtom);
+  const router = useRouter();
 
   useEffect(() => {
+    if (!verifyItsLogged()) {
+      return router.replace("/account/sign-in");
+    }
+
+    async function getData() {
+      const noteRequest = new NoteRequest(localStorage.getItem("jwt") || "");
+      const response = await noteRequest.sendFindOne(id);
+      if (response !== null) {
+        setSelectedNote(response);
+        setLocalContent(response.content);
+        setLocalTitle(response.title);
+      }
+    }
+
     if (selectedNote) {
       setLocalContent(selectedNote.content || "");
       setLocalTitle(selectedNote.title || "new file");
     } else {
-      setLocalContent("");
-      setLocalTitle("new file");
+      getData();
     }
     setIsInitialized(true);
   }, [selectedNote]);
@@ -99,6 +126,10 @@ export default function NoteHome() {
         <Panel className="flex flex-col gap-3"></Panel>
       </div>
     );
+  }
+
+  if (!verifyItsLogged()) {
+    return <></>;
   }
 
   return (

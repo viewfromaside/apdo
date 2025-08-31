@@ -1,4 +1,4 @@
 export enum NoteVisibility {
-  PUBLIC = "PUBLIC",
-  PRIVATE = "PRIVATE",
+  PUBLIC = "public",
+  PRIVATE = "private",
 }

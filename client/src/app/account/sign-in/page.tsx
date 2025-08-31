@@ -1,17 +1,26 @@
 "use client";
 import { Button, GoSignUp, Logo, Panel } from "@/app/components";
 import { Input } from "@/app/components/input";
+import { User } from "@/app/services/models/user";
+import { AccountRequest } from "@/app/services/requests/account";
+import { togglePopupAtom } from "@/app/store/pop-up";
+import { saveUser, verifyItsLogged } from "@/app/store/user";
 import gsap from "gsap";
-import Link from "next/link";
+import { useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
-import { toast } from "sonner";
+import { useEffect, useRef, useState } from "react";
 
 export default function SignInForm() {
   const formRef = useRef<HTMLDivElement>(null);
+  const togglePopup = useSetAtom(togglePopupAtom);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const router = useRouter();
 
   useEffect(() => {
+    if (verifyItsLogged()) {
+      return router.replace("/notes");
+    }
     if (!formRef.current) return;
 
     const elements = formRef.current.children;
@@ -33,16 +42,20 @@ export default function SignInForm() {
     );
   }, []);
 
-  const handleClick = () => {
-    // toast.error("locked in fr", {
-    //   style: {
-    //     // backgroundColor: "#83D448", success
-    //     backgroundColor: "#DE4747", // error
-    //     border: "0px",
-    //     padding: 10,
-    //   },
-    // });
-    router.replace("/notes");
+  const handleClick = async () => {
+    const request = new AccountRequest();
+    const response = await request.sendLogin({ username, password });
+
+    if (response.status == 200) {
+      let data = response.data;
+      if (data.data.active) {
+        togglePopup("confirmEmail");
+        return;
+      }
+      localStorage.setItem("jwt", data.jwt);
+      saveUser(data.data);
+      router.replace("/notes");
+    }
   };
 
   return (
@@ -50,8 +63,19 @@ export default function SignInForm() {
       <Panel className="flex flex-col gap-2 justify-center items-center">
         <Logo />
         <div ref={formRef} className="form flex flex-col gap-2 items-center">
-          <Input className="opacity-0" placeholder="username" />
-          <Input className="opacity-0" placeholder="password" type="password" />
+          <Input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="opacity-0"
+            placeholder="username"
+          />
+          <Input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="opacity-0"
+            placeholder="password"
+            type="password"
+          />
           <Button onClick={handleClick} className="opacity-0 w-full">
             hop on
           </Button>

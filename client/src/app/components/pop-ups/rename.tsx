@@ -34,6 +34,7 @@ export const PopupRename = ({
 
   const handleSubmit = () => {
     saveNote({
+      ...selectedNote,
       title: newTitle,
     });
     toggle();

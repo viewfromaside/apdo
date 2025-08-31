@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/apdo/server/models"
 	"github.com/apdo/server/services"
@@ -11,21 +12,36 @@ import (
 
 var availableVisibility = []models.NoteVisibility{models.PUBLIC, models.PRIVATE}
 
-func GetNotes(c *gin.Context) {
-	notes, _ := services.FindManyNotes()
+func GetNotesByUser(c *gin.Context) {
+	id := c.Param("id")
+	notes, err := services.FindManyNotesByField("CreatedBy", id)
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.IndentedJSON(http.StatusOK, notes)
+}
+
+func GetPublicNotes(c *gin.Context) {
+	notes, err := services.FindManyNotesByField("Visibility", "public")
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
 	c.IndentedJSON(http.StatusOK, notes)
 }
 
 func PostNotes(c *gin.Context) {
 	var input models.Note
 
-	if err := c.BindJSON(&input); err != nil || input.Content == "" || input.Title == "" || input.CreatedBy == "" {
+	if err := c.BindJSON(&input); err != nil || input.Title == "" || input.CreatedBy == "" {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to request, contact support"})
 		return
 	}
 
 	newNote := models.NewNote()
-	newNote.Title = input.Title
+	newNote.Title = strings.TrimSpace(strings.ReplaceAll(input.Title, " ", "_"))
 	newNote.Content = input.Content
 	newNote.CreatedBy = input.CreatedBy
 
@@ -67,6 +83,7 @@ func UpdateById(c *gin.Context) {
 		input.Visibility = models.PUBLIC
 	}
 
+	input.Title = strings.TrimSpace(strings.ReplaceAll(input.Title, " ", "_"))
 	input.ID = id
 
 	err := services.UpdateNote(input)

@@ -3,9 +3,12 @@ import { Button, GoSignIn, GoSignUp, Logo, Panel } from "@/app/components";
 import { Input } from "@/app/components";
 import { UserRequest } from "@/app/services";
 import { User } from "@/app/services/models/user";
+import { AccountRequest } from "@/app/services/requests/account";
 import { togglePopupAtom } from "@/app/store/pop-up";
+import { verifyItsLogged } from "@/app/store/user";
 import gsap from "gsap";
 import { useSetAtom } from "jotai";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function SignUpForm() {
@@ -13,6 +16,7 @@ export default function SignUpForm() {
   const [formObject, setFormObject] = useState<User>(new User({}));
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const togglePopup = useSetAtom(togglePopupAtom);
+  const router = useRouter();
 
   const handleChange = (field: keyof User, value: any) => {
     setFormObject((prev) => new User({ ...prev, [field]: value }));
@@ -27,13 +31,16 @@ export default function SignUpForm() {
     )
       return;
 
-    const request = new UserRequest();
-    const response = await request.sendCreate(formObject);
+    const request = new AccountRequest();
+    const response = await request.sendRegister(formObject);
     console.log(response);
     togglePopup("confirmEmail");
   };
 
   useEffect(() => {
+    if (verifyItsLogged()) {
+      return router.replace("/notes");
+    }
     if (!formRef.current) return;
 
     const elements = formRef.current.children;

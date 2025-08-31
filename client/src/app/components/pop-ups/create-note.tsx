@@ -43,13 +43,10 @@ export const PopupCreateNote = ({
   };
 
   const handleSubmit = () => {
-    console.log(formObject);
     if (!formObject.title || !formObject.visibility)
       return toast.error("complete this, aight?", ToastErrorStyle);
 
     createNote(formObject);
-
-    toast.success("note created", ToastSuccessStyle);
 
     clearFields();
     toggle();

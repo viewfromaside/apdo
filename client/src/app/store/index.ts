@@ -3,14 +3,17 @@ import { unwrap } from "jotai/utils";
 import { Note, NoteRequest } from "@/app/services";
 import { NoteVisibility } from "@/app/shared";
 import { createRandomId } from "../lib/utils";
+import { getUser } from "./user";
 
-const noteService = new NoteRequest();
+export const noteServiceAtom = atom((get) => {
+  const jwt = localStorage.getItem("jwt") || "";
+  return new NoteRequest(jwt);
+});
 
 const mockNote = new Note({
   id: createRandomId(7),
   title: "welcome note",
   content: "# Bem-vindo!\n\nEsta é sua primeira nota. Comece editando aqui!",
-  favorite: false,
   visibility: NoteVisibility.PUBLIC,
   createdAt: new Date(),
   updatedAt: new Date(),
@@ -21,14 +24,22 @@ export const notesAtom = unwrap(notesAtomWritable, (prev) => prev ?? []);
 
 export const selectedNoteIndexAtom = atom<number | null>(0);
 
-export const selectedNoteAtom = atom<Note | null>((get) => {
-  const notes = get(notesAtom);
-  const index = get(selectedNoteIndexAtom);
-  return index !== null && notes.length > index ? notes[index] : null;
-});
+export const selectedNoteAtom = atom<Note | null>(null);
 
-export const loadNotesAtom = atom(null, async (_get, set) => {
-  const notes = await noteService.sendFindMany();
+export const loadNotesAtom = atom(null, async (get, set) => {
+  const noteService = get(noteServiceAtom);
+  const user = getUser();
+  const response = await noteService.sendFindManyByUser(user!.id);
+
+  if (response === null) {
+    return;
+  }
+
+  const notes = response.map((n) => new Note(n));
+
+  if (notes === null) {
+    return;
+  }
 
   if (notes.length === 0) {
     set(notesAtomWritable, []);
@@ -44,15 +55,26 @@ export const loadNotesAtom = atom(null, async (_get, set) => {
 
 export const saveNoteAtom = atom(
   null,
-  (get, set, updatedNote: Partial<Note>) => {
+  async (get, set, updatedNote: Partial<Note>) => {
+    const noteService = get(noteServiceAtom);
     const selectedNote = get(selectedNoteAtom);
     if (!selectedNote) return;
 
     const savedNote = new Note({
       ...selectedNote,
       ...updatedNote,
-      updatedAt: new Date(),
     });
+
+    const user = getUser();
+
+    if (!user) {
+      throw new Error("internal client error");
+    }
+
+    savedNote.createdBy = user.id;
+
+    const response = await noteService.sendEdit(savedNote.id, savedNote);
+    console.log(response);
 
     set(
       notesAtomWritable,
@@ -64,11 +86,11 @@ export const saveNoteAtom = atom(
 );
 
 export const createEmptyNoteAtom = atom(null, async (get, set) => {
+  const noteService = get(noteServiceAtom);
   const newNote = await noteService.sendCreate(
     new Note({
       title: "",
       content: "",
-      favorite: false,
       visibility: NoteVisibility.PUBLIC,
     })
   );
@@ -78,29 +100,30 @@ export const createEmptyNoteAtom = atom(null, async (get, set) => {
   set(selectedNoteIndexAtom, 0);
 });
 
-export const setSelectedNoteAtom = atom(null, (get, set, noteId: string) => {
-  const notes = get(notesAtom);
-  const index = notes.findIndex((n) => n.id === noteId);
-  set(selectedNoteIndexAtom, index >= 0 ? index : null);
+export const setSelectedNoteAtom = atom(null, (get, set, note: Note | null) => {
+  set(selectedNoteAtom, note);
 });
 
 export const createNoteAtom = atom(
   null,
   async (get, set, data: Partial<Note>) => {
-    const createdNote = new Note(data);
-    createdNote.id = createRandomId(7);
+    const noteService = get(noteServiceAtom);
+    let user = getUser();
+    console.log(user);
+    data.createdBy = user?.id;
+    const createdNote = await noteService.sendCreate(data);
     const currentNotes = get(notesAtomWritable);
     set(notesAtomWritable, [createdNote, ...currentNotes]);
-    // set(selectedNoteIndexAtom, 0);
   }
 );
 
 export const deleteNoteAtom = atom(null, async (get, set) => {
+  const noteService = get(noteServiceAtom);
   const selectedNote = get(selectedNoteAtom);
   if (!selectedNote) return;
 
-  // const deleted = await noteService.sendRemove(selectedNote.id!);
-  // if (!deleted) return;
+  const deleted = await noteService.sendRemove(selectedNote.id!);
+  if (!deleted) return;
 
   const currentNotes = get(notesAtomWritable);
   set(

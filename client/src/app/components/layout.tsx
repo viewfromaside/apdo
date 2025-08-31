@@ -1,4 +1,5 @@
 import { ComponentProps } from "react";
+import { CookiesProvider } from "react-cookie";
 import { twMerge } from "tailwind-merge";
 
 export const Layout = ({
@@ -7,14 +8,16 @@ export const Layout = ({
   ...props
 }: ComponentProps<"main">) => {
   return (
-    <main
-      className={twMerge(
-        "flex flex-row h-screen xl:p-5 bg-background dark:bg-dark-background",
-        className
-      )}
-      {...props}
-    >
-      {children}
-    </main>
+    <CookiesProvider>
+      <main
+        className={twMerge(
+          "flex flex-row h-screen xl:p-5 bg-background dark:bg-dark-background",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </main>
+    </CookiesProvider>
   );
 };

@@ -30,7 +30,6 @@ const MarkdownEditorContent = ({
   useEffect(() => {
     if (!editorRef.current) return;
     editorRef.current.focus();
-    console.log(content);
 
     const children = Array.from(editorRef.current.children) as HTMLElement[];
 

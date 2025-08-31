@@ -1,8 +1,36 @@
+import { toast } from "sonner";
 import { Note } from "../models";
 import { BaseRequest } from "./base";
+import { ToastErrorStyle } from "@/app/shared";
 
 export class NoteRequest extends BaseRequest<Note> {
-  constructor() {
-    super("/api/notes");
+  constructor(jwt?: string) {
+    super("/api/notes", jwt);
+  }
+
+  async sendFindMany(params?: Record<string, any>): Promise<Note[]> {
+    throw new Error("this method does not exists on note");
+  }
+
+  async sendFindManyByUser(id: string): Promise<Note[]> {
+    const { data: res, status } = await this.client.get<Note[]>(`/user/${id}`);
+
+    if (status >= 200 && status < 300) {
+    } else {
+      toast.error("Error", ToastErrorStyle);
+    }
+
+    return res;
+  }
+
+  async sendFindManyOnlyPublic(): Promise<Note[]> {
+    const { data: res, status } = await this.client.get<Note[]>(`/public`);
+
+    if (status >= 200 && status < 300) {
+    } else {
+      toast.error("Error", ToastErrorStyle);
+    }
+
+    return res.map((n) => new Note(n));
   }
 }

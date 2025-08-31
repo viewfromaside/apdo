@@ -15,15 +15,21 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { togglePopupAtom } from "../store/pop-up";
 import {
   deleteNoteAtom,
+  loadNotesAtom,
   notesAtom,
   saveNoteAtom,
   setSelectedNoteAtom,
 } from "../store";
 import gsap from "gsap";
+import { useCookies } from "react-cookie";
+import { useRouter } from "next/navigation";
+import { verifyItsLogged } from "../store/user";
 
 export default function NotesHome() {
   let notes = useAtomValue(notesAtom);
+  const [loading, setLoading] = useState<boolean>(true);
   const selectNote = useSetAtom(setSelectedNoteAtom);
+  const loadNotes = useSetAtom(loadNotesAtom);
   const togglePopup = useSetAtom(togglePopupAtom);
 
   const headerRef = useRef<HTMLDivElement>(null);
@@ -32,8 +38,20 @@ export default function NotesHome() {
   const notesListRef = useRef<HTMLDivElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
 
+  const router = useRouter();
+
   useEffect(() => {
-    selectNote("none");
+    if (!verifyItsLogged()) {
+      return router.replace("/account/sign-in");
+    }
+
+    async function getData() {
+      await loadNotes();
+      setLoading(false);
+    }
+
+    selectNote(null);
+    getData();
   }, []);
 
   useEffect(() => {
@@ -117,6 +135,10 @@ export default function NotesHome() {
       );
     }
   }, [notes]);
+
+  if (loading) {
+    return <></>;
+  }
 
   return (
     <div className="flex w-full justify-center items-center">
