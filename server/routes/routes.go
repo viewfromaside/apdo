@@ -12,7 +12,7 @@ import (
 func RegisterRoutes(router *gin.Engine) {
 
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowOrigins:     []string{"https://apdo.vercel.app"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
@@ -29,7 +29,7 @@ func RegisterRoutes(router *gin.Engine) {
 	protected := router.Group("/api")
 	protected.Use(middlewares.JWTAuthMiddleware())
 
-	// NOTES CRUD
+	// NOTES CRUD = (CREATE READ UPDATE DELETE)
 	protected.GET("/notes/public", handlers.GetPublicNotes)
 	protected.GET("/notes/user/:id", handlers.GetNotesByUser)
 	protected.GET("/notes/:id", handlers.GetNoteById)

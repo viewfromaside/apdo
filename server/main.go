@@ -11,5 +11,5 @@ func main() {
 	services.InitFirestore()
 	router := gin.Default()
 	routes.RegisterRoutes(router)
-	router.Run("localhost:8080")
+	router.Run(":8080")
 }

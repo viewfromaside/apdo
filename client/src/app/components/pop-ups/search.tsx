@@ -32,10 +32,10 @@ export const PopupSearch = ({
   const togglePopup = useSetAtom(togglePopupAtom);
 
   const handleSubmit = () => {
-    if (!searchValue) {
-      toast.error(t("popups.errors.fieldsMissing"), ToastMinimumStyle);
-      return;
-    }
+    // if (!searchValue) {
+    //   toast.error(t("popups.errors.fieldsMissing"), ToastMinimumStyle);
+    //   return;
+    // }
     togglePopup("notes");
   };
 

@@ -62,7 +62,6 @@ export default function SignInForm() {
       localStorage.setItem("jwt", data.jwt);
       saveUser(data.data);
       await new Promise((resolve) => setTimeout(resolve, 100));
-      // router.refresh();
       router.push("/notes");
     } else {
       showAlertPopup(t("popups.errors.incorrectCredentials"));

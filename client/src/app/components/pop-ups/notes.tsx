@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ComponentProps,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Dialog, DialogBody, DialogContent, DialogHeader } from "../dialog";
 import { PopupProps } from ".";
@@ -32,7 +26,9 @@ export const PopupNotes = ({
 }: PopupNotesProps) => {
   const [backup, setBackup] = useState<Note[]>([]);
   const [notes, setNotes] = useState<Note[]>([]);
-  const noteService = useAtomValue(noteServiceAtom("asd"));
+  const noteService = useAtomValue(
+    noteServiceAtom(localStorage.getItem("jwt") || "")
+  );
   const openPopups = useAtomValue(openPopupsAtom);
   const closeAllPopups = useSetAtom(closeAllPopupAtom);
 

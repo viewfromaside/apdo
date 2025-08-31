@@ -7,7 +7,7 @@ import { getUser } from "./user";
 
 export const noteServiceAtom = atomFamily((jwtParam?: string) =>
   atom(() => {
-    const jwt = jwtParam ? jwtParam : localStorage.getItem("jwt");
+    const jwt = jwtParam != "" ? jwtParam : localStorage.getItem("jwt");
     return new NoteRequest(jwt!);
   })
 );
