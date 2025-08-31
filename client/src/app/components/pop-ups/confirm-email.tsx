@@ -1,16 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Dialog, DialogBody, DialogContent, DialogHeader } from "../dialog";
 import { Input } from "../input";
 import { Button } from "../button";
 import { PopupProps } from ".";
-import { useAtomValue, useSetAtom } from "jotai";
-import { togglePopupAtom } from "@/app/store/pop-up";
+import { useSetAtom } from "jotai";
+import { togglePopupAtom } from "@/store/pop-up";
 import { Tag } from "../tag";
-import { useKeyboardShortcut } from "@/app/hooks";
-import { saveNoteAtom, selectedNoteAtom } from "@/app/store";
+import { useKeyboardShortcut } from "@/hooks";
 
 export const PopupConfirmEmail = ({
   open,

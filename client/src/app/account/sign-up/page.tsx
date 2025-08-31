@@ -1,11 +1,10 @@
 "use client";
-import { Button, GoSignIn, GoSignUp, Logo, Panel } from "@/app/components";
+import { Button, GoSignIn, Logo, Panel } from "@/app/components";
 import { Input } from "@/app/components";
-import { UserRequest } from "@/app/services";
-import { User } from "@/app/services/models/user";
-import { AccountRequest } from "@/app/services/requests/account";
-import { showAlertPopupAtom, togglePopupAtom } from "@/app/store/pop-up";
-import { verifyItsLogged } from "@/app/store/user";
+import { User } from "@/services";
+import { AccountRequest } from "@/services";
+import { showAlertPopupAtom, togglePopupAtom } from "@/store/pop-up";
+import { verifyItsLogged } from "@/store/user";
 import gsap from "gsap";
 import { useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";

@@ -5,15 +5,16 @@ import { twMerge } from "tailwind-merge";
 import { Dialog, DialogBody, DialogContent, DialogHeader } from "../dialog";
 import { PopupProps } from ".";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { closeAllPopupAtom, openPopupsAtom } from "@/app/store/pop-up";
+import { closeAllPopupAtom, openPopupsAtom } from "@/store/pop-up";
 import { Tag } from "../tag";
 import { PaletteIcon } from "lucide-react";
 import { Button } from "../button";
 import { ColorPicker } from "../color-picker";
-import { ColorKey, themeColorsAtom } from "@/app/store/color";
-import { ColorRequest } from "@/app/services/requests/color";
-import { getUser } from "@/app/store/user";
-import { Color } from "@/app/services/models/color";
+import { ColorKey, themeColorsAtom } from "@/store/color";
+import { ColorRequest } from "@/services";
+import { getUser } from "@/store/user";
+import { Color } from "@/services";
+import { DE, US, BR } from "country-flag-icons/react/3x2";
 
 type PopupAppearenceProps = PopupProps & {};
 
@@ -26,6 +27,7 @@ export const PopupAppearence = ({
 }: PopupAppearenceProps) => {
   const openPopups = useAtomValue(openPopupsAtom);
   const closeAllPopups = useSetAtom(closeAllPopupAtom);
+  const [language, setLanguage] = useState<"de" | "pt" | "en">("en");
   const [themeColors, setThemeColors] = useAtom(themeColorsAtom);
   const [openPickers, setOpenPickers] = useState<Record<ColorKey, boolean>>({
     neutral: false,
@@ -109,6 +111,8 @@ export const PopupAppearence = ({
     accent: "accent color",
   };
 
+  const languageButtonClassName = "w-full flex flex-row gap-2 justify-center";
+
   return (
     <Dialog open={open} toggle={toggle} {...props} className={twMerge("")}>
       <DialogBody mainClassName="!bg-[#1e1e1e] border-[#ffb86c]/20">
@@ -121,6 +125,34 @@ export const PopupAppearence = ({
             contentClassName
           )}
         >
+          <div className="flex -mt-6 flex-col gap-2 mb-3">
+            <div className="flex flex-col w-full font-mono gap-2">
+              <Button
+                className={languageButtonClassName}
+                onClick={() => setLanguage("de")}
+                variant={language == "de" ? "primary" : "secondary"}
+              >
+                <DE className="w-5 rounded-md" />
+                <span>deutsch</span>
+              </Button>
+              <Button
+                className={languageButtonClassName}
+                onClick={() => setLanguage("en")}
+                variant={language == "en" ? "primary" : "secondary"}
+              >
+                <US className="w-5 rounded-md" />
+                <span>english</span>
+              </Button>
+              <Button
+                className={languageButtonClassName}
+                onClick={() => setLanguage("pt")}
+                variant={language == "pt" ? "primary" : "secondary"}
+              >
+                <BR className="w-5 rounded-md" />
+                <span>portuguese</span>
+              </Button>
+            </div>
+          </div>
           <div className="flex flex-col gap-2">
             {Object.entries(themeColors).map(([key, color]) => (
               <ColorPicker

@@ -1,10 +1,5 @@
-import { getCookie } from "@/app/lib/utils";
-import { IBase } from "@/app/services/models";
-import { ToastErrorStyle, ToastSuccessStyle } from "@/app/shared";
+import { IBase } from "@/services";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { getDefaultStore } from "jotai";
-import { useCookies } from "react-cookie";
-import { toast } from "sonner";
 
 export class BaseRequest<T extends IBase> {
   protected url: string;

@@ -1,8 +1,8 @@
 import { atom } from "jotai";
 import { unwrap } from "jotai/utils";
-import { Note, NoteRequest } from "@/app/services";
-import { NoteVisibility } from "@/app/shared";
-import { createRandomId } from "../lib/utils";
+import { Note, NoteRequest } from "@/services";
+import { NoteVisibility } from "@/shared";
+import { createRandomId } from "@/lib/utils";
 import { getUser } from "./user";
 
 export const noteServiceAtom = atom((get) => {

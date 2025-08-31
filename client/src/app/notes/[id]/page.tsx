@@ -1,10 +1,6 @@
 "use client";
 
 import {
-  Dialog,
-  DialogBody,
-  DialogContent,
-  DialogHeader,
   FileName,
   GoBack,
   MarkdownEditor,
@@ -16,17 +12,12 @@ import {
 } from "@/app/components";
 import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import {
-  saveNoteAtom,
-  selectedNoteAtom,
-  selectedNoteIndexAtom,
-  setSelectedNoteAtom,
-} from "@/app/store";
-import { togglePopupAtom } from "@/app/store/pop-up";
-import { useParams, useRouter } from "next/navigation";
-import { getUser, verifyItsLogged } from "@/app/store/user";
-import { Note, NoteRequest } from "@/app/services";
+import { useAtomValue, useSetAtom } from "jotai";
+import { saveNoteAtom, selectedNoteAtom, setSelectedNoteAtom } from "@/store";
+import { togglePopupAtom } from "@/store/pop-up";
+import { useRouter } from "next/navigation";
+import { getUser, verifyItsLogged } from "@/store/user";
+import { Note, NoteRequest } from "@/services";
 
 export default function NoteHome({
   params,

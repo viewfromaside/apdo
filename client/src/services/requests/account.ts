@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { User } from "../models/user";
+import { User } from "@/services";
 import { BaseRequest } from "./base";
 import { AxiosResponse } from "axios";
 

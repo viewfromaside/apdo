@@ -1,7 +1,7 @@
 import { toast } from "sonner";
-import { Note } from "../models";
-import { BaseRequest } from "./base";
-import { ToastErrorStyle } from "@/app/shared";
+import { Note } from "@/services";
+import { BaseRequest } from "@/services";
+import { ToastErrorStyle } from "@/shared";
 
 export class NoteRequest extends BaseRequest<Note> {
   constructor(jwt?: string) {

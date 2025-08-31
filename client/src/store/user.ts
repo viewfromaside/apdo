@@ -1,4 +1,4 @@
-import { User } from "../services/models/user";
+import { User } from "@/services";
 
 export function saveUser(user: User): User {
   localStorage.setItem("user", JSON.stringify(user));

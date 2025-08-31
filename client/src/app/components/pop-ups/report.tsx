@@ -1,19 +1,10 @@
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
-import {
-  Dialog,
-  DialogBody,
-  DialogContent,
-  DialogForm,
-  DialogHeader,
-  DialogProps,
-} from "../dialog";
-import { Input } from "../input";
+import { Dialog, DialogBody, DialogContent, DialogHeader } from "../dialog";
 import { Button } from "../button";
 import { PopupProps } from ".";
-import { useAtom, useAtomValue } from "jotai";
-import { selectedNoteAtom } from "@/app/store";
-import { Textarea } from "../textarea";
+import { useAtomValue } from "jotai";
+import { selectedNoteAtom } from "@/store";
 
 type callbacksType = {
   report?: () => void;

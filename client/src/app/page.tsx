@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { GoSignUp } from "./components/account/go-sign-up";
-import { verifyItsLogged } from "./store/user";
+import { verifyItsLogged } from "../store/user";
 import { useRouter } from "next/navigation";
 
 export default function Home() {

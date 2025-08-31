@@ -1,4 +1,4 @@
-import { ArrowLeft, Ellipsis, Plus, SettingsIcon } from "lucide-react";
+import { Ellipsis } from "lucide-react";
 import Link from "next/link";
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";

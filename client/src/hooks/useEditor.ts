@@ -1,9 +1,7 @@
 import { MDXEditorMethods } from "@mdxeditor/editor";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import { useRef } from "react";
-import { throttle } from "lodash";
-import { saveNoteAtom, selectedNoteAtom } from "@/app/store";
-import { Note } from "@/app/services";
+import { selectedNoteAtom } from "@/store";
 
 export const useMarkdownEditor = () => {
   const selectedNote = useAtomValue(selectedNoteAtom);

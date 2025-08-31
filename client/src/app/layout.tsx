@@ -1,15 +1,14 @@
 "use client";
 
-import type { Metadata } from "next";
 import { Inter, Fira_Code } from "next/font/google";
 import { Layout } from "./components";
 import { ThemeProvider } from "./components/shadcn-ui/theme-provider";
-import "@/app/assets/globals.css";
-import { Logo } from "./components/logo";
+import "@/assets/globals.css";
 import { CookiesProvider } from "react-cookie";
 import { useEffect } from "react";
-import { getUser } from "./store/user";
-import { ColorRequest } from "./services/requests/color";
+import { getUser } from "../store/user";
+import { ColorRequest } from "@/services/requests/color";
+import I18nProvider from "@/i18n/I18nProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -59,7 +58,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <CookiesProvider>
-            <Layout>{children}</Layout>
+            <I18nProvider>
+              <Layout>{children}</Layout>
+            </I18nProvider>
           </CookiesProvider>
         </ThemeProvider>
       </body>

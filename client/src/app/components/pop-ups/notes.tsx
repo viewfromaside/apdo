@@ -10,13 +10,13 @@ import {
 import { twMerge } from "tailwind-merge";
 import { Dialog, DialogBody, DialogContent, DialogHeader } from "../dialog";
 import { PopupProps } from ".";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { closeAllPopupAtom, openPopupsAtom } from "@/app/store/pop-up";
+import { useAtomValue, useSetAtom } from "jotai";
+import { closeAllPopupAtom, openPopupsAtom } from "@/store/pop-up";
 import { Card } from "../notes";
 import { Tag } from "../tag";
 import { SearchIcon } from "lucide-react";
-import { notesAtom, noteServiceAtom } from "@/app/store";
-import { Note } from "@/app/services";
+import { noteServiceAtom } from "@/store";
+import { Note } from "@/services";
 
 type PopupNotesProps = PopupProps & {
   searchValue: string;

@@ -1,4 +1,4 @@
-import { Color } from "../models/color";
+import { Color } from "@/services";
 import { BaseRequest } from "./base";
 
 export class ColorRequest extends BaseRequest<Color> {

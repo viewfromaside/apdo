@@ -1,10 +1,9 @@
 "use client";
 
-import { createPortal } from "react-dom";
 import { PopupSettings } from "./settings";
 import { PopupSearch } from "./search";
 import { useAtomValue, useSetAtom } from "jotai";
-import { openPopupsAtom, togglePopupAtom } from "@/app/store/pop-up";
+import { openPopupsAtom, togglePopupAtom } from "@/store/pop-up";
 import { useEffect, useState } from "react";
 import { PopupNotes } from "./notes";
 import { PopupCreateNote } from "./create-note";
@@ -15,9 +14,9 @@ import { PopupRename } from "./rename";
 import { PopupExclude } from "./exclude";
 import { PopupConfirmEmail } from "./confirm-email";
 import { PopupAlert } from "./alert";
-import { logout } from "@/app/store/user";
+import { logout } from "@/store/user";
 import { useRouter } from "next/navigation";
-import { resetNotesAtom } from "@/app/store";
+import { resetNotesAtom } from "@/store";
 
 export const PopupManager = () => {
   const openPopups = useAtomValue(openPopupsAtom);

@@ -12,7 +12,7 @@ import { Input } from "../input";
 import { Button } from "../button";
 import { PopupProps } from ".";
 import { useAtom, useAtomValue } from "jotai";
-import { selectedNoteAtom } from "@/app/store";
+import { selectedNoteAtom } from "@/store";
 
 type callbacksType = {
   rename?: () => void;

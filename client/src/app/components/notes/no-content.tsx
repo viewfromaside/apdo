@@ -4,7 +4,7 @@ import { ComponentProps, useRef, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
 import { Button } from "../button";
 import { useSetAtom } from "jotai";
-import { togglePopupAtom } from "@/app/store/pop-up";
+import { togglePopupAtom } from "@/store/pop-up";
 import gsap from "gsap";
 
 type NoContentProps = ComponentProps<"div"> & {};

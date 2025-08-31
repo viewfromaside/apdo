@@ -1,22 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Dialog, DialogBody, DialogContent, DialogHeader } from "../dialog";
 import { Input } from "../input";
 import { Button } from "../button";
 import { PopupProps } from ".";
-import { Note } from "@/app/services";
-import {
-  NoteVisibility,
-  ToastErrorStyle,
-  ToastMinimumStyle,
-  ToastSuccessStyle,
-} from "@/app/shared";
+import { Note } from "@/services";
+import { NoteVisibility, ToastErrorStyle } from "@/shared";
 import { useSetAtom } from "jotai";
-import { createNoteAtom } from "@/app/store";
+import { createNoteAtom } from "@/store";
 import { toast } from "sonner";
-import { useKeyboardShortcut } from "@/app/hooks";
+import { useKeyboardShortcut } from "@/hooks";
 
 export const PopupCreateNote = ({
   open,

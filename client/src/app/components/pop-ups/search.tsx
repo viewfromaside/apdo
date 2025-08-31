@@ -1,25 +1,17 @@
 "use client";
 
-import React, { ComponentProps, SetStateAction, useState } from "react";
+import React, { SetStateAction } from "react";
 import { twMerge } from "tailwind-merge";
-import {
-  Dialog,
-  DialogBody,
-  DialogContent,
-  DialogForm,
-  DialogHeader,
-  DialogProps,
-} from "../dialog";
+import { Dialog, DialogBody, DialogContent, DialogHeader } from "../dialog";
 import { Input } from "../input";
 import { Button } from "../button";
 import { PopupProps } from ".";
 import { useSetAtom } from "jotai";
-import { togglePopupAtom } from "@/app/store/pop-up";
-import { SearchIcon } from "lucide-react";
+import { togglePopupAtom } from "@/store/pop-up";
 import { Tag } from "../tag";
-import { useKeyboardShortcut } from "@/app/hooks";
+import { useKeyboardShortcut } from "@/hooks";
 import { toast } from "sonner";
-import { ToastMinimumStyle } from "@/app/shared";
+import { ToastMinimumStyle } from "@/shared";
 
 type PopupSearchProps = PopupProps & {
   searchValue: string;

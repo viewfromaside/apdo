@@ -1,21 +1,7 @@
 "use client";
 
-import {
-  ArrowLeft,
-  Ellipsis,
-  EyeClosedIcon,
-  EyeIcon,
-  Plus,
-  SettingsIcon,
-} from "lucide-react";
-import Link from "next/link";
-import {
-  ComponentProps,
-  Dispatch,
-  SetStateAction,
-  useRef,
-  useState,
-} from "react";
+import { EyeClosedIcon, EyeIcon } from "lucide-react";
+import { ComponentProps, Dispatch, SetStateAction } from "react";
 import { twMerge } from "tailwind-merge";
 
 type RawEditorProps = ComponentProps<"div"> & {

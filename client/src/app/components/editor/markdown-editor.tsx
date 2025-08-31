@@ -14,9 +14,9 @@ import {
 } from "@mdxeditor/editor";
 import gsap from "gsap";
 import dynamic from "next/dynamic";
-import React, { SetStateAction, useEffect, useRef, useState } from "react";
+import React, { SetStateAction, useEffect } from "react";
 import "@/app/assets/mdxeditor.css";
-import { useMarkdownEditor } from "@/app/hooks";
+import { useMarkdownEditor } from "@/hooks";
 
 const MarkdownEditorContent = ({
   content,

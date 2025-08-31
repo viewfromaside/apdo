@@ -1,4 +1,4 @@
-import { BaseEntity, IBase } from "./base";
+import { BaseEntity, IBase } from "@/services";
 
 export interface IColor extends IBase {
   backgroundColor: string;

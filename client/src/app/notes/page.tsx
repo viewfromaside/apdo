@@ -6,25 +6,16 @@ import {
   NoContent,
   NoteSettings,
   Panel,
-  PopupSearch,
-  PopupSettings,
 } from "@/app/components";
 import { useEffect, useState, useRef } from "react";
-import { Note } from "../services";
+import { Note } from "@/services/models/note";
 import { useAtomValue, useSetAtom } from "jotai";
-import { togglePopupAtom } from "../store/pop-up";
-import {
-  deleteNoteAtom,
-  loadNotesAtom,
-  notesAtom,
-  saveNoteAtom,
-  setSelectedNoteAtom,
-} from "../store";
+import { togglePopupAtom } from "../../store/pop-up";
+import { loadNotesAtom, notesAtom, setSelectedNoteAtom } from "../../store";
 import gsap from "gsap";
-import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
-import { getUser, verifyItsLogged } from "../store/user";
-import { ColorRequest } from "../services/requests/color";
+import { getUser, verifyItsLogged } from "@/store/user";
+import { ColorRequest } from "@/services/requests/color";
 
 export default function NotesHome() {
   let notes = useAtomValue(notesAtom);

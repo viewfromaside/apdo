@@ -10,7 +10,7 @@ function normalizeNotePayload(raw: any) {
   };
 }
 
-import { NoteVisibility } from "@/app/shared/enums/note";
+import { NoteVisibility } from "@/shared";
 import { BaseEntity, IBase } from "./base";
 
 export interface INote extends IBase {

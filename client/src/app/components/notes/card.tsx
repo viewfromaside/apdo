@@ -3,14 +3,13 @@
 import { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 import { FileName, Tag } from "@/app/components";
-import { LockIcon, LockOpenIcon, StarIcon } from "lucide-react";
-import Link from "next/link";
+import { LockIcon, LockOpenIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Note } from "@/app/services";
-import { NoteVisibility } from "@/app/shared";
+import { Note } from "@/services";
+import { NoteVisibility } from "@/shared";
 import { useSetAtom } from "jotai";
-import { setSelectedNoteAtom } from "@/app/store";
-import { closeAllPopupAtom } from "@/app/store/pop-up";
+import { setSelectedNoteAtom } from "@/store";
+import { closeAllPopupAtom } from "@/store/pop-up";
 
 type CardProps = ComponentProps<"div"> & {
   model: Note;

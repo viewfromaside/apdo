@@ -1,5 +1,5 @@
-import { User } from "../models/user";
-import { BaseRequest } from "./base";
+import { User } from "@/services";
+import { BaseRequest } from "@/services";
 
 export class UserRequest extends BaseRequest<User> {
   constructor() {
