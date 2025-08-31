@@ -40,9 +40,11 @@ export default function NotesHome() {
     }
 
     async function getData() {
-      loadNotes();
       let user = getUser();
       if (!user) throw new Error("internal client error");
+      const jwt = localStorage.getItem("jwt");
+      if (!jwt) throw new Error("internal client error");
+      loadNotes(jwt);
       const colorRequest = new ColorRequest(localStorage.getItem("jwt") || "");
       const response = await colorRequest.sendFindOne(user.username);
 

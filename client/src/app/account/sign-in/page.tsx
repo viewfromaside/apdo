@@ -3,7 +3,6 @@ import { Button, GoSignUp, Logo, Panel } from "@/app/components";
 import { Input } from "@/app/components/input";
 import { useKeyboardShortcut } from "@/hooks";
 import { AccountRequest } from "@/services";
-import { loadNotesAtom } from "@/store";
 import { showAlertPopupAtom, togglePopupAtom } from "@/store/pop-up";
 import { saveUser, verifyItsLogged } from "@/store/user";
 import gsap from "gsap";
@@ -18,7 +17,6 @@ export default function SignInForm() {
   const formRef = useRef<HTMLDivElement>(null);
   const togglePopup = useSetAtom(togglePopupAtom);
   const showAlertPopup = useSetAtom(showAlertPopupAtom);
-  const loadNotes = useSetAtom(loadNotesAtom);
   const [open, setOpen] = useState<boolean>(true);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -63,8 +61,8 @@ export default function SignInForm() {
       // }
       localStorage.setItem("jwt", data.jwt);
       saveUser(data.data);
-      loadNotes();
-      await new Promise((resolve) => setTimeout(resolve, 150));
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      // router.refresh();
       router.push("/notes");
     } else {
       showAlertPopup(t("popups.errors.incorrectCredentials"));

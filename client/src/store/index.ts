@@ -1,14 +1,16 @@
 import { atom } from "jotai";
-import { unwrap } from "jotai/utils";
+import { atomFamily, unwrap } from "jotai/utils";
 import { Note, NoteRequest } from "@/services";
 import { NoteVisibility } from "@/shared";
 import { createRandomId } from "@/lib/utils";
 import { getUser } from "./user";
 
-export const noteServiceAtom = atom((get) => {
-  const jwt = localStorage.getItem("jwt") || "";
-  return new NoteRequest(jwt);
-});
+export const noteServiceAtom = atomFamily((jwtParam?: string) =>
+  atom(() => {
+    const jwt = jwtParam ? jwtParam : localStorage.getItem("jwt");
+    return new NoteRequest(jwt!);
+  })
+);
 
 const mockNote = new Note({
   id: createRandomId(7),
@@ -26,8 +28,8 @@ export const selectedNoteIndexAtom = atom<number | null>(0);
 
 export const selectedNoteAtom = atom<Note | null>(null);
 
-export const loadNotesAtom = atom(null, async (get, set) => {
-  const noteService = get(noteServiceAtom);
+export const loadNotesAtom = atom(null, async (get, set, jwtParam?: string) => {
+  const noteService = get(noteServiceAtom(jwtParam));
   const user = getUser();
   const response = await noteService.sendFindManyByUser(user!.username);
 
@@ -53,7 +55,7 @@ export const loadNotesAtom = atom(null, async (get, set) => {
 export const saveNoteAtom = atom(
   null,
   async (get, set, updatedNote: Partial<Note>) => {
-    const noteService = get(noteServiceAtom);
+    const noteService = get(noteServiceAtom(""));
     const selectedNote = get(selectedNoteAtom);
     if (!selectedNote) return;
 
@@ -83,7 +85,7 @@ export const saveNoteAtom = atom(
 );
 
 export const createEmptyNoteAtom = atom(null, async (get, set) => {
-  const noteService = get(noteServiceAtom);
+  const noteService = get(noteServiceAtom(""));
   const newNote = await noteService.sendCreate(
     new Note({
       title: "",
@@ -104,7 +106,7 @@ export const setSelectedNoteAtom = atom(null, (get, set, note: Note | null) => {
 export const createNoteAtom = atom(
   null,
   async (get, set, data: Partial<Note>) => {
-    const noteService = get(noteServiceAtom);
+    const noteService = get(noteServiceAtom(""));
     let user = getUser();
     if (!user) {
       throw new Error("internal client error");
@@ -118,7 +120,7 @@ export const createNoteAtom = atom(
 );
 
 export const deleteNoteAtom = atom(null, async (get, set) => {
-  const noteService = get(noteServiceAtom);
+  const noteService = get(noteServiceAtom(""));
   const selectedNote = get(selectedNoteAtom);
   if (!selectedNote) return;
 

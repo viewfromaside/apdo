@@ -32,7 +32,7 @@ export const PopupNotes = ({
 }: PopupNotesProps) => {
   const [backup, setBackup] = useState<Note[]>([]);
   const [notes, setNotes] = useState<Note[]>([]);
-  const noteService = useAtomValue(noteServiceAtom);
+  const noteService = useAtomValue(noteServiceAtom("asd"));
   const openPopups = useAtomValue(openPopupsAtom);
   const closeAllPopups = useSetAtom(closeAllPopupAtom);
 
