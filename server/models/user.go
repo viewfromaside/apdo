@@ -19,7 +19,7 @@ func NewUser() User {
 	now := time.Now()
 	return User{
 		ID:        utils.GenerateID(7),
-		Active:    false,
+		Active:    true,
 		Username:  "",
 		Email:     "",
 		Password:  "",

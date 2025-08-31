@@ -13,24 +13,38 @@ export class NoteRequest extends BaseRequest<Note> {
   }
 
   async sendFindManyByUser(id: string): Promise<Note[]> {
-    const { data: res, status } = await this.client.get<Note[]>(`/user/${id}`);
+    try {
+      const { data: res, status } = await this.client.get<Note[]>(
+        `/user/${id}`
+      );
 
-    if (status >= 200 && status < 300) {
-    } else {
-      toast.error("Error", ToastErrorStyle);
+      if (status >= 200 && status < 300) {
+      } else {
+        toast.error("Error", ToastErrorStyle);
+      }
+
+      return res;
+    } catch (e) {
+      console.log(e);
+      return [];
     }
-
-    return res;
   }
 
   async sendFindManyOnlyPublic(): Promise<Note[]> {
-    const { data: res, status } = await this.client.get<Note[]>(`/public`);
+    try {
+      const { data: res, status } = await this.client.get<Note[]>(`/public`);
 
-    if (status >= 200 && status < 300) {
-    } else {
-      toast.error("Error", ToastErrorStyle);
+      if (status >= 200 && status < 300) {
+      } else {
+        toast.error("Error", ToastErrorStyle);
+      }
+      if (res) {
+        return res.map((n) => new Note(n));
+      }
+      return [];
+    } catch (e) {
+      console.log(e);
+      return [];
     }
-
-    return res.map((n) => new Note(n));
   }
 }

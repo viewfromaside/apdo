@@ -17,10 +17,12 @@ import { PopupConfirmEmail } from "./confirm-email";
 import { PopupAlert } from "./alert";
 import { logout } from "@/app/store/user";
 import { useRouter } from "next/navigation";
+import { resetNotesAtom } from "@/app/store";
 
 export const PopupManager = () => {
   const openPopups = useAtomValue(openPopupsAtom);
   const togglePopup = useSetAtom(togglePopupAtom);
+  const resetNotes = useSetAtom(resetNotesAtom);
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [mounted, setMounted] = useState(false);
@@ -44,6 +46,7 @@ export const PopupManager = () => {
           report: () => togglePopup("report"),
           fileSettings: () => togglePopup("file"),
           logout: () => {
+            resetNotes();
             logout();
             router.replace("/");
           },

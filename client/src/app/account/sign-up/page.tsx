@@ -39,7 +39,7 @@ export default function SignUpForm() {
     const request = new AccountRequest();
     const response = await request.sendRegister(formObject);
     if (response?.status == 201) {
-      togglePopup("confirmEmail");
+      router.push("/account/sign-in");
     } else {
       showAlertPopup("already exists a user with that username or email");
     }

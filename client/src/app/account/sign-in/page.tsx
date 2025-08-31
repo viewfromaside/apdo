@@ -52,10 +52,10 @@ export default function SignInForm() {
 
     if (response?.status == 200) {
       let data = response.data;
-      if (data.data.active) {
-        togglePopup("confirmEmail");
-        return;
-      }
+      // if (!data.data.active) {
+      //   togglePopup("confirmEmail");
+      //   return;
+      // }
       localStorage.setItem("jwt", data.jwt);
       saveUser(data.data);
       loadNotes();

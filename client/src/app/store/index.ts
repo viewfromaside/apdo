@@ -137,3 +137,9 @@ export const deleteNoteAtom = atom(null, async (get, set) => {
 
   set(selectedNoteIndexAtom, null);
 });
+
+export const resetNotesAtom = atom(null, (_get, set) => {
+  set(notesAtomWritable, []);
+  set(selectedNoteAtom, null);
+  set(selectedNoteIndexAtom, null);
+});

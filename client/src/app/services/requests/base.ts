@@ -48,15 +48,20 @@ export class BaseRequest<T extends IBase> {
   }
 
   async sendFindMany(params?: Record<string, any>): Promise<T[]> {
-    if (params?.field) {
-      this.url += `?field=${params.field}`;
-    }
-    if (params?.value) {
-      this.url += `?value=${params.value}`;
-    }
-    const { data: res, status } = await this.client.get<T[]>("", { params });
+    try {
+      if (params?.field) {
+        this.url += `?field=${params.field}`;
+      }
+      if (params?.value) {
+        this.url += `?value=${params.value}`;
+      }
+      const { data: res, status } = await this.client.get<T[]>("", { params });
 
-    return res;
+      return res;
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
   }
 
   async sendFindOne(id: string): Promise<T | null> {
