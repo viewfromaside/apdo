@@ -74,7 +74,7 @@ func UpdateNoteById(c *gin.Context) {
 		return
 	}
 
-	if input.Content == "" || input.Title == "" || input.CreatedBy == "" {
+	if input.Title == "" || input.CreatedBy == "" {
 		c.IndentedJSON(http.StatusBadRequest, gin.H{"error": "missing fields"})
 		return
 	}

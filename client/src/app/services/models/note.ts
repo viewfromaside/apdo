@@ -1,3 +1,15 @@
+function normalizeNotePayload(raw: any) {
+  return {
+    id: raw.id,
+    created_by: raw.created_by ?? raw.createdBy,
+    created_at: raw.created_at ?? raw.createdAt,
+    updated_at: raw.updated_at ?? raw.updatedAt,
+    title: raw.title,
+    content: raw.content,
+    visibility: raw.visibility,
+  };
+}
+
 import { NoteVisibility } from "@/app/shared/enums/note";
 import { BaseEntity, IBase } from "./base";
 
@@ -13,11 +25,12 @@ export class Note extends BaseEntity implements INote {
   public visibility: NoteVisibility;
 
   constructor(obj: Partial<Record<string, any>>) {
-    super(obj);
-    this.title = obj.title || "";
-    this.content = obj.content || "";
+    const normalized = normalizeNotePayload(obj);
+    super(normalized);
+    this.title = normalized.title || "";
+    this.content = normalized.content || "";
     this.visibility =
-      obj.visibility === NoteVisibility.PRIVATE
+      normalized.visibility === NoteVisibility.PRIVATE
         ? NoteVisibility.PRIVATE
         : NoteVisibility.PUBLIC;
   }

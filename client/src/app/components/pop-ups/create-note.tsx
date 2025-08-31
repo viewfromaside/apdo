@@ -29,7 +29,6 @@ export const PopupCreateNote = ({
   const createNote = useSetAtom(createNoteAtom);
 
   const handleChange = (field: keyof Note, value: any) => {
-    console.log(`[${field}]: ${value}`);
     setFormObject((prev) => {
       return new Note({
         ...prev,

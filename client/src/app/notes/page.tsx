@@ -47,7 +47,7 @@ export default function NotesHome() {
     }
 
     async function getData() {
-      await loadNotes();
+      loadNotes();
       let user = getUser();
       if (!user) throw new Error("internal client error");
       const colorRequest = new ColorRequest(localStorage.getItem("jwt") || "");
@@ -62,7 +62,6 @@ export default function NotesHome() {
           );
           root.style.setProperty(`--color-${key.replace("_color", "")}`, color);
         });
-        console.log(response);
       }
 
       setLoading(false);
@@ -176,7 +175,10 @@ export default function NotesHome() {
           </div>
         </div>
 
-        <div ref={contentRef} className="h-full">
+        <div
+          ref={contentRef}
+          className="h-[90%] overflow-auto overflow-x-hidden"
+        >
           {notes.length > 0 ? (
             <div className="md:p-5 md:pt-0 md:border-l-1 border-accent overflow-x-hidden overflow-auto flex-row flex-wrap gap-2 content-start">
               <h2

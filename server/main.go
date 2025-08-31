@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+
 	services.InitFirestore()
 	router := gin.Default()
 	routes.RegisterRoutes(router)

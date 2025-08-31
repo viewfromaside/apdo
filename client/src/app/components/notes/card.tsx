@@ -25,11 +25,10 @@ export const Card = ({
   ...props
 }: CardProps) => {
   const router = useRouter();
-  const selectNote = useSetAtom(setSelectedNoteAtom);
+  const setSelectedNote = useSetAtom(setSelectedNoteAtom);
   const closeAllPopups = useSetAtom(closeAllPopupAtom);
 
   const goToNote = () => {
-    selectNote(model);
     closeAllPopups();
     router.push(`/notes/${model.id}`);
   };

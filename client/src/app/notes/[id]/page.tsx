@@ -18,14 +18,11 @@ import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
-  loadNotesAtom,
-  noteServiceAtom,
   saveNoteAtom,
   selectedNoteAtom,
   selectedNoteIndexAtom,
   setSelectedNoteAtom,
 } from "@/app/store";
-import editor from "@/app/assets/main.json"; // JSON local com suas notas
 import { togglePopupAtom } from "@/app/store/pop-up";
 import { useParams, useRouter } from "next/navigation";
 import { getUser, verifyItsLogged } from "@/app/store/user";
@@ -51,11 +48,7 @@ export default function NoteHome({
   const togglePopup = useSetAtom(togglePopupAtom);
   const selectedNote = useAtomValue(selectedNoteAtom);
   const setSelectedNote = useSetAtom(setSelectedNoteAtom);
-  const [selectedNoteIndex, setSelectedNoteIndex] = useAtom(
-    selectedNoteIndexAtom
-  );
   const saveNote = useSetAtom(saveNoteAtom);
-  const loadNotes = useSetAtom(loadNotesAtom);
   const router = useRouter();
 
   useEffect(() => {
@@ -73,16 +66,16 @@ export default function NoteHome({
         setSelectedNote(asNote);
         setLocalContent(asNote.content);
         setLocalTitle(asNote.title);
-        setReadOnly(asNote.createdBy != loggedUser?.username);
-        console.log(asNote.createdBy);
-        console.log(loggedUser?.username);
+        setReadOnly(asNote.createdBy !== loggedUser?.username);
       }
     }
 
     if (selectedNote) {
       setLocalContent(selectedNote.content || "");
       setLocalTitle(selectedNote.title || "new file");
-      setReadOnly(selectedNote.createdBy != loggedUser?.username);
+      if (loggedUser) {
+        setReadOnly(selectedNote.createdBy !== loggedUser?.username);
+      }
     } else {
       getData();
     }

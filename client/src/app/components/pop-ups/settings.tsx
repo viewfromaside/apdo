@@ -55,7 +55,6 @@ export const PopupSettings = ({
             <>
               <Button
                 onClick={() => {
-                  console.log(selectedNote);
                   callbacks?.fileSettings && callbacks.fileSettings();
                   toggle();
                 }}

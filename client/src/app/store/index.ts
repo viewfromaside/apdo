@@ -47,10 +47,7 @@ export const loadNotesAtom = atom(null, async (get, set) => {
     return;
   }
 
-  const sorted = [...notes].sort(
-    (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime()
-  );
-  set(notesAtomWritable, sorted);
+  set(notesAtomWritable, notes);
 });
 
 export const saveNoteAtom = atom(
@@ -73,9 +70,9 @@ export const saveNoteAtom = atom(
 
     savedNote.createdBy = user.username;
 
-    const response = await noteService.sendEdit(savedNote.id, savedNote);
-    console.log(response);
+    await noteService.sendEdit(savedNote.id, savedNote);
 
+    set(selectedNoteAtom, savedNote);
     set(
       notesAtomWritable,
       get(notesAtomWritable).map((note) =>
@@ -114,7 +111,6 @@ export const createNoteAtom = atom(
     }
 
     data.createdBy = user.username;
-    console.log(user.username);
     const createdNote = await noteService.sendCreate(data);
     const currentNotes = get(notesAtomWritable);
     set(notesAtomWritable, [createdNote, ...currentNotes]);

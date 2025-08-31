@@ -14,11 +14,11 @@ export class BaseEntity implements IBase {
   public createdAt: Date;
   public updatedAt: Date;
 
-  constructor(obj?: Partial<Record<string, any>>) {
-    this.id = obj?.id ?? "";
-    this.createdBy = obj?.created_by ?? "";
-    this.createdAt = obj?.created_at ? new Date(obj.created_at) : new Date();
-    this.updatedAt = obj?.updated_at ? new Date(obj.updated_at) : new Date();
+  constructor(obj: Partial<Record<string, any>>) {
+    this.id = obj.id;
+    this.createdBy = obj.created_by;
+    this.createdAt = obj.created_at ? new Date(obj.created_at) : new Date();
+    this.updatedAt = obj.updated_at ? new Date(obj.updated_at) : new Date();
   }
 
   getObjectForCreate(): Record<string, any> {

@@ -28,7 +28,6 @@ export class AccountRequest extends BaseRequest<User> {
         username: data.username,
         password: data.password,
       });
-      console.log(res.status);
       return res;
     } catch (e) {
       console.log(e);
