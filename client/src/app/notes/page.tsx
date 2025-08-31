@@ -23,7 +23,8 @@ import {
 import gsap from "gsap";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
-import { verifyItsLogged } from "../store/user";
+import { getUser, verifyItsLogged } from "../store/user";
+import { ColorRequest } from "../services/requests/color";
 
 export default function NotesHome() {
   let notes = useAtomValue(notesAtom);
@@ -47,6 +48,23 @@ export default function NotesHome() {
 
     async function getData() {
       await loadNotes();
+      let user = getUser();
+      if (!user) throw new Error("internal client error");
+      const colorRequest = new ColorRequest(localStorage.getItem("jwt") || "");
+      const response = await colorRequest.sendFindOne(user.username);
+
+      if (response) {
+        let root = document.documentElement;
+        Object.entries(response).map(([key, color]) => {
+          root.style.setProperty(
+            `--color-dark-${key.replace("_color", "")}`,
+            color
+          );
+          root.style.setProperty(`--color-${key.replace("_color", "")}`, color);
+        });
+        console.log(response);
+      }
+
       setLoading(false);
     }
 

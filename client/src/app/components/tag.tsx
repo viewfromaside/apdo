@@ -32,7 +32,7 @@ export const Tag = ({
       {...props}
     >
       {Icon && <Icon size={size} strokeWidth={2} />}
-      <span className="whitespace-nowrap">{label}</span>
+      <span className="whitespace-nowrap text-neutral">{label}</span>
     </div>
   );
 };

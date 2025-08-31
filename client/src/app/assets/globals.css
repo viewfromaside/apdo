@@ -53,11 +53,11 @@
 }
 
 *::selection {
-  background: #ffb347;
+  @apply bg-accent;
   color: #000;
 }
 *::-moz-selection {
-  background: #ffb347;
+  @apply bg-accent;
   color: #000;
 }
 

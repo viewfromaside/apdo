@@ -34,9 +34,11 @@ func RegisterRoutes(router *gin.Engine) {
 	protected.GET("/notes/user/:id", handlers.GetNotesByUser)
 	protected.GET("/notes/:id", handlers.GetNoteById)
 	protected.DELETE("/notes/:id/remove", handlers.RemoveById)
-	protected.PUT("/notes/:id/edit", handlers.UpdateById)
+	protected.PUT("/notes/:id/edit", handlers.UpdateNoteById)
 	protected.POST("/notes/create", handlers.PostNotes)
 
-	// USERS CRUD
-	protected.GET("/users", handlers.GetUsers)
+	// COLORS CRUD
+	protected.GET("/colors/:id", handlers.GetColorByUserId)
+	protected.PUT("/colors/:id/edit", handlers.UpdateColorById)
+	protected.POST("/colors/create", handlers.PostColors)
 }

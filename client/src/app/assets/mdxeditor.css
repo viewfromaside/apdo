@@ -91,13 +91,3 @@ li[class*="_listItemChecked_"]::after {
     opacity: 0.3; /* não some totalmente, fica translúcido */
   }
 }
-
-.mdx-selection ::selection {
-  background: #ffb347;
-  color: #000;
-}
-
-.mdx-selection ::-moz-selection {
-  background: #ffb347;
-  color: #000;
-}

@@ -28,8 +28,8 @@ import {
 import editor from "@/app/assets/main.json"; // JSON local com suas notas
 import { togglePopupAtom } from "@/app/store/pop-up";
 import { useParams, useRouter } from "next/navigation";
-import { verifyItsLogged } from "@/app/store/user";
-import { NoteRequest } from "@/app/services";
+import { getUser, verifyItsLogged } from "@/app/store/user";
+import { Note, NoteRequest } from "@/app/services";
 
 export default function NoteHome({
   params,
@@ -42,6 +42,7 @@ export default function NoteHome({
   const [localContent, setLocalContent] = useState<string>("");
   const [localTitle, setLocalTitle] = useState<string>("new file");
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
+  const [readOnly, setReadOnly] = useState<boolean>(false);
 
   const [saved, setSaved] = useState<boolean>(true);
   const [formatMarkdownToggle, setFormatMarkdownToggle] =
@@ -62,24 +63,31 @@ export default function NoteHome({
       return router.replace("/account/sign-in");
     }
 
+    const loggedUser = getUser();
+
     async function getData() {
       const noteRequest = new NoteRequest(localStorage.getItem("jwt") || "");
       const response = await noteRequest.sendFindOne(id);
       if (response !== null) {
-        setSelectedNote(response);
-        setLocalContent(response.content);
-        setLocalTitle(response.title);
+        let asNote = new Note(response);
+        setSelectedNote(asNote);
+        setLocalContent(asNote.content);
+        setLocalTitle(asNote.title);
+        setReadOnly(asNote.createdBy != loggedUser?.username);
+        console.log(asNote.createdBy);
+        console.log(loggedUser?.username);
       }
     }
 
     if (selectedNote) {
       setLocalContent(selectedNote.content || "");
       setLocalTitle(selectedNote.title || "new file");
+      setReadOnly(selectedNote.createdBy != loggedUser?.username);
     } else {
       getData();
     }
     setIsInitialized(true);
-  }, [selectedNote]);
+  }, [selectedNote, id]);
 
   useEffect(() => {
     if (selectedNote && isInitialized) {
@@ -151,18 +159,24 @@ export default function NoteHome({
           </div>
         </div>
 
-        {formatMarkdownToggle ? (
-          <MarkdownEditor
-            key={`md-${selectedNote?.id || "new"}-${isInitialized}`}
-            content={localContent}
-            setContent={setLocalContent}
-          />
+        {selectedNote ? (
+          formatMarkdownToggle ? (
+            <MarkdownEditor
+              readOnly={readOnly}
+              key={`md-${selectedNote.id}-${isInitialized}`}
+              content={localContent}
+              setContent={setLocalContent}
+            />
+          ) : (
+            <RawEditor
+              readOnly={readOnly}
+              key={`raw-${selectedNote.id}-${isInitialized}`}
+              content={localContent}
+              setContent={setLocalContent}
+            />
+          )
         ) : (
-          <RawEditor
-            key={`raw-${selectedNote?.id || "new"}-${isInitialized}`}
-            content={localContent}
-            setContent={setLocalContent}
-          />
+          <div className="flex justify-center items-center">Carregando...</div>
         )}
 
         <UnsavedBottomBar show={!saved} />

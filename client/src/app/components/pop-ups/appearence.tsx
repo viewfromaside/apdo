@@ -11,6 +11,9 @@ import { PaletteIcon } from "lucide-react";
 import { Button } from "../button";
 import { ColorPicker } from "../color-picker";
 import { ColorKey, themeColorsAtom } from "@/app/store/color";
+import { ColorRequest } from "@/app/services/requests/color";
+import { getUser } from "@/app/store/user";
+import { Color } from "@/app/services/models/color";
 
 type PopupAppearenceProps = PopupProps & {};
 
@@ -31,8 +34,28 @@ export const PopupAppearence = ({
   });
 
   useEffect(() => {
-    if (openPopups.notes) {
-      console.log("o popup de notes acaba de executar um fetch");
+    if (openPopups.appearence) {
+      async function getData() {
+        let user = getUser();
+        if (!user) throw new Error("internal client error");
+        const colorRequest = new ColorRequest(
+          localStorage.getItem("jwt") || ""
+        );
+        const response = await colorRequest.sendFindOne(user.username);
+        if (!response) return;
+
+        let asColor = new Color(response);
+
+        setThemeColors((prev) => {
+          return {
+            ...prev,
+            background: asColor.backgroundColor,
+            neutral: asColor.neutralColor,
+            accent: asColor.accentColor,
+          };
+        });
+      }
+      getData();
     }
   }, [openPopups]);
 
@@ -59,12 +82,24 @@ export const PopupAppearence = ({
     setThemeColors(defaultThemeColors);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    let user = getUser();
+    if (!user) throw new Error("internal client error");
+    const colorRequest = new ColorRequest(localStorage.getItem("jwt") || "");
+    const response = await colorRequest.sendFindOne(user.username);
+    if (!response) return;
+
     let root = document.documentElement;
     Object.entries(themeColors).map(([key, color]) => {
       root.style.setProperty(`--color-dark-${key}`, color);
       root.style.setProperty(`--color-${key}`, color);
-      console.log(root.style);
+    });
+
+    colorRequest.sendEdit(response.id, {
+      background_color: themeColors.background,
+      neutral_color: themeColors.neutral,
+      accent_color: themeColors.accent,
+      user_id: user.username,
     });
   };
 

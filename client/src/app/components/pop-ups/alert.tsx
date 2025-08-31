@@ -47,7 +47,7 @@ export const PopupAlert = ({
         <DialogContent
           className={twMerge("flex flex-col w-full h-full", contentClassName)}
         >
-          <p className="text-center font-mono">{alertPopupText}</p>
+          <p className="text-center text-neutral font-mono">{alertPopupText}</p>
         </DialogContent>
       </DialogBody>
     </Dialog>

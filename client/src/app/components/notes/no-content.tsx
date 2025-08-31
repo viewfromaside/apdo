@@ -92,13 +92,13 @@ export const NoContent = ({ className, ...props }: NoContentProps) => {
       >
         Ayy, you made it
       </h2>
-      <span ref={subtitleRef} className="text-[14px] -mt-1">
+      <span ref={subtitleRef} className="text-[14px] text-neutral -mt-1">
         All the notes, your way — modern, no cap
       </span>
       <div ref={buttonsRef} className="flex flex-row mt-5 gap-4">
         <Button
           onClick={() => togglePopup("createNote")}
-          className="bg-green-800 hover:bg-green-500 !text-white hover:text-white"
+          className="bg-green-800 hover:bg-green-500 !text-neutral hover:text-neutral"
         >
           drop a fresh one
         </Button>

@@ -65,7 +65,7 @@ func GetNoteById(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, note)
 }
 
-func UpdateById(c *gin.Context) {
+func UpdateNoteById(c *gin.Context) {
 	id := c.Param("id")
 	var input models.Note
 

@@ -20,7 +20,9 @@ export const DialogContent = ({
       className={twMerge("flex flex-col w-full gap-2", className)}
       {...props}
     >
-      <span className={twMerge("my-4", textClassName)}>{children}</span>
+      <span className={twMerge("my-4 text-neutral", textClassName)}>
+        {children}
+      </span>
       {onClick && (
         <Button
           onClick={(event) => {

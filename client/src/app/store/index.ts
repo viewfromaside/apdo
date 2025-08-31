@@ -29,7 +29,7 @@ export const selectedNoteAtom = atom<Note | null>(null);
 export const loadNotesAtom = atom(null, async (get, set) => {
   const noteService = get(noteServiceAtom);
   const user = getUser();
-  const response = await noteService.sendFindManyByUser(user!.id);
+  const response = await noteService.sendFindManyByUser(user!.username);
 
   if (response === null) {
     return;
@@ -71,7 +71,7 @@ export const saveNoteAtom = atom(
       throw new Error("internal client error");
     }
 
-    savedNote.createdBy = user.id;
+    savedNote.createdBy = user.username;
 
     const response = await noteService.sendEdit(savedNote.id, savedNote);
     console.log(response);
@@ -109,8 +109,12 @@ export const createNoteAtom = atom(
   async (get, set, data: Partial<Note>) => {
     const noteService = get(noteServiceAtom);
     let user = getUser();
-    console.log(user);
-    data.createdBy = user?.id;
+    if (!user) {
+      throw new Error("internal client error");
+    }
+
+    data.createdBy = user.username;
+    console.log(user.username);
     const createdNote = await noteService.sendCreate(data);
     const currentNotes = get(notesAtomWritable);
     set(notesAtomWritable, [createdNote, ...currentNotes]);

@@ -13,6 +13,7 @@ import { Button } from "../button";
 import { PopupProps } from ".";
 import { useAtom, useAtomValue } from "jotai";
 import { selectedNoteAtom } from "@/app/store";
+import { getUser } from "@/app/store/user";
 
 type callbacksType = {
   search?: () => void;
@@ -50,7 +51,7 @@ export const PopupSettings = ({
             contentClassName
           )}
         >
-          {selectedNote && (
+          {selectedNote && selectedNote.createdBy == getUser()?.username && (
             <>
               <Button
                 onClick={() => {

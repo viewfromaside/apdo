@@ -46,6 +46,11 @@ func RegisterAccount(c *gin.Context) {
 
 	services.CreateUser(newUser)
 	newUser.Password = "secret"
+
+	newColor := models.NewColor()
+	newColor.UserID = newUser.Username
+	services.CreateColor(newColor)
+
 	c.IndentedJSON(http.StatusCreated, newUser)
 }
 

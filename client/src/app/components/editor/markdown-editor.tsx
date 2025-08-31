@@ -21,9 +21,11 @@ import { useMarkdownEditor } from "@/app/hooks";
 const MarkdownEditorContent = ({
   content,
   setContent,
+  readOnly,
 }: {
   content: string;
   setContent: React.Dispatch<SetStateAction<string>>;
+  readOnly?: boolean;
 }) => {
   const { editorRef } = useMarkdownEditor();
 
@@ -69,6 +71,7 @@ const MarkdownEditorContent = ({
   return (
     <div ref={editorRef} className="h-full overflow-auto">
       <MDXEditor
+        readOnly={readOnly}
         markdown={content}
         toMarkdownOptions={{
           bullet: "+",

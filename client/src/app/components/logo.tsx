@@ -19,7 +19,7 @@ export const Logo = ({ href, className, ...props }: LogoProps) => {
     const text = textRef.current.innerText;
     textRef.current.innerHTML = text
       .split("")
-      .map((char) => `<span class="inline-block">${char}</span>`)
+      .map((char) => `<span class="inline-block text-neutral">${char}</span>`)
       .join("");
 
     const chars = textRef.current.querySelectorAll("span");
@@ -85,7 +85,7 @@ export const Logo = ({ href, className, ...props }: LogoProps) => {
           />
           <span
             ref={textRef}
-            className="text-[36px] opacity-0 -mt-3 font-bold tracking-tighter"
+            className="text-[36px] text-neutral opacity-0 -mt-3 font-bold tracking-tighter"
           >
             apdo
           </span>
