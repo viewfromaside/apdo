@@ -19,9 +19,9 @@ import { ColorRequest } from "@/services/requests/color";
 import { useTranslations } from "next-intl";
 
 export default function NotesHome() {
-  const t = useTranslations("general");
   const [loading, setLoading] = useState<boolean>(true);
-  let notes = useAtomValue(notesAtom);
+  const t = useTranslations("general");
+  const notes = useAtomValue(notesAtom);
   const selectNote = useSetAtom(setSelectedNoteAtom);
   const loadNotes = useSetAtom(loadNotesAtom);
   const togglePopup = useSetAtom(togglePopupAtom);
@@ -148,6 +148,16 @@ export default function NotesHome() {
     }
   }, [notes]);
 
+  if (loading) {
+    return (
+      <>
+        <div className="flex w-full justify-center items-center">
+          <Panel className="flex flex-col gap-4"></Panel>
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className="flex w-full justify-center items-center">
       <Panel className="flex flex-col gap-4">
@@ -157,7 +167,7 @@ export default function NotesHome() {
         >
           <Logo href="/notes" />
           <div ref={buttonsRef} className="flex flex-row gap-4">
-            {!loading && notes.length > 0 && (
+            {notes.length > 0 && (
               <Button onClick={() => togglePopup("createNote")}>
                 {t("main.header.createNote")}
               </Button>
@@ -170,7 +180,7 @@ export default function NotesHome() {
           ref={contentRef}
           className="h-[90%] overflow-auto overflow-x-hidden"
         >
-          {!loading && notes.length > 0 ? (
+          {notes.length > 0 ? (
             <div className="md:p-5 md:pt-0 md:border-l-1 border-accent overflow-x-hidden overflow-auto flex-row flex-wrap gap-2 content-start">
               <h2
                 ref={titleRef}

@@ -60,7 +60,7 @@ export const Card = ({
             <Tag
               color="[#EB3C1A]"
               icon={LockIcon}
-              label={t("notes.attributes.public")}
+              label={t("notes.attributes.private")}
             />
           )}
         </div>
