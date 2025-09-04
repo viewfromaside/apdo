@@ -57,7 +57,7 @@ export default function NoteHome({
         setSelectedNote(asNote);
         setLocalContent(asNote.content);
         setLocalTitle(asNote.title);
-        setReadOnly(asNote.createdBy === loggedUser?.username);
+        setReadOnly(asNote.createdBy !== loggedUser?.username);
       }
     }
 
