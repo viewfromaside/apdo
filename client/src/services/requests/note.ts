@@ -2,6 +2,7 @@ import { toast } from "sonner";
 import { Note } from "@/services";
 import { BaseRequest } from "./base";
 import { ToastErrorStyle } from "@/shared";
+import axios from "axios";
 
 export class NoteRequest extends BaseRequest<Note> {
   constructor(jwt?: string) {
@@ -45,6 +46,19 @@ export class NoteRequest extends BaseRequest<Note> {
     } catch (e) {
       console.log(e);
       return [];
+    }
+  }
+
+  async sendFindOne(id: string): Promise<Note | null> {
+    try {
+      const { data: res, status } = await axios.get<Note>(
+        process.env.NEXT_PUBLIC_BACKEND_API_URL + `/notes/${id}`
+      );
+
+      return res;
+    } catch (err: any) {
+      if (err.response?.status == 404) return null;
+      return err;
     }
   }
 }
