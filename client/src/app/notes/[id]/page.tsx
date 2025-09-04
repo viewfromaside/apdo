@@ -117,10 +117,6 @@ export default function NoteHome({
     );
   }
 
-  if (!verifyItsLogged()) {
-    return <></>;
-  }
-
   return (
     <div className="flex w-full justify-center items-center">
       <Panel className="flex flex-col gap-3">
