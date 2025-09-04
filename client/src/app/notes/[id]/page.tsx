@@ -17,7 +17,7 @@ import { saveNoteAtom, selectedNoteAtom, setSelectedNoteAtom } from "@/store";
 import { togglePopupAtom } from "@/store/pop-up";
 import { useRouter } from "next/navigation";
 import { getUser, verifyItsLogged } from "@/store/user";
-import { Note, NoteRequest } from "@/services";
+import { Note, NoteRequest, User } from "@/services";
 import { useTranslations } from "next-intl";
 
 export default function NoteHome({
@@ -32,7 +32,7 @@ export default function NoteHome({
   const [localContent, setLocalContent] = useState<string>("");
   const [localTitle, setLocalTitle] = useState<string>("new file");
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
-  const [readOnly, setReadOnly] = useState<boolean>(false);
+  const [readOnly, setReadOnly] = useState<boolean>(true);
 
   const [saved, setSaved] = useState<boolean>(true);
   const [formatMarkdownToggle, setFormatMarkdownToggle] =
@@ -45,30 +45,25 @@ export default function NoteHome({
   const router = useRouter();
 
   useEffect(() => {
-    if (!verifyItsLogged()) {
-      return router.replace("/account/sign-in");
-    }
-
-    const loggedUser = getUser();
-
     async function getData() {
-      const noteRequest = new NoteRequest(localStorage.getItem("jwt") || "");
+      const noteRequest = new NoteRequest("");
       const response = await noteRequest.sendFindOne(id);
       if (response !== null) {
         let asNote = new Note(response);
+        let loggedUser: User | null = null;
+        if (verifyItsLogged()) {
+          loggedUser = getUser();
+        }
         setSelectedNote(asNote);
         setLocalContent(asNote.content);
         setLocalTitle(asNote.title);
-        setReadOnly(asNote.createdBy !== loggedUser?.username);
+        setReadOnly(asNote.createdBy === loggedUser?.username);
       }
     }
 
     if (selectedNote) {
       setLocalContent(selectedNote.content || "");
       setLocalTitle(selectedNote.title || "new file");
-      if (loggedUser) {
-        setReadOnly(selectedNote.createdBy !== loggedUser?.username);
-      }
     } else {
       getData();
     }
