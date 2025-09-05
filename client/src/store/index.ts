@@ -105,8 +105,8 @@ export const setSelectedNoteAtom = atom(null, (get, set, note: Note | null) => {
 
 export const createNoteAtom = atom(
   null,
-  async (get, set, data: Partial<Note>) => {
-    const noteService = get(noteServiceAtom(""));
+  async (get, set, data: Partial<Note>, jwtParam?: string) => {
+    const noteService = get(noteServiceAtom(jwtParam));
     let user = getUser();
     if (!user) {
       throw new Error("internal client error");

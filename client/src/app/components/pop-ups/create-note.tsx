@@ -41,8 +41,9 @@ export const PopupCreateNote = ({
   const handleSubmit = () => {
     if (!formObject.title || !formObject.visibility)
       return toast.error(t("popups.errors.fieldsMissing"), ToastErrorStyle);
-
-    createNote(formObject);
+    const jwt = localStorage.getItem("jwt");
+    if (!jwt) throw new Error("problem on client");
+    createNote(formObject, jwt);
 
     clearFields();
     toggle();
