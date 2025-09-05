@@ -96,6 +96,9 @@ export default function NoteHome({
 
   const handleSave = () => {
     try {
+      if (readOnly) {
+        return;
+      }
       saveNote({
         id: selectedNote?.id,
         title: localTitle,
