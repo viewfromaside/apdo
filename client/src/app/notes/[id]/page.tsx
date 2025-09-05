@@ -60,10 +60,9 @@ export default function NoteHome({
         setReadOnly(asNote.createdBy !== loggedUser?.username);
       }
     }
-
     getData();
     setIsInitialized(true);
-  }, [selectedNote, id]);
+  }, [id]);
 
   useEffect(() => {
     if (selectedNote && isInitialized) {
