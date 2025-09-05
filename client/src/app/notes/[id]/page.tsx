@@ -8,6 +8,7 @@ import {
   NoteSettings,
   Panel,
   RawEditor,
+  Save,
   UnsavedBottomBar,
 } from "@/app/components";
 import { use, useEffect, useState } from "react";
@@ -63,6 +64,14 @@ export default function NoteHome({
     getData();
     setIsInitialized(true);
   }, [id]);
+
+  useEffect(() => {
+    if (selectedNote) {
+      console.log("oi");
+      setLocalContent(selectedNote.content);
+      setLocalTitle(selectedNote.title);
+    }
+  }, [selectedNote]);
 
   useEffect(() => {
     if (selectedNote && isInitialized) {
@@ -122,6 +131,7 @@ export default function NoteHome({
             )}
           </div>
           <div className="flex flex-row gap-2">
+            <Save onClick={handleSave} />
             <NoteSettings onClick={() => togglePopup("settings")} />
             <NoteModeToggle
               formatMarkdownToggle={formatMarkdownToggle}

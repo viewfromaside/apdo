@@ -3,3 +3,4 @@ export * from "@/app/components/editor/header/go-back";
 export * from "@/app/components/editor/header/note-settings";
 export * from "@/app/components/editor/header/note-mode-toggle";
 export * from "@/app/components/editor/header/bottom-bar";
+export * from "@/app/components/editor/header/save";
