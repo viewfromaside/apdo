@@ -1,5 +1,11 @@
 "use client";
-import { Button, GoSignIn, Logo, Panel } from "@/app/components";
+import {
+  Button,
+  GoSignIn,
+  LanguageSwitcher,
+  Logo,
+  Panel,
+} from "@/app/components";
 import { Input } from "@/app/components";
 import { useKeyboardShortcut } from "@/hooks";
 import { User } from "@/services";
@@ -117,6 +123,7 @@ export default function SignUpForm() {
           </Button>
         </div>
         <GoSignIn />
+        <LanguageSwitcher />
       </Panel>
     </div>
   );

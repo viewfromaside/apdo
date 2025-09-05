@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Logo, Panel } from "./components";
+import { Button, LanguageSwitcher, Logo, Panel } from "./components";
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
@@ -51,6 +51,7 @@ export default function Home() {
           </Link>
           <GoSignUp />
         </div>
+        <LanguageSwitcher />
       </Panel>
     </div>
   );

@@ -11,7 +11,7 @@ export const Layout = ({
     <CookiesProvider>
       <main
         className={twMerge(
-          "flex flex-row h-screen xl:p-5 bg-background dark:bg-dark-background",
+          "flex flex-row h-[100dvh] xl:p-5 bg-background dark:bg-dark-background",
           className
         )}
         {...props}
