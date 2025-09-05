@@ -12,7 +12,7 @@ import (
 func RegisterRoutes(router *gin.Engine) {
 
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"https://apdo.vercel.app"},
+		AllowOrigins:     []string{"https://apdo.vercel.app", "http://localhost:3000"},
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},

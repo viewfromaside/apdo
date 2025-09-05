@@ -100,13 +100,13 @@ export const NoContent = ({ className, ...props }: NoContentProps) => {
       <div ref={buttonsRef} className="flex flex-row mt-5 gap-4">
         <Button
           onClick={() => togglePopup("createNote")}
-          className="bg-green-800 hover:bg-green-500 !text-neutral hover:text-neutral"
+          className="bg-green-800 opacity-0 hover:bg-green-500 !text-neutral hover:text-neutral"
         >
           {t("notes.noContent.createNote")}
         </Button>
         <Button
           onClick={() => togglePopup("appearence")}
-          className="hover:bg-accent"
+          className="hover:bg-accent opacity-0"
         >
           {t("notes.noContent.changeAppearence")}
         </Button>

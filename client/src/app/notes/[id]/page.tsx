@@ -61,12 +61,7 @@ export default function NoteHome({
       }
     }
 
-    if (selectedNote) {
-      setLocalContent(selectedNote.content || "");
-      setLocalTitle(selectedNote.title || "new file");
-    } else {
-      getData();
-    }
+    getData();
     setIsInitialized(true);
   }, [selectedNote, id]);
 
