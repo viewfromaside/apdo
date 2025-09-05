@@ -1,42 +1,100 @@
-# 😵 I spent 2 weeks on this... why did I do this to myself?
+# Customizable Notepad
 
-Welcome to my **highly customizable Notepad project**.  
-Yes, I know… nobody asked for it.  
-Yes, it consumed way too many hours of my life.  
-And yes, I kinda love it. ❤️
+A modern, extensible notepad application designed to adapt to different workflows. The project is split into two main parts: a **Next.js client** and a **Go (Gin) server**. The goal is to provide a clean, minimal interface with customization options and a robust backend.
 
----
-
-## ✨ Features
-- Fully customizable notes (because the default notepads are boring)
-- Clean and minimal interface (sometimes)
-- Built with technologies that also kept me awake at night
-- Designed for people who want a notepad that *finally adapts to them*
+<img width="1920" height="957" alt="image" src="https://github.com/user-attachments/assets/ecbbb932-72bf-4107-9591-ffc4a9a91177" />
 
 ---
 
-## 🛠️ Tech Stack
-- **Frontend:** Next.js + TailwindCSS + Framer Motion  
-- **Backend:** Gin (Go) + Firebase  
-- **Other magic:** Jotai, ESLint, and too much caffeine
+
+## Features
+- Customizable notes with flexible styling and organization
+- Minimal and responsive UI
+- Smooth animations powered by Framer Motion
+- Backend powered by Gin (Go) with Firebase integration
+- Planned features: authentication, API integrations, and advanced search
 
 ---
 
-## 🚧 Work in Progress
-This project is still evolving.  
-Things I still want to add:
-- Authentication improvements 🔑
-- API integrations 🌐
-- Smarter search for notes 🔍
+## Tech Stack
+- **Frontend:** Next.js, TailwindCSS, GSAP, Jotai
+- **Backend:** Gin (Go), Firebase
+- **Tooling:** ESLint, Prettier
 
 ---
 
-## 🤔 Why?
-Honestly? I just wanted to see how far I could push the idea of a customizable notepad.  
-Also… because I apparently hate myself and enjoy overcomplicating things.
+## Getting Started
+
+### Prerequisites
+- Node.js (>= 18)
+- Go (>= 1.20)
+- Firebase project (for backend integration)
 
 ---
 
-## 💬 Let’s Connect
-Have feedback? Want to roast my code?  
-Drop a comment or reach out — I’d love to hear it!
+### 1. Client (Next.js)
+
+```bash
+# Navigate to client folder
+cd client/
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+By default, the app runs on [http://localhost:3000](http://localhost:3000).
+
+---
+
+### 2. Server (Go + Gin)
+
+```bash
+# Navigate to server folder
+cd server/
+
+# Download Go dependencies
+go mod tidy
+
+# Run the server
+go run main.go
+```
+
+The server will start on [http://localhost:8080](http://localhost:8080) (or the port configured in your code).
+
+---
+
+## Project Structure
+```
+project-root/
+│
+├── client/   # Next.js frontend
+│   ├── src/
+│   └── ...
+│
+├── server/   # Go backend (Gin + Firebase)
+│   ├── main.go
+│   └── ...
+│
+└── README.md
+```
+
+---
+
+## Roadmap
+- [x] Authentication improvements
+- [ ] API integrations
+- [x] Smarter search for notes
+- [ ] Additional customization options
+
+---
+
+## Contributing
+Contributions, feedback, and suggestions are welcome. Please open an issue or submit a pull request if you’d like to contribute.
+
+---
+
+## License
+This project is licensed under the MIT License.
