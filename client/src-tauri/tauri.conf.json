@@ -16,7 +16,11 @@
         "width": 1024,
         "height": 600,
         "resizable": false,
-        "fullscreen": false
+        "fullscreen": false,
+
+        "additionalBrowserArgs": "--disable-backgrounding-occluded-windows --disable-renderer-backgrounding",
+        "skipTaskbar": true,
+        "decorations": false
       }
     ],
     "security": {

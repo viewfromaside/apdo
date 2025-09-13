@@ -44,6 +44,9 @@ func PostNotes(c *gin.Context) {
 	newNote.Title = strings.TrimSpace(strings.ReplaceAll(input.Title, " ", "_"))
 	newNote.Content = input.Content
 	newNote.CreatedBy = input.CreatedBy
+	if input.Content == "" {
+		newNote.Content = "Start editing this text"
+	}
 
 	if utils.Contains(availableVisibility, input.Visibility) {
 		newNote.Visibility = input.Visibility
